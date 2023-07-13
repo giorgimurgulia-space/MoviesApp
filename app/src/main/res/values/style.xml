@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="normalMontserratMedium">
+        <item name="android:textSize">@dimen/dimen_18_sp</item>
+        <item name="fontFamily">@font/montserrat_medium</item>
+    </style>
+
+    <style name="mediumMontserratMedium">
+        <item name="android:textSize">@dimen/dimen_22_sp</item>
+    </style>
+
+    <style name="smallMontserratMedium">
+        <item name="android:textSize">@dimen/dimen_14_sp</item>
+    </style>
+
+
+</resources>
