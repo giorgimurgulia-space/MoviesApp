@@ -19,9 +19,9 @@
     <androidx.cardview.widget.CardView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:layout_margin="@dimen/dimen_10_dp"
         android:backgroundTint="@color/yellow"
-        app:cardCornerRadius="22dp"
+        app:cardCornerRadius="@dimen/dimen_22_dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -30,8 +30,8 @@
             style="@style/smallMontserratMedium"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingHorizontal="12dp"
-            android:paddingVertical="4dp"
+            android:paddingHorizontal="@dimen/dimen_12_dp"
+            android:paddingVertical="@dimen/dimen_4_dp"
             android:textColor="@color/black"
             tools:text="Horror" />
     </androidx.cardview.widget.CardView>
@@ -50,13 +50,14 @@
         tools:text="In The Tall Grass" />
 
     <ImageView
-        android:t="@color/yellow"
         android:id="@+id/heart_image"
         android:layout_width="@dimen/dimen_20_dp"
         android:layout_height="@dimen/dimen_20_dp"
         android:layout_marginTop="@dimen/dimen_10_dp"
+        android:layout_marginEnd="@dimen/dimen_5_dp"
         android:scaleType="centerInside"
         android:src="@drawable/ic_heart"
+        android:t="@color/yellow"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/banner_image" />
 
