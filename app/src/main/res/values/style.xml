@@ -2,16 +2,17 @@
 <resources>
 
     <style name="normalMontserratMedium">
-        <item name="android:textSize">@dimen/dimen_18_sp</item>
+        <item name="android:textSize">@dimen/dimen_14_sp</item>
         <item name="fontFamily">@font/montserrat_medium</item>
+        <item name="lineHeight">@dimen/dimen_18_sp</item>
     </style>
 
     <style name="mediumMontserratMedium">
-        <item name="android:textSize">@dimen/dimen_22_sp</item>
+        <item name="android:textSize">@dimen/dimen_16_sp</item>
     </style>
 
     <style name="smallMontserratMedium">
-        <item name="android:textSize">@dimen/dimen_14_sp</item>
+        <item name="android:textSize">@dimen/dimen_12_sp</item>
     </style>
 
 
