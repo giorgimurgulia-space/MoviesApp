@@ -30,6 +30,19 @@
         android:layout_height="0dp"
         android:scaleType="centerInside"
         android:src="@drawable/ic_filter"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="@id/search_edit_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/search_edit_text" />
+
+    <TextView
+        android:id="@+id/cancel_search_text"
+        style="@style/smallMontserratMedium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/cancel_text"
+        android:textColor="@color/white"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="@id/search_edit_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/search_edit_text" />

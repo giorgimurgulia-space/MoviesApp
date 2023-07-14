@@ -3,4 +3,5 @@
     <string name="search_hint">Search</string>
     <string name="home_nav_text">Home</string>
     <string name="favorites_nav_text">Favorites</string>
+    <string name="cancel_text">Cancel</string>
 </resources>
