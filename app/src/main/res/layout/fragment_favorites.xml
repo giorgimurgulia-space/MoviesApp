@@ -31,6 +31,20 @@
         app:layout_constraintTop_toBottomOf="@id/title_text"
         tools:listitem="@layout/layout_movie_item" />
 
+    <ImageView
+        android:visibility="gone"
+        android:id="@+id/no_movies_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:src="@drawable/ic_no_movies"
+        app:layout_constraintBottom_toTopOf="@id/home_nav_linear_layout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/title_text" />
+
+
     <LinearLayout
         android:id="@+id/home_nav_linear_layout"
         android:layout_width="@dimen/dimen_0_dp"

@@ -5,4 +5,5 @@
     <string name="favorites_nav_text">Favorites</string>
     <string name="cancel">Cancel</string>
     <string name="favorite_movies">Favorite movies</string>
+    <string name="data_can_t_be_loaded">Data can’t be loaded</string>
 </resources>
