@@ -1,0 +1,50 @@
+package com.space.moviesapp.presentation.base.fragment
+
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.Toast
+import androidx.fragment.app.Fragment
+import androidx.viewbinding.ViewBinding
+import com.space.moviesapp.common.types.Inflater
+import com.space.moviesapp.presentation.base.vm.BaseViewModel
+
+
+abstract class BaseFragment<VB : ViewBinding, VM : BaseViewModel>(private val inflate: Inflater<VB>) :
+    Fragment() {
+    abstract val viewModel: VM
+
+    private var _binding: VB? = null
+    val binding get() = _binding!!
+
+
+    abstract fun onBind()
+    open fun setObserves() {}
+    open fun setListeners() {}
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+    ): View? {
+        _binding = inflate.invoke(inflater, container, false)
+        return binding.root
+
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        onBind()
+        setObserves()
+        setListeners()
+    }
+
+
+    protected fun toast(message: String) {
+        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+}

@@ -45,7 +45,6 @@
         android:layout_marginEnd="@dimen/dimen_5_dp"
         android:scaleType="centerInside"
         android:src="@drawable/ic_heart"
-        android:t="@color/yellow"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/banner_image" />
 
