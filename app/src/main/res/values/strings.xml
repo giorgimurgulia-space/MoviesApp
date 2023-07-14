@@ -3,5 +3,6 @@
     <string name="search_hint">Search</string>
     <string name="home_nav_text">Home</string>
     <string name="favorites_nav_text">Favorites</string>
-    <string name="cancel_text">Cancel</string>
+    <string name="cancel">Cancel</string>
+    <string name="favorite_movies">Favorite movies</string>
 </resources>
