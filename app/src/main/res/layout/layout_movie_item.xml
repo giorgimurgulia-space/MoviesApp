@@ -16,25 +16,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.cardview.widget.CardView
+    <include
+        layout="@layout/layout_category_item"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/dimen_10_dp"
-        android:backgroundTint="@color/yellow"
-        app:cardCornerRadius="@dimen/dimen_22_dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <TextView
-            android:id="@+id/category_text"
-            style="@style/smallMontserratMedium"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingHorizontal="@dimen/dimen_12_dp"
-            android:paddingVertical="@dimen/dimen_4_dp"
-            android:textColor="@color/black"
-            tools:text="Horror" />
-    </androidx.cardview.widget.CardView>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/movie_title_text"
