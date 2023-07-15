@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <style name="mediumMontserratMedium">
         <item name="android:textSize">@dimen/dimen_16_sp</item>
         <item name="fontFamily">@font/montserrat_medium</item>
@@ -17,6 +18,4 @@
         <item name="fontFamily">@font/montserrat_medium</item>
         <item name="lineHeight">@dimen/dimen_12_sp</item>
     </style>
-
-
 </resources>
