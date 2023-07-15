@@ -6,4 +6,6 @@
     <string name="cancel">Cancel</string>
     <string name="favorite_movies">Favorite movies</string>
     <string name="data_can_t_be_loaded">Data can’t be loaded</string>
+    <string name="no_internet_connection">internet connection or some other server error</string>
+    <string name="refresh">Refresh</string>
 </resources>
