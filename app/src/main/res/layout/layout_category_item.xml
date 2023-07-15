@@ -5,7 +5,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_marginStart="@dimen/dimen_4_dp"
-    android:backgroundTint="@color/yellow"
+    android:backgroundTint="@color/yellow_primary"
     app:cardCornerRadius="@dimen/dimen_22_dp">
 
 
@@ -16,7 +16,7 @@
         android:layout_height="match_parent"
         android:paddingHorizontal="@dimen/dimen_12_dp"
         android:paddingVertical="@dimen/dimen_4_dp"
-        android:textColor="@color/black"
+        android:textColor="@color/neutral_01_black"
         tools:text="Horror" />
 
 </androidx.cardview.widget.CardView>
