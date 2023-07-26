@@ -55,8 +55,7 @@ class HomeViewModel(
             getPopularMoviesUseCase.invoke(
                 _movieCategory.value[selectCategoryIndex].id,
                 currentPage.inc()
-            )
-                .toResult()
+            ).toResult()
                 .collectLatest {
                     it.onSuccess { movies ->
                         currentPage = movies.page

@@ -1,5 +1,6 @@
 package com.space.moviesapp.data.remote.api
 
+import com.space.moviesapp.data.remote.dto.GenresDto
 import com.space.moviesapp.data.remote.dto.MoviesDto
 import retrofit2.Response
 import retrofit2.http.GET
@@ -13,8 +14,8 @@ interface ApiService {
         @Query("page") page: Int
     ): Response<MoviesDto>
 
-    @GET("movie/top_rated")
-    suspend fun getTopMovies(@Query("page") page: Int): Response<MoviesDto>
+    @GET("genre/movie/list")
+    suspend fun getMovieGenres(): Response<GenresDto>
 
     @GET("search/movie")
     suspend fun searchMovies(

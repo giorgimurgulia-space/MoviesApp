@@ -29,7 +29,7 @@ class MovieAdapter :
         private val binding: LayoutMovieItemBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(movie: MovieUIModel.MovieItem) = with(binding) {
-            categoryLayout.categoryText.text = "Comedy"
+            categoryLayout.categoryText.text = movie.genres.first()
 
             bannerImage.loadImage(movie.poster)
             movieTitleText.text = movie.title

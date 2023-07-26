@@ -20,9 +20,10 @@ class MoviesRepositoryImpl(
     }
 
     override suspend fun getMovies(categoryId: String, page: Int): Flow<MovieModel> = flow {
+        val genresResponse = apiService.getMovieGenres()
         val response = apiService.getPopularMovies(categoryId, page)
-        if (response.isSuccessful) {
-            emit(response.body()!!.toDomainModel())
+        if (response.isSuccessful && genresResponse.isSuccessful) {
+            emit(response.body()!!.toDomainModel(genresResponse.body()!!.toDomainModel()))
         }
     }
 
