@@ -4,12 +4,12 @@ package com.space.moviesapp.presentation.ui.home
 import android.view.LayoutInflater
 import android.view.View
 import androidx.core.widget.doAfterTextChanged
-import com.google.android.material.chip.Chip
+import androidx.recyclerview.widget.RecyclerView
 import com.space.moviesapp.common.extensions.collectFlow
 import com.space.moviesapp.databinding.ChipFilterItemBinding
 import com.space.moviesapp.databinding.FragmentHomeBinding
-import com.space.moviesapp.databinding.LayoutMovieItemBinding
 import com.space.moviesapp.presentation.base.fragment.BaseFragment
+import com.space.moviesapp.presentation.model.MovieCategoryUIModel
 import kotlin.reflect.KClass
 
 class HomeFragment :
@@ -22,18 +22,14 @@ class HomeFragment :
 
 
     override fun onBind() {
-        setFilter(
-            listOf(
-                "Popular", "Top Rated"
-            )
-        )
-
         binding.mainRecycler.adapter = adapter
-
-        viewModel.getMovies()
+        viewModel.getMovieCategory()
     }
 
     override fun setObserves() {
+        collectFlow(viewModel.movieCategory) {
+            setFilter(it)
+        }
         collectFlow(viewModel.state) {
             adapter.submitList(it)
         }
@@ -57,14 +53,23 @@ class HomeFragment :
 
         binding.chipGroup.setOnCheckedStateChangeListener { group, checkedIds ->
             viewModel.onFilterClick(checkedIds)
-            toast(checkedIds[0].toString())
         }
+
+        binding.mainRecycler.addOnScrollListener(object :
+            RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+                if (!recyclerView.canScrollVertically(1)) {
+                    viewModel.onBottomScroll()
+                }
+            }
+        })
     }
 
-    private fun setFilter(chips: List<String>) {
+    private fun setFilter(chips: List<MovieCategoryUIModel>) {
         chips.forEachIndexed { index, it ->
             val chip = ChipFilterItemBinding.inflate(LayoutInflater.from(requireContext())).chipItem
-            chip.text = it
+            chip.text = it.title
             chip.id = index
 
             binding.chipGroup.addView(chip)

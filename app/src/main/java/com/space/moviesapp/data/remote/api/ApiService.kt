@@ -3,11 +3,15 @@ package com.space.moviesapp.data.remote.api
 import com.space.moviesapp.data.remote.dto.MoviesDto
 import retrofit2.Response
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface ApiService {
-    @GET("movie/popular")
-    suspend fun getPopularMovies(@Query("page") page: Int): Response<MoviesDto>
+    @GET("movie/{categoryId}")
+    suspend fun getPopularMovies(
+        @Path(value = "categoryId") categoryId: String,
+        @Query("page") page: Int
+    ): Response<MoviesDto>
 
     @GET("movie/top_rated")
     suspend fun getTopMovies(@Query("page") page: Int): Response<MoviesDto>

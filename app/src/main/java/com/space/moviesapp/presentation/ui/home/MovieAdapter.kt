@@ -8,7 +8,8 @@ import com.space.moviesapp.common.extensions.loadImage
 import com.space.moviesapp.databinding.LayoutMovieItemBinding
 import com.space.moviesapp.presentation.model.MovieUIModel
 
-class MovieAdapter : ListAdapter<MovieUIModel, MovieAdapter.MovieViewHolder>(MovieDiffUtil()) {
+class MovieAdapter :
+    ListAdapter<MovieUIModel.MovieItem, MovieAdapter.MovieViewHolder>(MovieDiffUtil()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
         return MovieViewHolder(
@@ -27,8 +28,9 @@ class MovieAdapter : ListAdapter<MovieUIModel, MovieAdapter.MovieViewHolder>(Mov
     class MovieViewHolder(
         private val binding: LayoutMovieItemBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(movie: MovieUIModel) = with(binding) {
+        fun bind(movie: MovieUIModel.MovieItem) = with(binding) {
             categoryLayout.categoryText.text = "Comedy"
+
             bannerImage.loadImage(movie.poster)
             movieTitleText.text = movie.title
             movieYearText.text = movie.releaseDate
