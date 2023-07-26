@@ -1,7 +1,7 @@
 package com.space.moviesapp.data.remote.di
 
-import com.space.moviesapp.data.remote.NetworkConstants.BASE_URL
-import com.space.moviesapp.data.remote.NetworkConstants.API_KEY
+import com.space.moviesapp.common.utils.MoviesConstants.BASE_URL
+import com.space.moviesapp.common.utils.MoviesConstants.API_KEY
 import com.space.moviesapp.data.remote.api.ApiService
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
