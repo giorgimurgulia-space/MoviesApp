@@ -21,10 +21,10 @@ class MoviesRepositoryImpl(
         }
     }
 
-    override suspend fun getTopMovies(): Flow<List<MovieModel>> = flow {
-        val response = apiService.getTopMovies()
+    override suspend fun getTopMovies(page: Int): Flow<List<MovieModel>> = flow {
+        val response = apiService.getTopMovies(page)
         if (response.isSuccessful) {
-            emit(response.body()!!.results!!.map {
+            emit(response.body()!!.results.map {
                 it!!.toDomainModel()
             })
         }

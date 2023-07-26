@@ -54,6 +54,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dimen_8_dp"
         android:visibility="gone"
+        app:selectionRequired="true"
+        app:singleSelection="true"
         app:layout_constraintTop_toBottomOf="@id/search_edit_text" />
 
     <TextView

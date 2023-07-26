@@ -6,7 +6,9 @@ import android.view.View
 import androidx.core.widget.doAfterTextChanged
 import com.google.android.material.chip.Chip
 import com.space.moviesapp.common.extensions.collectFlow
+import com.space.moviesapp.databinding.ChipFilterItemBinding
 import com.space.moviesapp.databinding.FragmentHomeBinding
+import com.space.moviesapp.databinding.LayoutMovieItemBinding
 import com.space.moviesapp.presentation.base.fragment.BaseFragment
 import kotlin.reflect.KClass
 
@@ -20,7 +22,7 @@ class HomeFragment :
 
 
     override fun onBind() {
-        showFilter(
+        setFilter(
             listOf(
                 "Popular", "Top Rated"
             )
@@ -39,10 +41,7 @@ class HomeFragment :
 
     override fun setListeners() {
         binding.filterImage.setOnClickListener {
-            if (binding.chipGroup.visibility == View.VISIBLE)
-                isFilterVisible(false)
-            else
-                isFilterVisible(true)
+            isFilterVisible()
         }
 
         binding.cancelSearchText.setOnClickListener {
@@ -57,19 +56,25 @@ class HomeFragment :
         }
     }
 
-
-    private fun showFilter(chips: List<String>) {
+    private fun setFilter(chips: List<String>) {
         chips.forEachIndexed { index, it ->
-            val chip = Chip(requireContext())
+            val chip = ChipFilterItemBinding.inflate(LayoutInflater.from(requireContext())).chipItem
             chip.text = it
             chip.id = index
 
+            chip.setOnClickListener {
+                viewModel.onFilterClick(chip.id)
+                toast(chip.id.toString())
+            }
+            if (index == 0)
+                chip.isChecked
             binding.chipGroup.addView(chip)
         }
+        binding.chipGroup.check(0)
     }
 
-    private fun isFilterVisible(isVisible: Boolean) {
-        if (isVisible)
+    private fun isFilterVisible() {
+        if (binding.chipGroup.visibility == View.GONE)
             binding.chipGroup.visibility = View.VISIBLE
         else
             binding.chipGroup.visibility = View.GONE

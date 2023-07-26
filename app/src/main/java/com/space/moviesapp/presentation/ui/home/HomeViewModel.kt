@@ -36,4 +36,8 @@ class HomeViewModel(
             }
         }
     }
+
+    fun onFilterClick(id: Int) {
+
+    }
 }
