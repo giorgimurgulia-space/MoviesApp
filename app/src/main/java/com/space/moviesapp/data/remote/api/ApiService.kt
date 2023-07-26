@@ -9,9 +9,12 @@ interface ApiService {
     @GET("movie/popular")
     suspend fun getPopularMovies(@Query("page") page: Int): Response<MoviesDto>
 
-    @GET("search/top_rated")
-    suspend fun getTopMovies(): Response<MoviesDto>
+    @GET("movie/top_rated")
+    suspend fun getTopMovies(@Query("page") page: Int): Response<MoviesDto>
 
     @GET("search/movie")
-    suspend fun searchMovies(@Query("query") query: String): Response<MoviesDto>
+    suspend fun searchMovies(
+        @Query("query") query: String,
+        @Query("page") page: Int
+    ): Response<MoviesDto>
 }

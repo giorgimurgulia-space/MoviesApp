@@ -20,7 +20,7 @@ class HomeViewModel(
 
     fun getMovies() {
         viewModelScope.launch {
-            getPopularMoviesUseCase.invoke(2).toResult().collectLatest {
+            getPopularMoviesUseCase.invoke(3).toResult().collectLatest {
                 it.onSuccess { movies ->
                     _state.tryEmit(
                         movies.map { movie ->

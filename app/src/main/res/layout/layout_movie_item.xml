@@ -57,7 +57,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dimen_5_dp"
-        android:textColor="@color/brown"
+        android:textColor="@color/neutral_01_black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/movie_title_text"
         tools:text="2019" />
