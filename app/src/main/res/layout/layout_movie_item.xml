@@ -34,7 +34,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dimen_5_dp"
         android:layout_marginTop="@dimen/dimen_10_dp"
-        android:textColor="@color/white"
+        android:textColor="@color/neutral_08_whisper"
         app:layout_constraintEnd_toStartOf="@id/heart_image"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/banner_image"
@@ -57,7 +57,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dimen_5_dp"
-        android:textColor="@color/neutral_01_black"
+        android:textColor="@color/neutral_04_grey"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/movie_title_text"
         tools:text="2019" />
