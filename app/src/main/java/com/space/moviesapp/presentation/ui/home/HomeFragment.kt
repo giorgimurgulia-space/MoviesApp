@@ -54,6 +54,11 @@ class HomeFragment :
             binding.filterImage.visibility = View.INVISIBLE
             binding.cancelSearchText.visibility = View.VISIBLE
         }
+
+        binding.chipGroup.setOnCheckedStateChangeListener { group, checkedIds ->
+            viewModel.onFilterClick(checkedIds)
+            toast(checkedIds[0].toString())
+        }
     }
 
     private fun setFilter(chips: List<String>) {
@@ -62,12 +67,6 @@ class HomeFragment :
             chip.text = it
             chip.id = index
 
-            chip.setOnClickListener {
-                viewModel.onFilterClick(chip.id)
-                toast(chip.id.toString())
-            }
-            if (index == 0)
-                chip.isChecked
             binding.chipGroup.addView(chip)
         }
         binding.chipGroup.check(0)

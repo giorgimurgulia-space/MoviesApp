@@ -37,7 +37,7 @@ class HomeViewModel(
         }
     }
 
-    fun onFilterClick(id: Int) {
+    fun onFilterClick(id: List<Int>) {
 
     }
 }
