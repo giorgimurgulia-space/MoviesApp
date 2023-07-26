@@ -6,12 +6,12 @@ import com.space.moviesapp.data.remote.dto.MoviesDto
 import com.space.moviesapp.domain.model.MovieModel
 
 
-fun MoviesDto.ResultDto.toDomainModel() =
+fun MoviesDto.MovieDto.toDomainModel() =
     MovieModel(
         id ?: 0,
         title ?: "",
         voteAverage ?: 0.0.formatDoubleToOneDecimal(),
+        releaseDate!!.dropLast(6),
         IMAGE_BASE_URL + posterPath,
-        releaseDate!!.dropLast(6)
     )
 

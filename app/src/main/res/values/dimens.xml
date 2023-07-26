@@ -23,6 +23,7 @@
     <dimen name="dimen_16_dp">16dp</dimen>
     <dimen name="dimen_22_dp">22dp</dimen>
     <dimen name="dimen_25_dp">25dp</dimen>
+    <dimen name="dimen_270_dp">270dp</dimen>
 
 
 </resources>

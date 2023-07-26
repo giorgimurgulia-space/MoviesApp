@@ -9,12 +9,13 @@ import kotlinx.coroutines.flow.flow
 
 class MoviesRepositoryImpl(
     private val apiService: ApiService
-
 ) : MoviesRepository {
-    override suspend fun getPopularMovies(): Flow<List<MovieModel>> = flow {
-        val response = apiService.getPopularMovies()
+
+
+    override suspend fun getPopularMovies(page: Int): Flow<List<MovieModel>> = flow {
+        val response = apiService.getPopularMovies(page)
         if (response.isSuccessful) {
-            emit(response.body()!!.results!!.map {
+            emit(response.body()!!.results.map {
                 it!!.toDomainModel()
             })
         }

@@ -4,41 +4,24 @@ package com.space.moviesapp.data.remote.dto
 import com.google.gson.annotations.SerializedName
 
 data class MoviesDto(
-    val dates: DatesDto?,
-    val page: Int?,
-    val results: List<ResultDto?>?,
+    val page: Int,
+    val results: List<MovieDto?>,
     @SerializedName("total_pages")
-    val totalPages: Int?,
-    @SerializedName("total_results")
-    val totalResults: Int?
+    val totalPages: Int
 ) {
-    data class DatesDto(
-        val maximum: String?,
-        val minimum: String?
-    )
-
-    data class ResultDto(
-        val adult: Boolean?,
-        @SerializedName("backdrop_path")
-        val backdropPath: String?,
+    data class MovieDto(
+        val id: Int,
         @SerializedName("genre_ids")
-        val genreIds: List<Int?>?,
-        val id: Int?,
-        @SerializedName("original_language")
-        val originalLanguage: String?,
+        val genreIds: List<Int>,
         @SerializedName("original_title")
-        val originalTitle: String?,
-        val overview: String?,
-        val popularity: Double?,
+        val originalTitle: String,
+        val overview: String,
         @SerializedName("poster_path")
-        val posterPath: String?,
+        val posterPath: String,
         @SerializedName("release_date")
-        val releaseDate: String?,
-        val title: String?,
-        val video: Boolean?,
+        val releaseDate: String,
+        val title: String,
         @SerializedName("vote_average")
-        val voteAverage: Double?,
-        @SerializedName("vote_count")
-        val voteCount: Int?
+        val voteAverage: Double
     )
 }

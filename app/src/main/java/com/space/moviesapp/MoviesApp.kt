@@ -4,6 +4,7 @@ import android.app.Application
 import com.space.moviesapp.data.remote.di.networkModule
 import com.space.moviesapp.domain.di.repositoryModule
 import com.space.moviesapp.domain.di.useCaseModule
+import com.space.moviesapp.presentation.di.viewModelModule
 
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -20,6 +21,7 @@ class MoviesApp : Application() {
                 networkModule,
                 repositoryModule,
                 useCaseModule,
+                viewModelModule
             )
         }
     }

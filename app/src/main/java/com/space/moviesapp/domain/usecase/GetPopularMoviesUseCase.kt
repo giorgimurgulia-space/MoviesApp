@@ -5,7 +5,5 @@ import com.space.moviesapp.domain.repository.MoviesRepository
 class GetPopularMoviesUseCase(
     private val moviesRepository: MoviesRepository
 ) {
-    fun invoke(){
-
-    }
+    suspend fun invoke(page: Int) = moviesRepository.getPopularMovies(page)
 }
