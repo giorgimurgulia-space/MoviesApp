@@ -12,6 +12,7 @@ import com.space.moviesapp.presentation.base.fragment.BaseFragment
 import com.space.moviesapp.presentation.model.MovieCategoryUIModel
 import kotlin.reflect.KClass
 
+
 class HomeFragment :
     BaseFragment<FragmentHomeBinding, HomeViewModel>(FragmentHomeBinding::inflate) {
 
@@ -47,6 +48,7 @@ class HomeFragment :
         }
 
         binding.searchEditText.doAfterTextChanged {
+
             binding.filterImage.visibility = View.INVISIBLE
             binding.cancelSearchText.visibility = View.VISIBLE
         }

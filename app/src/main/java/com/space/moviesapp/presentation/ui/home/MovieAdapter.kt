@@ -2,6 +2,7 @@ package com.space.moviesapp.presentation.ui.home
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.space.moviesapp.common.extensions.loadImage
@@ -29,11 +30,15 @@ class MovieAdapter :
         private val binding: LayoutMovieItemBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(movie: MovieUIModel.MovieItem) = with(binding) {
-            categoryLayout.categoryText.text = movie.genres.first()
+            genresText.text = movie.genres.first()
 
             bannerImage.loadImage(movie.poster)
             movieTitleText.text = movie.title
             movieYearText.text = movie.releaseDate
+
+            favoriteCheckBox.setOnCheckedChangeListener { checkbox, isChecked ->
+                Toast.makeText(binding.root.context, movie.id.toString(), Toast.LENGTH_SHORT).show()
+            }
         }
     }
 }
