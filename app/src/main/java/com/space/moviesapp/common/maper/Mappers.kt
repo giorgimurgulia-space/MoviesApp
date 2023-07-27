@@ -3,7 +3,6 @@ package com.space.moviesapp.common.maper
 import com.space.moviesapp.common.utils.MoviesConstants.IMAGE_BASE_URL
 import com.space.moviesapp.data.remote.dto.GenresDto
 import com.space.moviesapp.data.remote.dto.MoviesDto
-import com.space.moviesapp.domain.model.Genres
 import com.space.moviesapp.domain.model.MovieCategoryModel
 import com.space.moviesapp.domain.model.MovieModel
 import com.space.moviesapp.presentation.model.MovieCategoryUIModel

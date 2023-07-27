@@ -1,6 +1,6 @@
 package com.space.moviesapp.domain.model
 
-data class Genres(
+data class Genre(
     val id: Int,
     val title: String
 )
