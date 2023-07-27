@@ -1,6 +1,11 @@
 package com.space.moviesapp.presentation.ui.home
 
-import androidx.fragment.app.viewModels
+import android.view.LayoutInflater
+import android.view.View
+import androidx.core.widget.doAfterTextChanged
+import androidx.recyclerview.widget.RecyclerView
+import com.space.moviesapp.common.extensions.collectFlow
+import com.space.moviesapp.databinding.ChipFilterItemBinding
 import com.space.moviesapp.databinding.FragmentHomeBinding
 import com.space.moviesapp.presentation.base.fragment.BaseFragment
 import com.space.moviesapp.presentation.model.MovieCategoryUIModel

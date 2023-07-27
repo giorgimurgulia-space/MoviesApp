@@ -31,7 +31,6 @@
         android:layout_height="0dp"
         android:scaleType="centerInside"
         android:src="@drawable/ic_filter"
-        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="@id/search_edit_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/search_edit_text" />
@@ -43,20 +42,44 @@
         android:layout_height="wrap_content"
         android:text="@string/cancel_text"
         android:textColor="@color/white"
-        android:visibility="invisible"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@id/search_edit_text"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/search_edit_text"
         app:layout_constraintTop_toTopOf="@id/search_edit_text" />
 
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/chip_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_8_dp"
+        android:visibility="gone"
+        app:selectionRequired="true"
+        app:singleSelection="true"
+        app:layout_constraintTop_toBottomOf="@id/search_edit_text" />
+
+    <TextView
+        android:id="@+id/movie_title"
+        style="@style/mediumMontserratMedium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_22_dp"
+        android:text="@string/movies_title"
+        android:textColor="@color/yellow_primary"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/chip_group" />
+
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/item_recycler"
+        android:id="@+id/main_recycler"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="@dimen/dimen_22_dp"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:layout_constraintBottom_toTopOf="@id/home_nav_linear_layout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/search_edit_text"
+        app:layout_constraintTop_toBottomOf="@id/movie_title"
+        app:spanCount="2"
         tools:listitem="@layout/layout_movie_item" />
 
     <LinearLayout
@@ -105,7 +128,7 @@
             android:layout_width="@dimen/dimen_20_dp"
             android:layout_height="match_parent"
             android:scaleType="centerInside"
-            android:src="@drawable/ic_heart"
+            android:src="@drawable/ic_heart_outlined"
             app:tint="@color/white" />
 
         <TextView
