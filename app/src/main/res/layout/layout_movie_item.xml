@@ -2,27 +2,36 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/neutral_01_black"
     android:paddingTop="@dimen/dimen_16_dp">
 
-    <androidx.constraintlayout.utils.widget.ImageFilterView
+    <ImageView
         android:id="@+id/banner_image"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:src="@drawable/movie_banner"
+        android:layout_height="@dimen/dimen_270_dp"
+        android:scaleType="centerInside"
+        app:layout_constraintBottom_toTopOf="@id/movie_title_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@drawable/movie_banner" />
 
-    <include
-        layout="@layout/layout_category_item"
+    <TextView
+        android:id="@+id/genres_text"
+        style="@style/smallMontserratMedium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/dimen_10_dp"
+        android:background="@drawable/shape_rectangle_background"
+        android:backgroundTint="@color/yellow_primary"
+        android:paddingHorizontal="@dimen/dimen_12_dp"
+        android:paddingVertical="@dimen/dimen_4_dp"
+        android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Horror" />
 
     <TextView
         android:id="@+id/movie_title_text"
@@ -31,20 +40,20 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dimen_5_dp"
         android:layout_marginTop="@dimen/dimen_10_dp"
-        android:textColor="@color/white"
-        app:layout_constraintEnd_toStartOf="@id/heart_image"
+        android:textColor="@color/neutral_08_whisper"
+        app:layout_constraintEnd_toStartOf="@id/favorite_check_box"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/banner_image"
         tools:text="In The Tall Grass" />
 
-    <ImageView
-        android:id="@+id/heart_image"
+    <CheckBox
+        android:id="@+id/favorite_check_box"
         android:layout_width="@dimen/dimen_20_dp"
         android:layout_height="@dimen/dimen_20_dp"
         android:layout_marginTop="@dimen/dimen_10_dp"
         android:layout_marginEnd="@dimen/dimen_5_dp"
+        android:button="@drawable/check_box_heart_selector"
         android:scaleType="centerInside"
-        android:src="@drawable/ic_heart"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/banner_image" />
 

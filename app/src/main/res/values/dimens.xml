@@ -25,6 +25,7 @@
     <dimen name="dimen_22_dp">22dp</dimen>
     <dimen name="dimen_24_dp">24dp</dimen>
     <dimen name="dimen_25_dp">25dp</dimen>
+    <dimen name="dimen_270_dp">270dp</dimen>
     <dimen name="dimen_30_dp">30dp</dimen>
     <dimen name="dimen_70_dp">70dp</dimen>
     <dimen name="dimen_100_dp">100dp</dimen>
