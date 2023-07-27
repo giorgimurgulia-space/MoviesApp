@@ -1,6 +1,7 @@
 package com.space.moviesapp
 
 import android.app.Application
+import com.space.moviesapp.data.local.di.dataBaseModule
 import com.space.moviesapp.data.remote.di.networkModule
 import com.space.moviesapp.domain.di.repositoryModule
 import com.space.moviesapp.domain.di.useCaseModule
@@ -21,7 +22,8 @@ class MoviesApp : Application() {
                 networkModule,
                 repositoryModule,
                 useCaseModule,
-                viewModelModule
+                viewModelModule,
+                dataBaseModule
             )
         }
     }
