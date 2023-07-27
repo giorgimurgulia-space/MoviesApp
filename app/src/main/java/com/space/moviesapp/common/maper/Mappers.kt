@@ -1,6 +1,7 @@
 package com.space.moviesapp.common.maper
 
 import com.space.moviesapp.common.utils.MoviesConstants.IMAGE_BASE_URL
+import com.space.moviesapp.data.local.database.entity.MovieEntity
 import com.space.moviesapp.data.remote.dto.GenresDto
 import com.space.moviesapp.data.remote.dto.MoviesDto
 import com.space.moviesapp.domain.model.MovieCategoryModel
@@ -16,9 +17,7 @@ fun MoviesDto.toDomainModel(genresMap: HashMap<Int, String>) = MovieModel(
     page, results.map {
         MovieItemModel(
             it.id,
-            it.genreIds.map { id ->
-                genresMap[id]!!
-            },
+            genresMap[it.genreIds.first()] ?: "",
             it.title,
             it.voteAverage,
             it.releaseDate.dropLast(6),
@@ -36,7 +35,8 @@ fun MovieModel.toUIModel() = MovieUIModel(
             it.title,
             it.rating,
             it.releaseDate,
-            it.poster
+            it.poster,
+            it.isFavorite
         )
     },
     totalPages
@@ -49,3 +49,5 @@ fun GenresDto.toDomainModel(): HashMap<Int, String> {
     }
     return genresMap
 }
+
+fun MovieEntity.toDomainModel() = MovieItemModel(id, genres, title, rating, releaseDate, poster)

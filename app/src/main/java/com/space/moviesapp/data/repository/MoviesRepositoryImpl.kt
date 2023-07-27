@@ -1,6 +1,7 @@
 package com.space.moviesapp.data.repository
 
 import com.space.moviesapp.common.maper.toDomainModel
+import com.space.moviesapp.data.local.database.dao.MoviesDao
 import com.space.moviesapp.data.remote.api.ApiService
 import com.space.moviesapp.domain.model.MovieCategoryModel
 import com.space.moviesapp.domain.model.MovieModel
@@ -9,7 +10,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
 class MoviesRepositoryImpl(
-    private val apiService: ApiService
+    private val apiService: ApiService,
+    private val moviesDao: MoviesDao
 ) : MoviesRepository {
 
     override fun getMovieCategory(): List<MovieCategoryModel> {

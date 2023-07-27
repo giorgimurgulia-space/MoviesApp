@@ -5,18 +5,18 @@ import com.space.moviesapp.common.extensions.toResult
 import com.space.moviesapp.common.maper.toUIModel
 import com.space.moviesapp.common.resource.onSuccess
 import com.space.moviesapp.domain.usecase.GetMovieCategoryUseCase
-import com.space.moviesapp.domain.usecase.GetPopularMoviesUseCase
+import com.space.moviesapp.domain.usecase.GetMoviesUseCase
 import com.space.moviesapp.presentation.base.vm.BaseViewModel
 import com.space.moviesapp.presentation.model.MovieCategoryUIModel
-import com.space.moviesapp.presentation.model.MovieUIModel
+import com.space.moviesapp.presentation.model.MovieItemUIModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 class HomeViewModel(
-    private val getPopularMoviesUseCase: GetPopularMoviesUseCase,
-    private val getMovieCategoryUseCase: GetMovieCategoryUseCase
+    private val getMoviesUseCase: GetMoviesUseCase,
+    private val getMovieCategoryUseCase: GetMovieCategoryUseCase,
 ) : BaseViewModel() {
 
     private var currentPage = 0
@@ -26,7 +26,7 @@ class HomeViewModel(
     private val _movieCategory = MutableStateFlow<List<MovieCategoryUIModel>>(emptyList())
     val movieCategory get() = _movieCategory.asStateFlow()
 
-    private val _state = MutableStateFlow<List<MovieUIModel.MovieItem>>(emptyList())
+    private val _state = MutableStateFlow<List<MovieItemUIModel>>(emptyList())
     val state get() = _state.asStateFlow()
 
     fun getMovieCategory() {
@@ -52,7 +52,7 @@ class HomeViewModel(
 
     private fun getNewMovie() {
         viewModelScope.launch {
-            getPopularMoviesUseCase.invoke(
+            getMoviesUseCase.invoke(
                 _movieCategory.value[selectCategoryIndex].id,
                 currentPage.inc()
             ).toResult()
