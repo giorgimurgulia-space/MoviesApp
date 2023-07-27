@@ -7,10 +7,11 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.space.moviesapp.common.extensions.loadImage
 import com.space.moviesapp.databinding.LayoutMovieItemBinding
+import com.space.moviesapp.presentation.model.MovieItemUIModel
 import com.space.moviesapp.presentation.model.MovieUIModel
 
 class MovieAdapter :
-    ListAdapter<MovieUIModel.MovieItem, MovieAdapter.MovieViewHolder>(MovieDiffUtil()) {
+    ListAdapter<MovieItemUIModel, MovieAdapter.MovieViewHolder>(MovieDiffUtil()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
         return MovieViewHolder(
@@ -29,7 +30,7 @@ class MovieAdapter :
     class MovieViewHolder(
         private val binding: LayoutMovieItemBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(movie: MovieUIModel.MovieItem) = with(binding) {
+        fun bind(movie: MovieItemUIModel) = with(binding) {
             genresText.text = movie.genres.first()
 
             bannerImage.loadImage(movie.poster)
