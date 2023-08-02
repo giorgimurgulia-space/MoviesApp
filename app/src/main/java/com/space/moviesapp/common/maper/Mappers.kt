@@ -11,6 +11,8 @@ import com.space.moviesapp.presentation.model.MovieCategoryUIModel
 import com.space.moviesapp.presentation.model.MovieItemUIModel
 import com.space.moviesapp.presentation.model.MovieUIModel
 
+
+//todo mapper class
 fun MovieCategoryModel.toUIModel() = MovieCategoryUIModel(id, title)
 
 fun MoviesDto.toDomainModel(genresMap: HashMap<Int, String>) = MovieModel(

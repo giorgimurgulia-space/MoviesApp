@@ -8,6 +8,8 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface ApiService {
+
+    // todo name
     @GET("movie/{categoryId}")
     suspend fun getPopularMovies(
         @Path(value = "categoryId") categoryId: String,

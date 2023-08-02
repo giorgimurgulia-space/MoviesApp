@@ -15,6 +15,7 @@ class MoviesRepositoryImpl(
 ) : MoviesRepository {
 
     override fun getMovieCategory(): List<MovieCategoryModel> {
+        // todo api
         return listOf(
             MovieCategoryModel("popular", "Popular"),
             MovieCategoryModel("top_rated", "Top Rated")
@@ -25,7 +26,15 @@ class MoviesRepositoryImpl(
         val genresResponse = apiService.getMovieGenres()
         val response = apiService.getPopularMovies(categoryId, page)
         if (response.isSuccessful && genresResponse.isSuccessful) {
-            emit(response.body()!!.toDomainModel(genresResponse.body()!!.toDomainModel()))
+            val movieWithFavorite = response.body()!!
+                .toDomainModel(genresResponse.body()!!.toDomainModel()).results.map {
+                    it.copy(isFavorite = moviesDao.isFavouriteMovie(it.id))
+                }
+            emit(
+                response.body()!!.toDomainModel(genresResponse.body()!!.toDomainModel()).copy(
+                    results = movieWithFavorite
+                )
+            )
         }
     }
 

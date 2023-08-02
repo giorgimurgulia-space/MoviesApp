@@ -31,7 +31,9 @@ class MovieAdapter :
         private val binding: LayoutMovieItemBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(movie: MovieItemUIModel) = with(binding) {
-            genresText.text = movie.genres.first()
+            binding.favoriteCheckBox.isChecked = movie.isFavorite
+
+            genresText.text = movie.genres
 
             bannerImage.loadImage(movie.poster)
             movieTitleText.text = movie.title

@@ -5,12 +5,21 @@ import com.space.moviesapp.data.local.database.dao.MoviesDao
 import com.space.moviesapp.data.local.database.entity.MovieEntity
 import com.space.moviesapp.domain.model.MovieItemModel
 import com.space.moviesapp.domain.repository.FavouriteMovieRepository
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.flow.*
 
 class FavouriteMovieRepositoryImpl(
     private val moviesDao: MoviesDao
 ) : FavouriteMovieRepository {
-    override suspend fun getFavoriteMovie(): List<MovieItemModel> {
-        return moviesDao.getFavouriteMovies().map { it.toDomainModel() }
+
+    override suspend fun getFavoriteMovie(): Flow<List<MovieItemModel>> {
+        return moviesDao.getFavouriteMovies().map { movies ->
+            movies.map {
+                it.toDomainModel()
+            }
+        }
     }
 
     override suspend fun insertFavoriteMovie(movie: MovieItemModel) {

@@ -71,6 +71,7 @@ class HomeFragment :
         chips.forEachIndexed { index, it ->
             val chip = ChipFilterItemBinding.inflate(LayoutInflater.from(requireContext())).chipItem
             chip.text = it.title
+            //todo id
             chip.id = index
 
             binding.chipGroup.addView(chip)
