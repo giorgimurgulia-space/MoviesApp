@@ -1,14 +1,9 @@
 package com.space.moviesapp.presentation.ui.home.fragment
 
 
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.CompoundButton
 import androidx.core.widget.doAfterTextChanged
-import androidx.core.widget.doOnTextChanged
-import androidx.paging.cachedIn
 import com.space.moviesapp.common.extensions.changeVisibility
 import com.space.moviesapp.common.extensions.collectFlow
 import com.space.moviesapp.databinding.ChipFilterItemBinding
@@ -18,11 +13,7 @@ import com.space.moviesapp.presentation.model.MovieCategoryUIModel
 import com.space.moviesapp.presentation.ui.home.adapter.GridSpacingItemDecoration
 import com.space.moviesapp.presentation.ui.home.adapter.MovieAdapter
 import com.space.moviesapp.presentation.ui.home.vm.HomeViewModel
-import kotlinx.coroutines.flow.collectLatest
 import kotlin.reflect.KClass
-import androidx.lifecycle.lifecycleScope
-import androidx.paging.LoadState
-import androidx.paging.cachedIn
 
 
 class HomeFragment :
