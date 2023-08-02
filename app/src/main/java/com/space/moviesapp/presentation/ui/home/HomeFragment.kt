@@ -1,9 +1,17 @@
 package com.space.moviesapp.presentation.ui.home
 
 
+import android.R
+import android.app.Activity
+import android.content.Context
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
-import androidx.core.widget.doAfterTextChanged
+import android.view.ViewGroup
+import android.view.WindowManager
+import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.space.moviesapp.common.extensions.changeVisibility
 import com.space.moviesapp.common.extensions.collectFlow
@@ -39,19 +47,19 @@ class HomeFragment :
     }
 
     override fun setListeners() = with(binding) {
-        filterImage.setOnClickListener {
+        filterCheckBox.setOnClickListener {
             chipGroup.changeVisibility()
         }
 
         cancelSearchText.setOnClickListener {
-            binding.filterImage.visibility = View.VISIBLE
-            binding.cancelSearchText.visibility = View.GONE
-            binding.searchEditText.text.clear()
+            searchEditText.clearFocus()
+            closeKeyBoard()
         }
 
-        searchEditText.doAfterTextChanged {
-            filterImage.visibility = View.INVISIBLE
-            cancelSearchText.visibility = View.VISIBLE
+        searchEditText.setOnFocusChangeListener { view, b ->
+            searchEditText.text.clear()
+            cancelSearchText.changeVisibility()
+            filterCheckBox.changeVisibility()
         }
 
         chipGroup.setOnCheckedStateChangeListener { group, checkedIds ->

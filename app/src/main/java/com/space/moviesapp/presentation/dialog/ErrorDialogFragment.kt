@@ -14,12 +14,13 @@ import com.space.moviesapp.databinding.LayoutErrorBinding
 class ErrorDialogFragment(context: Context, private val onRefreshClick: (() -> Unit),) : DialogFragment() {
 
     private val binding = LayoutErrorBinding.inflate(LayoutInflater.from(context))
+    private var onRefreshClickListener: (() -> Unit)? = null
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        setStyle(STYLE_NO_TITLE, R.style.MyDialog)
         return inflater.inflate(R.layout.layout_error, container, false)
     }
 
@@ -32,6 +33,10 @@ class ErrorDialogFragment(context: Context, private val onRefreshClick: (() -> U
 
         binding.refreshLinearLayout.setOnClickListener {
             onRefreshClick.invoke()
+        }
+
+        fun setOnRefreshClickListener(onRefreshClickListener: (() -> Unit)) {
+            this.onRefreshClickListener = onRefreshClickListener
         }
     }
 }

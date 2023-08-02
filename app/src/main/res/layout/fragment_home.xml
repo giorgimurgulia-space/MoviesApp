@@ -20,32 +20,40 @@
         android:paddingStart="@dimen/dimen_20_dp"
         android:textColor="@color/neutral_05_light_grey"
         android:textColorHint="@color/neutral_05_light_grey"
-        app:layout_constraintEnd_toStartOf="@id/filter_image"
+        app:layout_constraintEnd_toStartOf="@id/search_barrier"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/filter_image"
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/search_barrier"
+        app:barrierDirection="start"
+        app:constraint_referenced_ids="filter_check_box,cancel_search_text"
         android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <CheckBox
+        android:id="@+id/filter_check_box"
+        android:layout_width="44dp"
         android:layout_height="0dp"
-        android:scaleType="centerInside"
-        android:visibility="gone"
-        android:src="@drawable/ic_filter"
+        android:button="@drawable/filter_button_selector"
+        android:scaleType="centerCrop"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="@id/search_edit_text"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/search_edit_text" />
+        app:layout_constraintTop_toTopOf="@id/search_edit_text"
+        app:useMaterialThemeColors="false" />
+
 
     <TextView
         android:id="@+id/cancel_search_text"
         style="@style/smallMontserratMedium"
-        android:layout_width="wrap_content"
+        android:layout_width="44dp"
         android:layout_height="wrap_content"
         android:text="@string/cancel_text"
         android:textColor="@color/neutral_08_whisper"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@id/search_edit_text"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/search_edit_text"
         app:layout_constraintTop_toTopOf="@id/search_edit_text" />
 
     <com.google.android.material.chip.ChipGroup
@@ -64,6 +72,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dimen_22_dp"
+        android:layout_marginBottom="@dimen/dimen_10_dp"
         android:text="@string/movies_title"
         android:textColor="@color/yellow_primary"
         android:textStyle="bold"

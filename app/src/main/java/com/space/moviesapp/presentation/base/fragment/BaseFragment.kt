@@ -1,10 +1,12 @@
 package com.space.moviesapp.presentation.base.fragment
 
+import android.app.Activity
 import android.app.Dialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
@@ -82,6 +84,10 @@ abstract class BaseFragment<VB : ViewBinding, VM : BaseViewModel>(private val in
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
     }
 
+    protected fun closeKeyBoard(){
+        val imm = requireContext().getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(view?.windowToken, 0)
+    }
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

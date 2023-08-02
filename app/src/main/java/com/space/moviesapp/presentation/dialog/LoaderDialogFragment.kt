@@ -18,7 +18,6 @@ class LoaderDialogFragment : DialogFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        setStyle(STYLE_NO_TITLE, R.style.MyDialog)
         return inflater.inflate(R.layout.layout_loader, container, false)
     }
 
