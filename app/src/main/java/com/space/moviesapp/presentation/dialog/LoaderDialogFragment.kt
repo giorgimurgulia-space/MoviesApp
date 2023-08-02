@@ -1,6 +1,7 @@
 package com.space.moviesapp.presentation.dialog
 
 import android.annotation.SuppressLint
+import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -17,6 +18,7 @@ class LoaderDialogFragment : DialogFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        setStyle(STYLE_NO_TITLE, R.style.MyDialog)
         return inflater.inflate(R.layout.layout_loader, container, false)
     }
 
@@ -26,6 +28,5 @@ class LoaderDialogFragment : DialogFragment() {
         val width = ViewGroup.LayoutParams.MATCH_PARENT
         val height = ViewGroup.LayoutParams.MATCH_PARENT
         dialog?.window?.setLayout(width, height)
-        dialog?.window?.setBackgroundDrawable(ColorDrawable(R.color.neutral_01_black))
     }
 }

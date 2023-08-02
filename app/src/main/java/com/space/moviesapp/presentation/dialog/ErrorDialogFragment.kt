@@ -19,6 +19,7 @@ class ErrorDialogFragment(context: Context, private val onRefreshClick: (() -> U
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        setStyle(STYLE_NO_TITLE, R.style.MyDialog)
         return inflater.inflate(R.layout.layout_error, container, false)
     }
 
@@ -28,7 +29,6 @@ class ErrorDialogFragment(context: Context, private val onRefreshClick: (() -> U
         val width = ViewGroup.LayoutParams.MATCH_PARENT
         val height = ViewGroup.LayoutParams.MATCH_PARENT
         dialog?.window?.setLayout(width, height)
-        dialog?.window?.setBackgroundDrawable(ColorDrawable(R.color.neutral_01_black))
 
         binding.refreshLinearLayout.setOnClickListener {
             onRefreshClick.invoke()

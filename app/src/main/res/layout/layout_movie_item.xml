@@ -4,14 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/neutral_01_black"
-    android:paddingTop="@dimen/dimen_16_dp">
+    android:paddingTop="@dimen/dimen_16_dp"
+    android:paddingEnd="@dimen/dimen_16_dp">
 
     <ImageView
         android:id="@+id/banner_image"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dimen_270_dp"
-        android:scaleType="centerInside"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_rectangle_background"
+        android:maxHeight="@dimen/dimen_270_dp"
+        android:scaleType="fitCenter"
         app:layout_constraintBottom_toTopOf="@id/movie_title_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -55,7 +57,8 @@
         android:button="@drawable/check_box_heart_selector"
         android:scaleType="centerInside"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/banner_image" />
+        app:layout_constraintTop_toBottomOf="@id/banner_image"
+        app:useMaterialThemeColors="false" />
 
     <TextView
         android:id="@+id/movie_year_text"
