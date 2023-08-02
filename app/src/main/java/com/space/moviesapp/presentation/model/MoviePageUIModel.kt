@@ -1,7 +1,7 @@
 package com.space.moviesapp.presentation.model
 
 
-data class MovieUIModel(
+data class MoviePageUIModel(
     val page: Int,
     val results: List<MovieUIItem>,
     val totalPages: Int

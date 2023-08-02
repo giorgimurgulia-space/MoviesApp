@@ -1,6 +1,7 @@
 package com.space.moviesapp.domain.model
 
 data class MovieCategoryModel(
-    val id: String,
+    val id: Int,
+    val urlId: String,
     val title: String
 )

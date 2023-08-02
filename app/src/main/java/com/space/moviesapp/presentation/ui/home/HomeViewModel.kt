@@ -3,19 +3,21 @@ package com.space.moviesapp.presentation.ui.home
 import androidx.lifecycle.viewModelScope
 import com.space.moviesapp.common.extensions.toResult
 import com.space.moviesapp.common.maper.toUIModel
+import com.space.moviesapp.common.resource.onError
+import com.space.moviesapp.common.resource.onLoading
 import com.space.moviesapp.common.resource.onSuccess
 import com.space.moviesapp.domain.usecase.GetMovieCategoryUseCase
-import com.space.moviesapp.domain.usecase.GetPopularMoviesUseCase
+import com.space.moviesapp.domain.usecase.GetMoviesUseCase
 import com.space.moviesapp.presentation.base.vm.BaseViewModel
 import com.space.moviesapp.presentation.model.MovieCategoryUIModel
-import com.space.moviesapp.presentation.model.MovieUIModel
+import com.space.moviesapp.presentation.model.MovieUIItem
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 class HomeViewModel(
-    private val getPopularMoviesUseCase: GetPopularMoviesUseCase,
+    private val getMoviesUseCase: GetMoviesUseCase,
     private val getMovieCategoryUseCase: GetMovieCategoryUseCase
 ) : BaseViewModel() {
 
@@ -26,19 +28,23 @@ class HomeViewModel(
     private val _movieCategory = MutableStateFlow<List<MovieCategoryUIModel>>(emptyList())
     val movieCategory get() = _movieCategory.asStateFlow()
 
-    private val _state = MutableStateFlow<List<MovieUIModel.MovieUIItem>>(emptyList())
+    private val _state = MutableStateFlow<List<MovieUIItem>>(emptyList())
     val state get() = _state.asStateFlow()
 
     fun getMovieCategory() {
         viewModelScope.launch {
-            _movieCategory.tryEmit(getMovieCategoryUseCase.invoke().map {
-                it.toUIModel()
-            })
+            getMovieCategoryUseCase.invoke().toResult().collect {
+                it.onLoading {}
+                it.onSuccess { category ->
+                    _movieCategory.tryEmit(category.map { item -> item.toUIModel() })
+                }
+                it.onError { }
+            }
         }
     }
 
-    fun onFilterClick(selectCategory: List<Int>) {
-        selectCategoryIndex = selectCategory.first()
+    fun onFilterClick(index: Int) {
+        selectCategoryIndex = index
         currentPage = 0
         _state.tryEmit(emptyList())
 
@@ -52,9 +58,8 @@ class HomeViewModel(
 
     private fun getNewMovie() {
         viewModelScope.launch {
-            getPopularMoviesUseCase.invoke(
-                _movieCategory.value[selectCategoryIndex].id,
-                currentPage.inc()
+            getMoviesUseCase.invoke(
+                _movieCategory.value[selectCategoryIndex].urlId, currentPage
             ).toResult()
                 .collectLatest {
                     it.onSuccess { movies ->

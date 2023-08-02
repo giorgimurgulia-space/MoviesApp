@@ -1,4 +1,4 @@
-package com.space.moviesapp.presentation.ui.home
+package com.space.moviesapp.presentation.ui.home.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -7,10 +7,11 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.space.moviesapp.common.extensions.loadImage
 import com.space.moviesapp.databinding.LayoutMovieItemBinding
-import com.space.moviesapp.presentation.model.MovieUIModel
+import com.space.moviesapp.presentation.model.MoviePageUIModel
+import com.space.moviesapp.presentation.model.MovieUIItem
 
 class MovieAdapter :
-    ListAdapter<MovieUIModel.MovieUIItem, MovieAdapter.MovieViewHolder>(MovieDiffUtil()) {
+    ListAdapter<MovieUIItem, MovieAdapter.MovieViewHolder>(MovieDiffUtil()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
         return MovieViewHolder(
@@ -29,7 +30,7 @@ class MovieAdapter :
     class MovieViewHolder(
         private val binding: LayoutMovieItemBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(movie: MovieUIModel.MovieUIItem) = with(binding) {
+        fun bind(movie: MovieUIItem) = with(binding) {
             genresText.text = movie.genres.first()
 
             bannerImage.loadImage(movie.poster)
@@ -37,6 +38,7 @@ class MovieAdapter :
             movieYearText.text = movie.releaseDate
 
             favoriteCheckBox.setOnCheckedChangeListener { checkbox, isChecked ->
+                // todo > for test button work
                 Toast.makeText(binding.root.context, movie.id.toString(), Toast.LENGTH_SHORT).show()
             }
         }
