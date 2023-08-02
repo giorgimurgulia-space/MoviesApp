@@ -2,17 +2,17 @@ package com.space.moviesapp.common.maper
 
 import com.space.moviesapp.common.utils.MoviesConstants.IMAGE_BASE_URL
 import com.space.moviesapp.data.remote.dto.GenresDto
-import com.space.moviesapp.data.remote.dto.MoviesDto
+import com.space.moviesapp.data.remote.dto.MoviesPageDto
 import com.space.moviesapp.domain.model.MovieCategoryModel
-import com.space.moviesapp.domain.model.MovieModel
+import com.space.moviesapp.domain.model.MoviesPageModel
 import com.space.moviesapp.presentation.model.MovieCategoryUIModel
 import com.space.moviesapp.presentation.model.MovieUIModel
 
 fun MovieCategoryModel.toUIModel() = MovieCategoryUIModel(id, title)
 
-fun MoviesDto.toDomainModel(genresMap: HashMap<Int, String>) = MovieModel(
+fun MoviesPageDto.toDomainModel(genresMap: HashMap<Int, String>) = MoviesPageModel(
     page, results.map {
-        MovieModel.MovieItem(
+        MoviesPageModel.MovieItem(
             it.id,
             it.genreIds.map { id ->
                 genresMap[id]!!
@@ -26,9 +26,9 @@ fun MoviesDto.toDomainModel(genresMap: HashMap<Int, String>) = MovieModel(
     totalPages
 )
 
-fun MovieModel.toUIModel() = MovieUIModel(
+fun MoviesPageModel.toUIModel() = MovieUIModel(
     page, results.map {
-        MovieUIModel.MovieItem(
+        MovieUIModel.MovieUIItem(
             it.id,
             it.genres,
             it.title,

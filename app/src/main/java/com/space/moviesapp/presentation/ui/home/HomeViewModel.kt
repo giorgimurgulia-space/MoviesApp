@@ -26,7 +26,7 @@ class HomeViewModel(
     private val _movieCategory = MutableStateFlow<List<MovieCategoryUIModel>>(emptyList())
     val movieCategory get() = _movieCategory.asStateFlow()
 
-    private val _state = MutableStateFlow<List<MovieUIModel.MovieItem>>(emptyList())
+    private val _state = MutableStateFlow<List<MovieUIModel.MovieUIItem>>(emptyList())
     val state get() = _state.asStateFlow()
 
     fun getMovieCategory() {
