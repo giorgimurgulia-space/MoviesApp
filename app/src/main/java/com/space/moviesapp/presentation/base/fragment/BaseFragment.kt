@@ -1,10 +1,12 @@
 package com.space.moviesapp.presentation.base.fragment
 
+import android.app.Dialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
 import com.space.moviesapp.common.extensions.observeNonNull
@@ -12,7 +14,9 @@ import com.space.moviesapp.common.types.Inflater
 import com.space.moviesapp.common.utils.MoviesConstants.ERROR_FRAGMENT_TAG
 import com.space.moviesapp.common.utils.MoviesConstants.LOADER_FRAGMENT_TAG
 import com.space.moviesapp.presentation.base.vm.BaseViewModel
+import com.space.moviesapp.presentation.dialog.ErrorDialogFragment
 import com.space.moviesapp.presentation.dialog.LoaderDialogFragment
+import com.space.moviesapp.presentation.model.DialogItem
 import kotlinx.coroutines.delay
 import org.koin.androidx.viewmodel.ext.android.viewModelForClass
 import kotlin.reflect.KClass
@@ -28,6 +32,7 @@ abstract class BaseFragment<VB : ViewBinding, VM : BaseViewModel>(private val in
     private var _binding: VB? = null
     val binding get() = _binding!!
 
+    private lateinit var movieDialog: DialogFragment
 
     abstract fun onBind()
     open fun setObserves() {}
@@ -52,11 +57,23 @@ abstract class BaseFragment<VB : ViewBinding, VM : BaseViewModel>(private val in
     private fun observeDialog() {
         viewModel.dialog.observeNonNull(viewLifecycleOwner) {
             it.getContentIfNotHandled()?.let { dialog ->
-                LoaderDialogFragment().show(childFragmentManager, LOADER_FRAGMENT_TAG)
-                Thread.sleep(10000)
-                val loader =
-                    childFragmentManager.findFragmentByTag(LOADER_FRAGMENT_TAG) as LoaderDialogFragment
-                loader.dismiss()
+                if (this::movieDialog.isInitialized)
+                    movieDialog.dismiss()
+
+                when (dialog.viewType) {
+                    DialogItem.ViewType.LOADER -> {
+                        dialog as DialogItem.LoaderDialog
+                        if (dialog.isLoaded) {
+                            movieDialog = LoaderDialogFragment()
+                            movieDialog.show(childFragmentManager, LOADER_FRAGMENT_TAG)
+                        }
+                    }
+                    DialogItem.ViewType.ERROR -> {
+                        dialog as DialogItem.ErrorDialog
+                        movieDialog = ErrorDialogFragment(dialog.onRefreshClick)
+                        movieDialog.show(childFragmentManager, ERROR_FRAGMENT_TAG)
+                    }
+                }
             }
         }
     }

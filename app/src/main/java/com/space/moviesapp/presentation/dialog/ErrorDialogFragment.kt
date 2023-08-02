@@ -9,15 +9,17 @@ import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import com.space.moviesapp.R
 import com.space.moviesapp.databinding.LayoutErrorBinding
-import com.space.moviesapp.databinding.LayoutLoaderBinding
 
-class LoaderDialogFragment : DialogFragment() {
+class ErrorDialogFragment(private val onRefreshClick: (() -> Unit)) : DialogFragment() {
+
+    private val binding = LayoutErrorBinding.inflate(LayoutInflater.from(context))
+    private var onRefreshClickListener: (() -> Unit)? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.layout_loader, container, false)
+        return inflater.inflate(R.layout.layout_error, container, false)
     }
 
     @SuppressLint("ResourceAsColor")
@@ -27,5 +29,9 @@ class LoaderDialogFragment : DialogFragment() {
         val height = ViewGroup.LayoutParams.MATCH_PARENT
         dialog?.window?.setLayout(width, height)
         dialog?.window?.setBackgroundDrawable(ColorDrawable(R.color.neutral_01_black))
+
+        binding.refreshLinearLayout.setOnClickListener {
+            onRefreshClick.invoke()
+        }
     }
 }

@@ -10,11 +10,11 @@ abstract class BaseViewModel : ViewModel() {
     private val _dialog = MutableLiveData<MovieEvent<DialogItem>>()
     val dialog get() = _dialog
 
-    fun setLoader(isLoaded: Boolean) {
-        _dialog.value = MovieEvent(DialogItem.LoaderDialog(isLoaded))
+    fun setDialog(dialog: DialogItem) {
+        _dialog.value = MovieEvent(dialog)
     }
 
-    fun setError() {
-
+    fun closeLoaderDialog() {
+        _dialog.value = MovieEvent(DialogItem.LoaderDialog(false))
     }
 }

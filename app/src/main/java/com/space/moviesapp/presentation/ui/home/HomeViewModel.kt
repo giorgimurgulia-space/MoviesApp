@@ -9,6 +9,7 @@ import com.space.moviesapp.common.resource.onSuccess
 import com.space.moviesapp.domain.usecase.GetMovieCategoryUseCase
 import com.space.moviesapp.domain.usecase.GetMoviesUseCase
 import com.space.moviesapp.presentation.base.vm.BaseViewModel
+import com.space.moviesapp.presentation.model.DialogItem
 import com.space.moviesapp.presentation.model.MovieCategoryUIModel
 import com.space.moviesapp.presentation.model.MovieUIItem
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -33,12 +34,18 @@ class HomeViewModel(
 
     fun getMovieCategory() {
         viewModelScope.launch {
-            getMovieCategoryUseCase.invoke().toResult().collect {
-                it.onLoading {}
+            getMovieCategoryUseCase.invoke().toResult().collectLatest {
+                it.onLoading {
+                    setDialog(DialogItem.LoaderDialog())
+                }
                 it.onSuccess { category ->
+                    closeLoaderDialog()
                     _movieCategory.tryEmit(category.map { item -> item.toUIModel() })
                 }
-                it.onError { }
+                it.onError {
+                    setDialog(DialogItem.ErrorDialog(onRefreshClick = { getMovieCategory() }))
+
+                }
             }
         }
     }
@@ -59,13 +66,21 @@ class HomeViewModel(
     private fun getNewMovie() {
         viewModelScope.launch {
             getMoviesUseCase.invoke(
-                _movieCategory.value[selectCategoryIndex].urlId, currentPage
+                _movieCategory.value[selectCategoryIndex].urlId, currentPage.inc()
             ).toResult()
                 .collectLatest {
+                    it.onLoading {
+                        setDialog(DialogItem.LoaderDialog())
+                    }
                     it.onSuccess { movies ->
+                        closeLoaderDialog()
+
                         currentPage = movies.page
                         totalPages = movies.totalPages
                         _state.tryEmit(_state.value + (movies.toUIModel().results))
+                    }
+                    it.onError {
+                        setDialog(DialogItem.ErrorDialog(onRefreshClick = { getNewMovie() }))
                     }
                 }
         }

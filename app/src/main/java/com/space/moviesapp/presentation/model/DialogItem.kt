@@ -10,7 +10,7 @@ sealed class DialogItem(val viewType: ViewType) {
         val isLoaded: Boolean = true
     ) : DialogItem(ViewType.LOADER)
 
-    data class QuestionDialog(
+    data class ErrorDialog(
         val onRefreshClick: (() -> Unit)
     ) : DialogItem(ViewType.ERROR)
 }
