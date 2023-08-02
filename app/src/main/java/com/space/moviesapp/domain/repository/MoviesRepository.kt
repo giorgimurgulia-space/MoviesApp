@@ -9,7 +9,6 @@ interface MoviesRepository {
     fun getMovieCategory(): List<MovieCategoryModel>
 
     suspend fun getMovies(categoryId: String, page: Int): Flow<MoviesPageModel>
-    suspend fun getGenres(): Flow<HashMap<Int, String>>
 
     suspend fun searchMovies()
 }

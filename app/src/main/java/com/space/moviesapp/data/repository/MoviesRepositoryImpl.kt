@@ -1,6 +1,7 @@
 package com.space.moviesapp.data.repository
 
 import com.space.moviesapp.common.maper.toDomainModel
+import com.space.moviesapp.common.resource.ApiError
 import com.space.moviesapp.data.remote.api.ApiService
 import com.space.moviesapp.domain.model.MovieCategoryModel
 import com.space.moviesapp.domain.model.MoviesPageModel
@@ -22,13 +23,19 @@ class MoviesRepositoryImpl(
     override suspend fun getMovies(categoryId: String, page: Int): Flow<MoviesPageModel> = flow {
         val response = apiService.getMoviesPage(categoryId, page)
 
-        if (moviesResponse.isSuccessful && genresResponse.isSuccessful) {
-            emit(moviesResponse.body()!!.toDomainModel(genresResponse.body()!!.toDomainModel()))
+
+        if (response.isSuccessful) {
+            emit(response.body()!!.toDomainModel(getGenres()))
         }
     }
 
-    override suspend fun getGenres(): Flow<HashMap<Int, String>> {
+    private suspend fun getGenres(): Map<Int, String> {
         val response = apiService.getMovieGenres()
+        return if (response.isSuccessful) {
+            response.body()!!.toDomainModel()
+        } else {
+            emptyMap<Int, String>()
+        }
     }
 
     override suspend fun searchMovies() {
