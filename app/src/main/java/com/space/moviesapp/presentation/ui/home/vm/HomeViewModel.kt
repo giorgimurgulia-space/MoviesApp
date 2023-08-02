@@ -1,7 +1,11 @@
-package com.space.moviesapp.presentation.ui.home
+package com.space.moviesapp.presentation.ui.home.vm
 
 import androidx.lifecycle.viewModelScope
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
+import androidx.paging.map
 import com.space.moviesapp.common.extensions.toResult
+import com.space.moviesapp.common.maper.toDomainModel
 import com.space.moviesapp.common.maper.toUIModel
 import com.space.moviesapp.common.resource.onError
 import com.space.moviesapp.common.resource.onLoading
@@ -12,9 +16,7 @@ import com.space.moviesapp.presentation.base.vm.BaseViewModel
 import com.space.moviesapp.presentation.model.DialogItem
 import com.space.moviesapp.presentation.model.MovieCategoryUIModel
 import com.space.moviesapp.presentation.model.MovieUIItem
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 class HomeViewModel(
@@ -29,7 +31,7 @@ class HomeViewModel(
     private val _movieCategory = MutableStateFlow<List<MovieCategoryUIModel>>(emptyList())
     val movieCategory get() = _movieCategory.asStateFlow()
 
-    private val _state = MutableStateFlow<List<MovieUIItem>>(emptyList())
+    private val _state = MutableStateFlow<PagingData<MovieUIItem>>(PagingData.empty())
     val state get() = _state.asStateFlow()
 
     fun getMovieCategory() {
@@ -44,7 +46,6 @@ class HomeViewModel(
                 }
                 it.onError {
                     setDialog(DialogItem.ErrorDialog(onRefreshClick = { getMovieCategory() }))
-
                 }
             }
         }
@@ -53,36 +54,19 @@ class HomeViewModel(
     fun onFilterClick(index: Int) {
         selectCategoryIndex = index
         currentPage = 0
-        _state.tryEmit(emptyList())
-
+        _state.tryEmit(PagingData.empty())
         getNewMovie()
+
     }
 
-    fun onBottomScroll() {
-        if (currentPage < totalPages)
-            getNewMovie()
-    }
 
     private fun getNewMovie() {
         viewModelScope.launch {
             getMoviesUseCase.invoke(
-                _movieCategory.value[selectCategoryIndex].urlId, currentPage.inc()
-            ).toResult()
-                .collectLatest {
-                    it.onLoading {
-                        setDialog(DialogItem.LoaderDialog())
-                    }
-                    it.onSuccess { movies ->
-                        closeLoaderDialog()
-
-                        currentPage = movies.page
-                        totalPages = movies.totalPages
-                        _state.tryEmit(_state.value + (movies.toUIModel().results))
-                    }
-                    it.onError {
-                        setDialog(DialogItem.ErrorDialog(onRefreshClick = { getNewMovie() }))
-                    }
-                }
+                _movieCategory.value[selectCategoryIndex].urlId
+            ).collectLatest { movieItem ->
+                _state.value = movieItem.map { it.toUIModel() }
+            }
         }
     }
 }
