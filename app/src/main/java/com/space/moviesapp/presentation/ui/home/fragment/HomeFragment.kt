@@ -1,7 +1,13 @@
 package com.space.moviesapp.presentation.ui.home.fragment
 
 
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
+import android.view.View
+import android.widget.CompoundButton
+import androidx.core.widget.doAfterTextChanged
+import androidx.core.widget.doOnTextChanged
 import androidx.paging.cachedIn
 import com.space.moviesapp.common.extensions.changeVisibility
 import com.space.moviesapp.common.extensions.collectFlow
@@ -30,6 +36,7 @@ class HomeFragment :
 
     override fun onBind() {
         binding.mainRecycler.adapter = adapter
+
         val spanCount = 2
         val spacing = 32
         val includeEdge = false
@@ -40,12 +47,15 @@ class HomeFragment :
                 includeEdge
             )
         )
+
         viewModel.getMovieCategory()
+
+        searchListener()
     }
 
     override fun setObserves() {
         collectFlow(viewModel.state) {
-            adapter.submitData(lifecycle,it)
+            adapter.submitData(lifecycle, it)
         }
 
         collectFlow(viewModel.movieCategory) {
@@ -54,23 +64,36 @@ class HomeFragment :
     }
 
     override fun setListeners() = with(binding) {
-        filterCheckBox.setOnClickListener {
-            chipGroup.changeVisibility()
+        filterCheckBox.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked || chipGroup.visibility == View.VISIBLE)
+                chipGroup.changeVisibility()
         }
 
         cancelSearchText.setOnClickListener {
             searchEditText.clearFocus()
             closeKeyBoard()
+
+            chipGroup.check(0)
         }
 
         searchEditText.setOnFocusChangeListener { view, b ->
             searchEditText.text.clear()
             cancelSearchText.changeVisibility()
+            filterCheckBox.isChecked = false
             filterCheckBox.changeVisibility()
+            chipGroup.clearCheck()
         }
 
         chipGroup.setOnCheckedStateChangeListener { group, checkedIds ->
             viewModel.onFilterClick(group.checkedChipId)
+        }
+    }
+
+    private fun searchListener() {
+        binding.searchEditText.doAfterTextChanged {
+            if (!it.isNullOrEmpty() && it.isNotBlank()) {
+                viewModel.search(it.toString())
+            }
         }
     }
 
@@ -85,3 +108,4 @@ class HomeFragment :
         chipGroup.check(0)
     }
 }
+

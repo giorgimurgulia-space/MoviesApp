@@ -16,5 +16,5 @@ interface MoviesRepository {
 
     suspend fun getMoviesGenres(): Map<Int, String>
 
-    suspend fun searchMovies()
+    suspend fun searchMovies(query: String): Flow<PagingData<MovieItem>>
 }

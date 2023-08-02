@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.space.moviesapp.common.extensions.changeVisibility
 import com.space.moviesapp.common.extensions.loadImage
 import com.space.moviesapp.databinding.LayoutMovieItemBinding
 import com.space.moviesapp.presentation.model.MovieUIItem
@@ -31,7 +32,12 @@ class MovieAdapter :
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(movie: MovieUIItem) = with(binding) {
 
-            genresText.text = movie.genres.first()
+            if (movie.genres.isNotEmpty()) {
+                genresText.text = movie.genres.first()
+            } else {
+                genresText.changeVisibility()
+            }
+
             bannerImage.loadImage(movie.poster)
             movieTitleText.text = movie.title
             movieYearText.text = movie.releaseDate
@@ -41,5 +47,6 @@ class MovieAdapter :
                 Toast.makeText(binding.root.context, movie.id.toString(), Toast.LENGTH_SHORT).show()
             }
         }
+
     }
 }

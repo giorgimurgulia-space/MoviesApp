@@ -12,6 +12,7 @@ import com.space.moviesapp.common.resource.onLoading
 import com.space.moviesapp.common.resource.onSuccess
 import com.space.moviesapp.domain.usecase.GetMovieCategoryUseCase
 import com.space.moviesapp.domain.usecase.GetMoviesUseCase
+import com.space.moviesapp.domain.usecase.SearchMovieUseCase
 import com.space.moviesapp.presentation.base.vm.BaseViewModel
 import com.space.moviesapp.presentation.model.DialogItem
 import com.space.moviesapp.presentation.model.MovieCategoryUIModel
@@ -21,11 +22,10 @@ import kotlinx.coroutines.launch
 
 class HomeViewModel(
     private val getMoviesUseCase: GetMoviesUseCase,
-    private val getMovieCategoryUseCase: GetMovieCategoryUseCase
+    private val getMovieCategoryUseCase: GetMovieCategoryUseCase,
+    private val searchMovieUseCase: SearchMovieUseCase
 ) : BaseViewModel() {
 
-    private var currentPage = 0
-    private var totalPages = 0
     private var selectCategoryIndex = 0
 
     private val _movieCategory = MutableStateFlow<List<MovieCategoryUIModel>>(emptyList())
@@ -53,10 +53,19 @@ class HomeViewModel(
 
     fun onFilterClick(index: Int) {
         selectCategoryIndex = index
-        currentPage = 0
         _state.tryEmit(PagingData.empty())
-        getNewMovie()
 
+        if (index >= 0) {
+            getNewMovie()
+        }
+    }
+
+    fun search(query: String) {
+        viewModelScope.launch {
+            searchMovieUseCase.invoke(query).collectLatest { movieItem ->
+                _state.value = movieItem.map { it.toUIModel() }
+            }
+        }
     }
 
 
