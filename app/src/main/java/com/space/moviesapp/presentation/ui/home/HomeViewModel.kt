@@ -1,6 +1,5 @@
 package com.space.moviesapp.presentation.ui.home
 
-import android.widget.Toast
 import androidx.lifecycle.viewModelScope
 import com.space.moviesapp.common.extensions.toResult
 import com.space.moviesapp.common.maper.toUIModel

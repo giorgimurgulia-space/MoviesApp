@@ -32,6 +32,7 @@
         android:textColor="@color/neutral_08_whisper" />
 
     <LinearLayout
+        android:id="@+id/refresh_linear_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dimen_110_dp"
