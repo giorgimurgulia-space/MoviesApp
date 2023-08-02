@@ -1,17 +1,7 @@
 package com.space.moviesapp.presentation.ui.home
 
 
-import android.R
-import android.app.Activity
-import android.content.Context
-import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.view.WindowManager
-import android.view.inputmethod.InputMethodManager
-import android.widget.EditText
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.space.moviesapp.common.extensions.changeVisibility
 import com.space.moviesapp.common.extensions.collectFlow
@@ -19,6 +9,7 @@ import com.space.moviesapp.databinding.ChipFilterItemBinding
 import com.space.moviesapp.databinding.FragmentHomeBinding
 import com.space.moviesapp.presentation.base.fragment.BaseFragment
 import com.space.moviesapp.presentation.model.MovieCategoryUIModel
+import com.space.moviesapp.presentation.ui.home.adapter.GridSpacingItemDecoration
 import com.space.moviesapp.presentation.ui.home.adapter.MovieAdapter
 import kotlin.reflect.KClass
 
@@ -34,6 +25,16 @@ class HomeFragment :
 
     override fun onBind() {
         binding.mainRecycler.adapter = adapter
+        val spanCount = 2 // 3 columns
+        val spacing = 32 // 50px
+        val includeEdge = false
+        binding.mainRecycler.addItemDecoration(
+            GridSpacingItemDecoration(
+                spanCount,
+                spacing,
+                includeEdge
+            )
+        )
         viewModel.getMovieCategory()
     }
 
