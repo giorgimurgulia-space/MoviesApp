@@ -16,7 +16,7 @@
         android:layout_height="match_parent"
         android:paddingHorizontal="@dimen/dimen_12_dp"
         android:paddingVertical="@dimen/dimen_4_dp"
-        android:textColor="@color/black"
+        android:textColor="@color/neutral_01_black"
         tools:text="Horror" />
 
 </androidx.cardview.widget.CardView>

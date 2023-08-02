@@ -3,11 +3,27 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_nav_graph"
-    tools:ignore="InvalidNavigation"
-    app:startDestination="@id/homeFragment">
+    app:startDestination="@id/homeFragment"
+    tools:ignore="InvalidNavigation">
 
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.space.moviesapp.presentation.ui.home.HomeFragment"
         android:label="HomeFragment" />
+    <fragment
+        android:id="@+id/favoritesFragment"
+        android:name="com.space.moviesapp.presentation.ui.favorites.FavoritesFragment"
+        android:label="FavoritesFragment" />
+
+    <action
+        android:id="@+id/action_global_homeFragment"
+        app:destination="@id/homeFragment"
+        app:popUpTo="@id/main_nav_graph"
+        app:popUpToInclusive="true" />
+
+    <action
+        android:id="@+id/action_global_favoritesFragment"
+        app:destination="@id/favoritesFragment"
+        app:popUpTo="@id/main_nav_graph"
+        app:popUpToInclusive="true" />
 </navigation>

@@ -7,45 +7,17 @@
     android:background="@color/neutral_01_black"
     android:padding="@dimen/dimen_16_dp">
 
-    <EditText
-        android:id="@+id/search_edit_text"
-        android:layout_width="@dimen/dimen_0_dp"
+    <TextView
+        android:id="@+id/title_text"
+        style="@style/mediumMontserratMedium"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/dimen_8_dp"
-        android:background="@drawable/shape_input_background"
-        android:backgroundTint="@color/neutral_02_darkest_grey"
-        android:drawableStart="@drawable/ic_search"
-        android:drawablePadding="@dimen/dimen_6_dp"
-        android:hint="@string/search_hint"
-        android:paddingVertical="11dp"
-        android:paddingStart="@dimen/dimen_20_dp"
-        android:textColorHint="@color/neutral_05_light_grey"
-        app:layout_constraintEnd_toStartOf="@id/filter_image"
+        android:text="@string/favorite_movies"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:id="@+id/filter_image"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:scaleType="centerInside"
-        android:src="@drawable/ic_filter"
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="@id/search_edit_text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/search_edit_text" />
-
-    <TextView
-        android:id="@+id/cancel_search_text"
-        style="@style/smallMontserratMedium"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/cancel"
-        android:textColor="@color/white"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="@id/search_edit_text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/search_edit_text" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/item_recycler"
@@ -56,8 +28,22 @@
         app:layout_constraintBottom_toTopOf="@id/home_nav_linear_layout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/search_edit_text"
+        app:layout_constraintTop_toBottomOf="@id/title_text"
         tools:listitem="@layout/layout_movie_item" />
+
+    <ImageView
+        android:visibility="gone"
+        android:id="@+id/no_movies_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:src="@drawable/ic_no_movies"
+        app:layout_constraintBottom_toTopOf="@id/home_nav_linear_layout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/title_text" />
+
 
     <LinearLayout
         android:id="@+id/home_nav_linear_layout"
@@ -65,7 +51,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/dimen_16_dp"
         android:background="@drawable/shape_rectangle_background"
-        android:backgroundTint="@color/yellow_primary"
+        android:backgroundTint="@color/neutral_02_darkest_grey"
         android:gravity="center"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -77,7 +63,7 @@
             android:layout_height="match_parent"
             android:scaleType="centerInside"
             android:src="@drawable/ic_home"
-            app:tint="@color/neutral_01_black" />
+            app:tint="@color/white" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -86,7 +72,7 @@
             android:padding="@dimen/dimen_10_dp"
             android:text="@string/home_nav_text"
             android:textAlignment="center"
-            android:textColor="@color/neutral_01_black" />
+            android:textColor="@color/white" />
     </LinearLayout>
 
     <LinearLayout
@@ -94,7 +80,7 @@
         android:layout_width="@dimen/dimen_0_dp"
         android:layout_height="wrap_content"
         android:background="@drawable/shape_rectangle_background"
-        android:backgroundTint="@color/neutral_02_darkest_grey"
+        android:backgroundTint="@color/yellow_primary"
         android:gravity="center"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -106,7 +92,7 @@
             android:layout_height="match_parent"
             android:scaleType="centerInside"
             android:src="@drawable/ic_heart"
-            app:tint="@color/white" />
+            app:tint="@color/neutral_01_black" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -115,8 +101,7 @@
             android:padding="@dimen/dimen_10_dp"
             android:text="@string/favorites_nav_text"
             android:textAlignment="center"
-            android:textColor="@color/white" />
+            android:textColor="@color/neutral_01_black" />
     </LinearLayout>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
