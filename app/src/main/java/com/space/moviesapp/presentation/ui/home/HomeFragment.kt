@@ -25,8 +25,8 @@ class HomeFragment :
 
     override fun onBind() {
         binding.mainRecycler.adapter = adapter
-        val spanCount = 2 // 3 columns
-        val spacing = 32 // 50px
+        val spanCount = 2
+        val spacing = 32
         val includeEdge = false
         binding.mainRecycler.addItemDecoration(
             GridSpacingItemDecoration(
