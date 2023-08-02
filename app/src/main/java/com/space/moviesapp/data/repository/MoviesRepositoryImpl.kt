@@ -14,6 +14,7 @@ class MoviesRepositoryImpl(
 ) : MoviesRepository {
 
     override fun getMovieCategory(): List<MovieCategoryModel> {
+        //todo list from Api
         return listOf(
             MovieCategoryModel("popular", "Popular"),
             MovieCategoryModel("top_rated", "Top Rated")
