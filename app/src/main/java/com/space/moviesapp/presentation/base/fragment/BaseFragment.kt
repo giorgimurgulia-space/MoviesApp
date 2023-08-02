@@ -70,7 +70,7 @@ abstract class BaseFragment<VB : ViewBinding, VM : BaseViewModel>(private val in
                     }
                     DialogItem.ViewType.ERROR -> {
                         dialog as DialogItem.ErrorDialog
-                        movieDialog = ErrorDialogFragment(dialog.onRefreshClick)
+                        movieDialog = ErrorDialogFragment(requireContext(), dialog.onRefreshClick)
                         movieDialog.show(childFragmentManager, ERROR_FRAGMENT_TAG)
                     }
                 }

@@ -34,7 +34,7 @@ class MoviesRepositoryImpl(
         return if (response.isSuccessful) {
             response.body()!!.toDomainModel()
         } else {
-            emptyMap()
+            throw ApiError(Throwable())
         }
     }
 

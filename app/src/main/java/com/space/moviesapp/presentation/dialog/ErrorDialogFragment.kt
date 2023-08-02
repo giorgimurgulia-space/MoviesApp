@@ -1,6 +1,7 @@
 package com.space.moviesapp.presentation.dialog
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,10 +11,9 @@ import androidx.fragment.app.DialogFragment
 import com.space.moviesapp.R
 import com.space.moviesapp.databinding.LayoutErrorBinding
 
-class ErrorDialogFragment(private val onRefreshClick: (() -> Unit)) : DialogFragment() {
+class ErrorDialogFragment(context: Context, private val onRefreshClick: (() -> Unit),) : DialogFragment() {
 
     private val binding = LayoutErrorBinding.inflate(LayoutInflater.from(context))
-    private var onRefreshClickListener: (() -> Unit)? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
