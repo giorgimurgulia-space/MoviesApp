@@ -12,22 +12,16 @@ import com.space.moviesapp.presentation.model.MovieItemUIModel
 import com.space.moviesapp.presentation.model.MoviePageUIModel
 import kotlin.collections.HashMap
 
+
+//todo mapper class
 fun MovieCategoryDto.toDomainModel(id: Int) = MovieCategoryModel(id, urlId, title)
 fun MovieCategoryModel.toUIModel() = MovieCategoryUIModel(id, urlId, title)
-
-fun MoviesPageDto.toDomainModel(genresMap: Map<Int, String>) = MoviesPageModel(
-    page, results.map { it.toDomainModel(genresMap) }, totalPages
-)
 
 fun MovieItemDto.toDomainModel(genresMap: Map<Int, String>) =
     MovieItem(
         id, genreIds.map { id -> genresMap[id] }, title, voteAverage, releaseDate.dropLast(6),
         IMAGE_BASE_URL + posterPath
     )
-
-fun MoviesPageModel.toUIModel() = MoviePageUIModel(
-    page, results.map { it.toUIModel() }, totalPages
-)
 
 fun MovieItem.toUIModel() = MovieItemUIModel(id, genres, title, rating, releaseDate, poster)
 

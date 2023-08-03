@@ -4,8 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavDirections
-import com.space.moviesapp.common.types.MovieEvent
 import com.space.moviesapp.presentation.model.DialogItem
+import com.space.moviesapp.presentation.navigation.MovieEvent
 import com.space.moviesapp.presentation.navigation.NavigationCommand
 
 

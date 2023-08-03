@@ -8,5 +8,4 @@ object MoviesConstants {
     const val LOADER_FRAGMENT_TAG = "loader_tag"
     const val ERROR_FRAGMENT_TAG = "error_tag"
     const val MOVIE_ID = "movieId"
-
 }

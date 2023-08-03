@@ -1,4 +1,4 @@
-package com.space.moviesapp.common.types
+package com.space.moviesapp.presentation.navigation
 
 open class MovieEvent<out T>(private val content: T) {
 

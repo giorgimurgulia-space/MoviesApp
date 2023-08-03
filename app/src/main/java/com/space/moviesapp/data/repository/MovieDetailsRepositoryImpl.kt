@@ -17,6 +17,5 @@ class MovieDetailsRepositoryImpl(
             emit(response.body()!!.toDomainModel())
         } else
             throw ApiError(Throwable())
-
     }
 }
