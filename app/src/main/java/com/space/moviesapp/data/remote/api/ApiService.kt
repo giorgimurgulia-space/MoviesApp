@@ -1,6 +1,7 @@
 package com.space.moviesapp.data.remote.api
 
 import com.space.moviesapp.data.remote.dto.GenresDto
+import com.space.moviesapp.data.remote.dto.MovieDetailsDto
 import com.space.moviesapp.data.remote.dto.MoviesPageDto
 import retrofit2.Response
 import retrofit2.http.GET
@@ -22,4 +23,7 @@ interface ApiService {
         @Query("query") query: String,
         @Query("page") page: Int
     ): Response<MoviesPageDto>
+
+    @GET("movie/{movieId}")
+    suspend fun getMovie(@Path(value = "movieId") movieId: Int): Response<MovieDetailsDto>
 }

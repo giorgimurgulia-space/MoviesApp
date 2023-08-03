@@ -8,10 +8,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.space.moviesapp.common.extensions.changeVisibility
 import com.space.moviesapp.common.extensions.loadImage
 import com.space.moviesapp.databinding.LayoutMovieItemBinding
-import com.space.moviesapp.presentation.model.MovieUIItem
+import com.space.moviesapp.presentation.model.MovieDetailsUIModel
 
 class MovieAdapter :
-    PagingDataAdapter<MovieUIItem, MovieAdapter.MovieViewHolder>(MovieDiffUtil()) {
+    PagingDataAdapter<MovieDetailsUIModel, MovieAdapter.MovieViewHolder>(MovieDiffUtil()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
         return MovieViewHolder(
@@ -30,7 +30,7 @@ class MovieAdapter :
     class MovieViewHolder(
         private val binding: LayoutMovieItemBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(movie: MovieUIItem) = with(binding) {
+        fun bind(movie: MovieDetailsUIModel) = with(binding) {
 
             if (movie.genres.isNotEmpty()) {
                 genresText.text = movie.genres.first()

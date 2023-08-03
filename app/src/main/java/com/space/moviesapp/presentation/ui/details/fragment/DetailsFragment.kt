@@ -14,5 +14,6 @@ class DetailsFragment :
 
     override fun onBind() {
         val movieId = arguments?.getString(MOVIE_ID)
+        viewModel.getMovie(movieId)
     }
 }

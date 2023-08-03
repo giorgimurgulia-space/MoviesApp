@@ -1,6 +1,6 @@
 package com.space.moviesapp.presentation.model
 
-data class MovieUIItem(
+data class MovieDetailsUIModel(
         val id: Int,
         val genres: List<String?>,
         val title: String,

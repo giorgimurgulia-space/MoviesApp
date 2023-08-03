@@ -9,7 +9,7 @@ import com.space.moviesapp.domain.model.MovieCategoryModel
 import com.space.moviesapp.domain.model.MovieItem
 import com.space.moviesapp.domain.model.MoviesPageModel
 import com.space.moviesapp.presentation.model.MovieCategoryUIModel
-import com.space.moviesapp.presentation.model.MovieUIItem
+import com.space.moviesapp.presentation.model.MovieDetailsUIModel
 import com.space.moviesapp.presentation.model.MoviePageUIModel
 import kotlin.collections.HashMap
 
@@ -30,7 +30,7 @@ fun MoviesPageModel.toUIModel() = MoviePageUIModel(
     page, results.map { it.toUIModel() }, totalPages
 )
 
-fun MovieItem.toUIModel() = MovieUIItem(id, genres, title, rating, releaseDate, poster)
+fun MovieItem.toUIModel() = MovieDetailsUIModel(id, genres, title, rating, releaseDate, poster)
 
 fun GenresDto.toDomainModel(): HashMap<Int, String> {
     val genresMap = HashMap<Int, String>()
