@@ -14,7 +14,7 @@ import com.space.moviesapp.domain.usecase.SearchMovieUseCase
 import com.space.moviesapp.presentation.base.vm.BaseViewModel
 import com.space.moviesapp.presentation.model.DialogItem
 import com.space.moviesapp.presentation.model.MovieCategoryUIModel
-import com.space.moviesapp.presentation.model.MovieDetailsUIModel
+import com.space.moviesapp.presentation.model.MovieItemUIModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
@@ -29,7 +29,7 @@ class HomeViewModel(
     private val _movieCategory = MutableStateFlow<List<MovieCategoryUIModel>>(emptyList())
     val movieCategory get() = _movieCategory.asStateFlow()
 
-    private val _state = MutableStateFlow<PagingData<MovieDetailsUIModel>>(PagingData.empty())
+    private val _state = MutableStateFlow<PagingData<MovieItemUIModel>>(PagingData.empty())
     val state get() = _state.asStateFlow()
 
     fun getMovieCategory() {

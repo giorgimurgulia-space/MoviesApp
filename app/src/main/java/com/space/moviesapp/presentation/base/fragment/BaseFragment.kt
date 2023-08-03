@@ -10,6 +10,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.viewbinding.ViewBinding
 import com.space.moviesapp.common.extensions.observeNonNull
 import com.space.moviesapp.common.types.Inflater
@@ -19,6 +20,7 @@ import com.space.moviesapp.presentation.base.vm.BaseViewModel
 import com.space.moviesapp.presentation.dialog.ErrorDialogFragment
 import com.space.moviesapp.presentation.dialog.LoaderDialogFragment
 import com.space.moviesapp.presentation.model.DialogItem
+import com.space.moviesapp.presentation.navigation.NavigationCommand
 import kotlinx.coroutines.delay
 import org.koin.androidx.viewmodel.ext.android.viewModelForClass
 import kotlin.reflect.KClass
@@ -54,6 +56,8 @@ abstract class BaseFragment<VB : ViewBinding, VM : BaseViewModel>(private val in
         setObserves()
         setListeners()
         observeDialog()
+        observeNavigation()
+        observeDialog()
     }
 
     private fun observeDialog() {
@@ -84,10 +88,27 @@ abstract class BaseFragment<VB : ViewBinding, VM : BaseViewModel>(private val in
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
     }
 
-    protected fun closeKeyBoard(){
-        val imm = requireContext().getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+    protected fun closeKeyBoard() {
+        val imm =
+            requireContext().getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(view?.windowToken, 0)
     }
+
+    private fun observeNavigation() {
+        viewModel.navigation.observeNonNull(viewLifecycleOwner) {
+            it.getContentIfNotHandled()?.let { navigationCommand ->
+                handleNavigation(navigationCommand)
+            }
+        }
+    }
+
+    private fun handleNavigation(navCommand: NavigationCommand) {
+        when (navCommand) {
+            is NavigationCommand.ToDirection -> findNavController().navigate(navCommand.directions)
+            is NavigationCommand.Back -> findNavController().navigateUp()
+        }
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

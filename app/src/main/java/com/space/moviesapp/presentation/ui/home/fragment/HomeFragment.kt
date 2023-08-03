@@ -22,7 +22,9 @@ class HomeFragment :
     override val viewModelClass: KClass<HomeViewModel>
         get() = HomeViewModel::class
 
-    private val adapter = MovieAdapter()
+    private val adapter = MovieAdapter(onItemClicked = {
+        viewModel.navigate(HomeFragmentDirections.actionGlobalDetailsFragment(it))
+    })
 
 
     override fun onBind() {
