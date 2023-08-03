@@ -40,15 +40,8 @@ class HomeFragment :
 
         binding.mainRecycler.adapter = adapter
 
-        val spanCount = 2
-        val spacing = 32
-        val includeEdge = false
         binding.mainRecycler.addItemDecoration(
-            GridSpacingItemDecoration(
-                spanCount,
-                spacing,
-                includeEdge
-            )
+            GridSpacingItemDecoration(2, 32, false)
         )
     }
 
