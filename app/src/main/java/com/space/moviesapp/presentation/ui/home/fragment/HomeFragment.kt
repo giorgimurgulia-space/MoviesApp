@@ -4,18 +4,22 @@ package com.space.moviesapp.presentation.ui.home.fragment
 import android.view.LayoutInflater
 import android.view.View
 import androidx.core.widget.doAfterTextChanged
+import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
 import com.space.moviesapp.common.extensions.changeVisibility
 import com.space.moviesapp.common.extensions.collectFlow
+import com.space.moviesapp.common.extensions.observeNonNull
 import com.space.moviesapp.databinding.ChipFilterItemBinding
 import com.space.moviesapp.databinding.FragmentHomeBinding
 import com.space.moviesapp.presentation.base.fragment.BaseFragment
+import com.space.moviesapp.presentation.dialog.ErrorDialogFragment
 import com.space.moviesapp.presentation.model.DialogItem
 import com.space.moviesapp.presentation.model.MovieCategoryUIModel
 import com.space.moviesapp.presentation.ui.home.adapter.GridSpacingItemDecoration
 import com.space.moviesapp.presentation.ui.home.adapter.MovieAdapter
 import com.space.moviesapp.presentation.ui.home.vm.HomeViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlin.reflect.KClass
 
@@ -32,6 +36,8 @@ class HomeFragment :
 
 
     override fun onBind() {
+        viewModel.getMovieCategory()
+
         binding.mainRecycler.adapter = adapter
 
         val spanCount = 2
@@ -44,10 +50,6 @@ class HomeFragment :
                 includeEdge
             )
         )
-
-        viewModel.getMovieCategory()
-
-        searchListener()
     }
 
     override fun setObserves() {
@@ -58,8 +60,6 @@ class HomeFragment :
         collectFlow(viewModel.movieCategory) {
             setFilter(it)
         }
-
-
         lifecycleScope.launch {
             adapter.loadStateFlow.collect { loadStates ->
                 when (loadStates.refresh) {
@@ -67,7 +67,7 @@ class HomeFragment :
                         viewModel.setDialog(DialogItem.LoaderDialog())
                     }
                     is LoadState.Error -> {
-                        viewModel.setDialog(DialogItem.ErrorDialog(onRefreshClick = { adapter.retry() }))
+                        viewModel.setDialog(DialogItem.ErrorDialog(onRefreshClick = { viewModel.refresh() }))
                     }
                     else -> {
                         viewModel.closeLoaderDialog()
@@ -78,6 +78,8 @@ class HomeFragment :
     }
 
     override fun setListeners() = with(binding) {
+        searchListener()
+
         filterCheckBox.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked || chipGroup.visibility == View.VISIBLE)
                 chipGroup.changeVisibility()
@@ -105,7 +107,7 @@ class HomeFragment :
 
     private fun searchListener() {
         binding.searchEditText.doAfterTextChanged {
-            if (!it.isNullOrEmpty() && it.isNotBlank()) {
+            if (!it.isNullOrEmpty() && it.isNotBlank() && it.length > 3) {
                 viewModel.search(it.toString())
             }
         }

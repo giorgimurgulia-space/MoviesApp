@@ -10,6 +10,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResultListener
 import androidx.navigation.fragment.findNavController
 import androidx.viewbinding.ViewBinding
 import com.space.moviesapp.common.extensions.observeNonNull
@@ -76,8 +77,11 @@ abstract class BaseFragment<VB : ViewBinding, VM : BaseViewModel>(private val in
                     }
                     DialogItem.ViewType.ERROR -> {
                         dialog as DialogItem.ErrorDialog
-                        movieDialog = ErrorDialogFragment(requireContext(), dialog.onRefreshClick)
+                        movieDialog = ErrorDialogFragment()
                         movieDialog.show(childFragmentManager, ERROR_FRAGMENT_TAG)
+                        (movieDialog as ErrorDialogFragment).setOnRefreshClickListener {
+                            dialog.onRefreshClick
+                        }
                     }
                 }
             }

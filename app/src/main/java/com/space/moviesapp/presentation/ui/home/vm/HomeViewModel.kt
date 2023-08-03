@@ -16,6 +16,7 @@ import com.space.moviesapp.presentation.base.vm.BaseViewModel
 import com.space.moviesapp.presentation.model.DialogItem
 import com.space.moviesapp.presentation.model.MovieCategoryUIModel
 import com.space.moviesapp.presentation.model.MovieItemUIModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
@@ -61,13 +62,16 @@ class HomeViewModel(
 
     fun search(query: String) {
         viewModelScope.launch {
+            delay(1000)
             searchMovieUseCase.invoke(query).collectLatest { movieItem ->
                 _state.value = movieItem.map { it.toUIModel() }
             }
         }
     }
 
-
+    fun refresh(){
+        getNewMovie()
+    }
     private fun getNewMovie() {
         viewModelScope.launch {
             getMoviesUseCase.invoke(

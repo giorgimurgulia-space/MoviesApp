@@ -39,6 +39,8 @@ class DetailsFragment :
         movieTitleText.text = movieModel.originalTitle
         descriptionTextView.text = movieModel.overview
 
+
+        //todo empty genres
         if (movieModel.genres.isNotEmpty()) {
             val chips = mutableListOf<String>()
             chips.add(movieModel.voteAverage.toString())
@@ -50,6 +52,7 @@ class DetailsFragment :
     }
 
     private fun setChips(chips: List<String>) = with(binding) {
+        //todo chips design
         chips.forEachIndexed { index, it ->
             val chip = ChipFilterItemBinding.inflate(LayoutInflater.from(requireContext())).chipItem
             chip.text = it

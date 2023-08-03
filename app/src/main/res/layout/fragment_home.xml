@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="@dimen/dimen_16_dp">
+    android:paddingHorizontal="@dimen/dimen_16_dp"
+    android:paddingBottom="@dimen/dimen_16_dp">
 
     <EditText
         android:id="@+id/search_edit_text"
@@ -26,10 +27,10 @@
 
     <androidx.constraintlayout.widget.Barrier
         android:id="@+id/search_barrier"
-        app:barrierDirection="start"
-        app:constraint_referenced_ids="filter_check_box,cancel_search_text"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        app:barrierDirection="start"
+        app:constraint_referenced_ids="filter_check_box,cancel_search_text" />
 
     <CheckBox
         android:id="@+id/filter_check_box"
