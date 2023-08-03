@@ -36,7 +36,7 @@ class MovieAdapter(private val onItemClicked: ((movieId: Int) -> Unit)) :
 
         fun bind(movie: MovieItemUIModel) = with(binding) {
 
-            if (movie.genres.isNotEmpty()) {
+            if (!movie.genres.first().isNullOrEmpty()) {
                 genresText.text = movie.genres.first()
             } else {
                 genresText.changeVisibility()
@@ -47,7 +47,7 @@ class MovieAdapter(private val onItemClicked: ((movieId: Int) -> Unit)) :
             movieYearText.text = movie.releaseDate
 
             favoriteCheckBox.setOnCheckedChangeListener { checkbox, isChecked ->
-                // todo > for test button work
+                // todo / for test button work
                 Toast.makeText(binding.root.context, movie.id.toString(), Toast.LENGTH_SHORT).show()
             }
 

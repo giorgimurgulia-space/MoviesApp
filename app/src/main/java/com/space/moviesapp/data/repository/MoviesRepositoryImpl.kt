@@ -48,7 +48,7 @@ class MoviesRepositoryImpl(
                 throw e
             }
         } else {
-            throw ApiError(Throwable())
+            emptyMap()
         }
     }
 
