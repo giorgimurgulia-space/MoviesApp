@@ -10,20 +10,19 @@
         android:id="@+id/homeFragment"
         android:name="com.space.moviesapp.presentation.ui.home.fragment.HomeFragment"
         android:label="HomeFragment" />
+
+    <action
+        android:id="@+id/action_global_details_Fragment"
+        app:destination="@id/detailsFragment"
+        app:popUpTo="@id/main_nav_graph"
+        app:popUpToInclusive="true" />
+
     <fragment
-        android:id="@+id/favoritesFragment"
-        android:name="com.space.moviesapp.presentation.ui.favorites.FavoritesFragment"
-        android:label="FavoritesFragment" />
-
-    <action
-        android:id="@+id/action_global_homeFragment"
-        app:destination="@id/homeFragment"
-        app:popUpTo="@id/main_nav_graph"
-        app:popUpToInclusive="true" />
-
-    <action
-        android:id="@+id/action_global_favoritesFragment"
-        app:destination="@id/favoritesFragment"
-        app:popUpTo="@id/main_nav_graph"
-        app:popUpToInclusive="true" />
+        android:id="@+id/detailsFragment"
+        android:name="com.space.moviesapp.presentation.ui.details.fragment.DetailsFragment"
+        android:label="DetailsFragment">
+        <argument
+            android:name="movieID"
+            app:argType="string" />
+    </fragment>
 </navigation>
