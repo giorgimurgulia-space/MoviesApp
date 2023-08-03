@@ -60,6 +60,7 @@ class HomeViewModel(
         }
     }
 
+    //name
     fun search(query: String) {
         viewModelScope.launch {
             delay(1000)
@@ -69,6 +70,8 @@ class HomeViewModel(
         }
     }
 
+
+    //name
     fun refresh(){
         getNewMovie()
     }

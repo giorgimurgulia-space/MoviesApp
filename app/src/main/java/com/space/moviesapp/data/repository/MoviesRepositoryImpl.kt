@@ -30,7 +30,7 @@ class MoviesRepositoryImpl(
 
     override suspend fun getMovies(categoryId: String): Flow<PagingData<MovieItem>> {
         return Pager(
-            config = PagingConfig(pageSize = 1, enablePlaceholders = false),
+            config = PagingConfig(pageSize = 20, enablePlaceholders = false, initialLoadSize = 20),
             pagingSourceFactory = { MoviesPagingSource(apiService, categoryId) }
         ).flow.map {
             it.map { movie ->
