@@ -37,7 +37,7 @@ class MovieAdapter(private val onItemClicked: ((movieId: Int) -> Unit)) :
         fun bind(movie: MovieItemUIModel) = with(binding) {
 
             if (!movie.genres.first().isNullOrEmpty()) {
-                genresText.text = movie.genres.first()
+                genresText.text = movie.genres.first().toString()
             } else {
                 genresText.changeVisibility()
             }
