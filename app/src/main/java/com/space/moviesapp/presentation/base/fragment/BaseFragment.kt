@@ -104,8 +104,12 @@ abstract class BaseFragment<VB : ViewBinding, VM : BaseViewModel>(private val in
 
     private fun handleNavigation(navCommand: NavigationCommand) {
         when (navCommand) {
-            is NavigationCommand.ToDirection -> findNavController().navigate(navCommand.directions)
-            is NavigationCommand.Back -> findNavController().navigateUp()
+            is NavigationCommand.ToDirection -> {
+                findNavController().navigate(navCommand.directions)
+            }
+            is NavigationCommand.Back -> {
+                findNavController().navigateUp()
+            }
         }
     }
 

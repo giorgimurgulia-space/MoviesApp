@@ -5,6 +5,7 @@ import androidx.paging.PagingState
 import com.space.moviesapp.common.resource.ApiError
 import com.space.moviesapp.data.remote.api.ApiService
 import com.space.moviesapp.data.remote.dto.MovieItemDto
+import java.util.concurrent.CancellationException
 
 class MoviesSearchPagingSource(
     private val apiService: ApiService,
@@ -24,6 +25,8 @@ class MoviesSearchPagingSource(
                 prevKey = if (currentPage == 1) null else currentPage - 1,
                 nextKey = if (currentPage == totalPages) null else currentPage + 1
             )
+        } catch (e: CancellationException) {
+            throw e
         } catch (e: Exception) {
             throw ApiError(Throwable())
         }

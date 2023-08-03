@@ -2,6 +2,7 @@ package com.space.moviesapp.presentation.ui.home.vm
 
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import androidx.paging.map
 import com.space.moviesapp.common.extensions.toResult
 import com.space.moviesapp.common.maper.toUIModel
@@ -71,8 +72,10 @@ class HomeViewModel(
         viewModelScope.launch {
             getMoviesUseCase.invoke(
                 _movieCategory.value[selectCategoryIndex].urlId
-            ).collectLatest { movieItem ->
-                _state.value = movieItem.map { it.toUIModel() }
+            ).cachedIn(viewModelScope).collectLatest {
+                _state.value = it.map { movieItem ->
+                    movieItem.toUIModel()
+                }
             }
         }
     }

@@ -13,9 +13,7 @@
 
     <action
         android:id="@+id/action_global_details_Fragment"
-        app:destination="@id/detailsFragment"
-        app:popUpTo="@id/main_nav_graph"
-        app:popUpToInclusive="true" />
+        app:destination="@id/detailsFragment"/>
 
     <fragment
         android:id="@+id/detailsFragment"
