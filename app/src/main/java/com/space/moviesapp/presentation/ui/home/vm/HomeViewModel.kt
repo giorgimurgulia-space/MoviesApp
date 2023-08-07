@@ -5,7 +5,6 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import androidx.paging.map
 import com.space.moviesapp.common.extensions.toResult
-import com.space.moviesapp.common.maper.toDomainModel
 import com.space.moviesapp.common.maper.toUIModel
 import com.space.moviesapp.common.resource.onError
 import com.space.moviesapp.common.resource.onLoading
@@ -15,23 +14,21 @@ import com.space.moviesapp.domain.usecase.GetMoviesUseCase
 import com.space.moviesapp.presentation.base.vm.BaseViewModel
 import com.space.moviesapp.presentation.model.DialogItem
 import com.space.moviesapp.presentation.model.MovieCategoryUIModel
-import com.space.moviesapp.presentation.model.MovieUIItem
+import com.space.moviesapp.presentation.model.MovieItemUIModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 class HomeViewModel(
     private val getMoviesUseCase: GetMoviesUseCase,
     private val getMovieCategoryUseCase: GetMovieCategoryUseCase
-) : BaseViewModel() {
+    ) : BaseViewModel() {
 
-    private var currentPage = 0
-    private var totalPages = 0
     private var selectCategoryIndex = 0
 
     private val _movieCategory = MutableStateFlow<List<MovieCategoryUIModel>>(emptyList())
     val movieCategory get() = _movieCategory.asStateFlow()
 
-    private val _state = MutableStateFlow<PagingData<MovieUIItem>>(PagingData.empty())
+    private val _state = MutableStateFlow<PagingData<MovieItemUIModel>>(PagingData.empty())
     val state get() = _state.asStateFlow()
 
     fun getMovieCategory() {
@@ -53,19 +50,25 @@ class HomeViewModel(
 
     fun onFilterClick(index: Int) {
         selectCategoryIndex = index
-        currentPage = 0
         _state.tryEmit(PagingData.empty())
-        getNewMovie()
 
+        if (index >= 0) {
+            getNewMovie()
+        }
     }
 
-
+    //name
+    fun refresh(){
+        getNewMovie()
+    }
     private fun getNewMovie() {
         viewModelScope.launch {
             getMoviesUseCase.invoke(
                 _movieCategory.value[selectCategoryIndex].urlId
-            ).collectLatest { movieItem ->
-                _state.value = movieItem.map { it.toUIModel() }
+            ).cachedIn(viewModelScope).collectLatest {
+                _state.value = it.map { movieItem ->
+                    movieItem.toUIModel()
+                }
             }
         }
     }

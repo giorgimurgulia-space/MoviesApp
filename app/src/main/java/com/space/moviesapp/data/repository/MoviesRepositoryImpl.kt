@@ -1,14 +1,9 @@
 package com.space.moviesapp.data.repository
 
-import androidx.paging.Pager
-import androidx.paging.PagingConfig
-import androidx.paging.PagingData
-import androidx.paging.map
+import androidx.paging.*
 import com.space.moviesapp.common.maper.toDomainModel
-import com.space.moviesapp.common.resource.ApiError
 import com.space.moviesapp.data.remote.api.ApiService
 import com.space.moviesapp.data.remote.dto.MovieCategoryDto
-import com.space.moviesapp.data.remote.dto.MovieItemDto
 import com.space.moviesapp.domain.model.MovieCategoryModel
 import com.space.moviesapp.domain.model.MovieItem
 import com.space.moviesapp.domain.repository.MoviesRepository
@@ -16,6 +11,7 @@ import com.space.moviesapp.presentation.ui.home.adapter.MoviesPagingSource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
+import java.util.concurrent.CancellationException
 
 class MoviesRepositoryImpl(
     private val apiService: ApiService
@@ -30,22 +26,25 @@ class MoviesRepositoryImpl(
 
     override suspend fun getMovies(categoryId: String): Flow<PagingData<MovieItem>> {
         return Pager(
-            config = PagingConfig(pageSize = 1, enablePlaceholders = false),
+            config = PagingConfig(pageSize = 20, enablePlaceholders = false, initialLoadSize = 20),
             pagingSourceFactory = { MoviesPagingSource(apiService, categoryId) }
-        ).flow
-            .map {
-                it.map { movie ->
-                    movie.toDomainModel(getMoviesGenres())
-                }
+        ).flow.map {
+            it.map { movie ->
+                movie.toDomainModel(getMoviesGenres())
             }
+        }
     }
 
     override suspend fun getMoviesGenres(): Map<Int, String> {
         val response = apiService.getMovieGenres()
         return if (response.isSuccessful) {
-            response.body()!!.toDomainModel()
+            try {
+                response.body()!!.toDomainModel()
+            } catch (e: CancellationException) {
+                throw e
+            }
         } else {
-            throw ApiError(Throwable())
+            emptyMap()
         }
     }
 
