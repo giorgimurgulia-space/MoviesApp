@@ -46,17 +46,15 @@ class DetailsFragment :
 
         //todo empty genres
         if (movieModel.genres.isNotEmpty()) {
-            setChips(movieModel.voteAverage.toString(), R.drawable.ic_starr)
-            setChips(movieModel.genres.first())
-            setChips(movieModel.runtime?.fromMinutesToHHmm()!!, R.drawable.ic_clock)
-            setChips(movieModel.releaseDate.toString())
+            setChip(movieModel.voteAverage.toString(), R.drawable.ic_starr)
+            setChip(movieModel.genres.first())
+            setChip(movieModel.runtime?.fromMinutesToHHmm()!!, R.drawable.ic_clock)
+            setChip(movieModel.releaseDate.toString())
         }
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
-    private fun setChips(title: String, icon: Int? = null) = with(binding) {
-        //todo chips design
-
+    private fun setChip(title: String, icon: Int? = null) = with(binding) {
         val chip = ChipWithIconBinding.inflate(LayoutInflater.from(requireContext())).chipItem
         chip.text = title
         chip.chipIcon = icon?.let { requireContext().getDrawable(it) }
