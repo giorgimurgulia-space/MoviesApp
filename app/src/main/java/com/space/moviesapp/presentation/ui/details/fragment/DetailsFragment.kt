@@ -7,8 +7,7 @@ import com.space.moviesapp.common.extensions.collectFlow
 import com.space.moviesapp.common.extensions.fromMinutesToHHmm
 import com.space.moviesapp.common.extensions.loadImage
 import com.space.moviesapp.common.utils.MoviesConstants.MOVIE_ID
-import com.space.moviesapp.databinding.ChipFilterItemBinding
-import com.space.moviesapp.databinding.ChipWithIconBinding
+import com.space.moviesapp.databinding.ChipDetailMovieBinding
 import com.space.moviesapp.databinding.FragmentDetailsBinding
 import com.space.moviesapp.presentation.base.fragment.BaseFragment
 import com.space.moviesapp.presentation.model.MovieDetailsUIModel
@@ -55,7 +54,7 @@ class DetailsFragment :
 
     @SuppressLint("UseCompatLoadingForDrawables")
     private fun setChip(title: String, icon: Int? = null) = with(binding) {
-        val chip = ChipWithIconBinding.inflate(LayoutInflater.from(requireContext())).chipItem
+        val chip = ChipDetailMovieBinding.inflate(LayoutInflater.from(requireContext())).chipItem
         chip.text = title
         chip.chipIcon = icon?.let { requireContext().getDrawable(it) }
         chipGroup.addView(chip)
