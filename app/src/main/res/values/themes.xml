@@ -2,18 +2,16 @@
     <!-- Base application theme. -->
     <style name="Theme.MoviesApp" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/purple_500</item>
-        <item name="colorPrimaryVariant">@color/purple_700</item>
-        <item name="colorOnPrimary">@color/white</item>
+
         <!-- Status bar color. -->
-        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightStatusBar">false</item>
         <!-- Customize your theme here. -->
-        <item name="android:statusBarColor">@android:color/white</item>
+        <item name="android:statusBarColor">@color/black</item>
         <!-- Customize your theme here. -->
 
         <!-- splash screen -->
         <item name="android:windowSplashScreenBackground">@color/black</item>
         <item name="android:windowSplashScreenAnimatedIcon">@drawable/ic_imdb_logo</item>
-        <item name="android:windowSplashScreenAnimationDuration">10000</item>
+        <item name="android:windowSplashScreenAnimationDuration">5000</item>
     </style>
 </resources>

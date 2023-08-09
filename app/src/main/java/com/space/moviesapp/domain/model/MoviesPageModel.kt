@@ -1,8 +1,8 @@
 package com.space.moviesapp.domain.model
 
 
-data class MovieModel(
+data class MoviesPageModel(
     val page: Int,
-    val results: List<MovieItemModel>,
+    val results: List<MovieItem>,
     val totalPages: Int
 )

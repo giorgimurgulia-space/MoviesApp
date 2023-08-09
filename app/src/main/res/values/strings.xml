@@ -8,6 +8,9 @@
     <string name="data_can_t_be_loaded">Data can’t be loaded</string>
     <string name="no_internet_connection">internet connection or some other server error</string>
     <string name="refresh">Refresh</string>
+    <string name="details_title">Details</string>
+    <string name="trailer">Trailer</string>
     <string name="cancel_text">Cancel</string>
     <string name="movies_title">Movies</string>
+    <string name="about_movie_text">About Movie</string>
 </resources>

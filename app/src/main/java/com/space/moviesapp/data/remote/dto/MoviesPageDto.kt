@@ -3,7 +3,7 @@ package com.space.moviesapp.data.remote.dto
 
 import com.google.gson.annotations.SerializedName
 
-data class MoviesDto(
+data class MoviesPageDto(
     val page: Int,
     val results: List<MovieItemDto>,
     @SerializedName("total_pages")

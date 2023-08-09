@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <style name="largeMontserratMedium">
+        <item name="android:textSize">@dimen/dimen_20_sp</item>
+        <item name="fontFamily">@font/montserrat_medium</item>
+        <item name="lineHeight">@dimen/dimen_26_sp</item>
+    </style>
+
     <style name="mediumMontserratMedium">
         <item name="android:textSize">@dimen/dimen_16_sp</item>
         <item name="fontFamily">@font/montserrat_medium</item>
@@ -19,11 +25,16 @@
         <item name="lineHeight">@dimen/dimen_12_sp</item>
     </style>
 
-    <style name="CustomChipStyle" parent="Widget.MaterialComponents.Chip.Choice">
+    <style name="CustomFilterStyle" parent="Widget.MaterialComponents.Chip.Choice">
         <item name="chipBackgroundColor">@color/chip_background_color_selector</item>
         <item name="chipStrokeColor">@color/chip_stroke_color_selector</item>
         <item name="android:textColor">@color/chip_text_color_selector</item>
         <item name="chipStrokeWidth">@dimen/dimen_1_dp</item>
     </style>
 
+    <style name="MovieDetailChipStyle" parent="Widget.MaterialComponents.Chip.Choice">
+        <item name="chipBackgroundColor">@color/neutral_02_darkest_grey</item>
+        <item name="android:textColor">@color/neutral_06_light_grey</item>
+        <item name="chipIconSize">@dimen/dimen_16_dp</item>
+    </style>
 </resources>

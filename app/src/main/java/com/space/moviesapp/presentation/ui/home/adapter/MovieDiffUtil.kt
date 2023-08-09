@@ -1,8 +1,7 @@
-package com.space.moviesapp.presentation.ui.home
+package com.space.moviesapp.presentation.ui.home.adapter
 
 import androidx.recyclerview.widget.DiffUtil
 import com.space.moviesapp.presentation.model.MovieItemUIModel
-import com.space.moviesapp.presentation.model.MovieUIModel
 
 class MovieDiffUtil : DiffUtil.ItemCallback<MovieItemUIModel>() {
     override fun areItemsTheSame(oldItem: MovieItemUIModel, newItem: MovieItemUIModel): Boolean {
