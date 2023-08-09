@@ -2,10 +2,8 @@ package com.space.moviesapp.presentation.ui.home.vm
 
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
-import androidx.paging.cachedIn
 import androidx.paging.map
 import com.space.moviesapp.common.extensions.toResult
-import com.space.moviesapp.common.maper.toDomainModel
 import com.space.moviesapp.common.maper.toUIModel
 import com.space.moviesapp.common.resource.onError
 import com.space.moviesapp.common.resource.onLoading
@@ -60,7 +58,7 @@ class HomeViewModel(
         }
     }
 
-    fun search(query: String) {
+    fun movieSearch(query: String) {
         viewModelScope.launch {
             searchMovieUseCase.invoke(query).collectLatest { movieItem ->
                 _state.value = movieItem.map { it.toUIModel() }

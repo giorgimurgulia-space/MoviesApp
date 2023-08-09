@@ -83,7 +83,7 @@ class HomeFragment :
     private fun searchListener() {
         binding.searchEditText.doAfterTextChanged {
             if (!it.isNullOrEmpty() && it.isNotBlank()) {
-                viewModel.search(it.toString())
+                viewModel.movieSearch(it.toString())
             }
         }
     }
