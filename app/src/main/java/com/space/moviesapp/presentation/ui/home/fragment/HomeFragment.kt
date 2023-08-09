@@ -6,6 +6,7 @@ import android.view.View
 import androidx.core.widget.doAfterTextChanged
 import com.space.moviesapp.common.extensions.changeVisibility
 import com.space.moviesapp.common.extensions.collectFlow
+import com.space.moviesapp.common.extensions.observeNonNull
 import com.space.moviesapp.databinding.ChipFilterItemBinding
 import com.space.moviesapp.databinding.FragmentHomeBinding
 import com.space.moviesapp.presentation.base.fragment.BaseFragment
@@ -62,6 +63,7 @@ class HomeFragment :
         }
 
         cancelSearchText.setOnClickListener {
+            searchEditText.text.clear()
             searchEditText.clearFocus()
             closeKeyBoard()
 
@@ -69,7 +71,6 @@ class HomeFragment :
         }
 
         searchEditText.setOnFocusChangeListener { view, b ->
-            searchEditText.text.clear()
             cancelSearchText.changeVisibility()
             filterCheckBox.isChecked = false
             filterCheckBox.changeVisibility()
@@ -84,7 +85,7 @@ class HomeFragment :
     private fun searchListener() {
         binding.searchEditText.doAfterTextChanged {
             if (!it.isNullOrEmpty() && it.isNotBlank()) {
-                viewModel.search(it.toString())
+                viewModel.movieSearch(it.toString())
             }
         }
     }

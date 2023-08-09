@@ -42,21 +42,21 @@ class DetailsFragment :
         movieTitleText.text = movieModel.originalTitle
         descriptionTextView.text = movieModel.overview
 
-
-        //todo empty genres
-        if (movieModel.genres.isNotEmpty()) {
-            setChip(movieModel.voteAverage.toString(), R.drawable.ic_starr)
-            setChip(movieModel.genres.first())
-            setChip(movieModel.runtime?.fromMinutesToHHmm()!!, R.drawable.ic_clock)
-            setChip(movieModel.releaseDate.toString())
-        }
+        chipGroup.removeAllViews()
+        setChip(movieModel.voteAverage.toString(), R.drawable.ic_starr)
+        setChip(movieModel.genres.firstOrNull())
+        setChip(movieModel.runtime.fromMinutesToHHmm(), R.drawable.ic_clock)
+        setChip(movieModel.releaseDate.toString())
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
-    private fun setChip(title: String, icon: Int? = null) = with(binding) {
-        val chip = ChipDetailMovieBinding.inflate(LayoutInflater.from(requireContext())).chipItem
-        chip.text = title
-        chip.chipIcon = icon?.let { requireContext().getDrawable(it) }
-        chipGroup.addView(chip)
+    private fun setChip(title: String?, icon: Int? = null) = with(binding) {
+        if (!title.isNullOrEmpty()) {
+            val chip =
+                ChipDetailMovieBinding.inflate(LayoutInflater.from(requireContext())).chipItem
+            chip.text = title
+            chip.chipIcon = icon?.let { requireContext().getDrawable(it) }
+            chipGroup.addView(chip)
+        }
     }
 }
