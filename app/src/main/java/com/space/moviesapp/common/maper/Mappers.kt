@@ -1,11 +1,9 @@
 package com.space.moviesapp.common.maper
 
 import com.space.moviesapp.common.utils.MoviesConstants.IMAGE_BASE_URL
+import com.space.moviesapp.data.local.database.entity.MovieEntity
 import com.space.moviesapp.data.remote.dto.*
-import com.space.moviesapp.domain.model.MovieCategoryModel
-import com.space.moviesapp.domain.model.MovieDetailsModel
-import com.space.moviesapp.domain.model.MovieItem
-import com.space.moviesapp.domain.model.MoviesPageModel
+import com.space.moviesapp.domain.model.*
 import com.space.moviesapp.presentation.model.MovieCategoryUIModel
 import com.space.moviesapp.presentation.model.MovieDetailsUIModel
 import com.space.moviesapp.presentation.model.MovieItemUIModel
@@ -62,3 +60,4 @@ fun MovieDetailsModel.toUIModel() = MovieDetailsUIModel(
     runtime,
     BigDecimal(voteAverage).setScale(2, RoundingMode.FLOOR).toDouble()
 )
+fun MovieEntity.toDomainModel() = MovieItemModel(id, genres, title, rating, releaseDate, poster)
