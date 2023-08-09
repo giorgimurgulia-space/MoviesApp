@@ -1,5 +1,6 @@
 package com.space.moviesapp.presentation.ui.home.vm
 
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
@@ -15,18 +16,16 @@ import com.space.moviesapp.domain.usecase.GetMoviesUseCase
 import com.space.moviesapp.presentation.base.vm.BaseViewModel
 import com.space.moviesapp.presentation.model.DialogItem
 import com.space.moviesapp.presentation.model.MovieCategoryUIModel
-import com.space.moviesapp.presentation.model.MovieUIItem
+import com.space.moviesapp.presentation.model.MovieItemUIModel
+import com.space.moviesapp.presentation.navigation.MovieEvent
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 class HomeViewModel(
     private val getMoviesUseCase: GetMoviesUseCase,
     private val getMovieCategoryUseCase: GetMovieCategoryUseCase,
-    private val searchMovieUseCase: SearchMovieUseCase
 ) : BaseViewModel() {
 
-    private var currentPage = 0
-    private var totalPages = 0
     private var selectCategoryIndex = 0
     private var movieCategoryList = emptyList<MovieCategoryUIModel>()
 
@@ -65,10 +64,6 @@ class HomeViewModel(
         if (index >= 0) {
             getNewMovie()
         }
-    }
-
-    fun refreshPage() {
-        getNewMovie()
     }
 
     private fun getNewMovie() {

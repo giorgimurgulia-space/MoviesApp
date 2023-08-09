@@ -10,7 +10,6 @@ val viewModelModule = module {
         HomeViewModel(
             getMoviesUseCase = get(),
             getMovieCategoryUseCase = get(),
-            searchMovieUseCase = get()
         )
     }
     viewModel {

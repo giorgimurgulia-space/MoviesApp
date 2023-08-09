@@ -6,16 +6,18 @@ import androidx.paging.PagingData
 import androidx.paging.map
 import com.space.moviesapp.common.maper.toDomainModel
 import com.space.moviesapp.common.resource.ApiError
+import com.space.moviesapp.data.paging.MoviesPagingSource
+import com.space.moviesapp.data.paging.MoviesSearchPagingSource
 import com.space.moviesapp.data.remote.api.ApiService
 import com.space.moviesapp.data.remote.dto.MovieCategoryDto
 import com.space.moviesapp.data.remote.dto.MovieItemDto
 import com.space.moviesapp.domain.model.MovieCategoryModel
 import com.space.moviesapp.domain.model.MovieItem
 import com.space.moviesapp.domain.repository.MoviesRepository
-import com.space.moviesapp.presentation.ui.home.adapter.MoviesPagingSource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
+import java.util.concurrent.CancellationException
 
 class MoviesRepositoryImpl(
     private val apiService: ApiService
