@@ -50,7 +50,7 @@ fun MovieDetailsModel.toUIModel() = MovieDetailsUIModel(
     originalTitle,
     overview,
     posterPath,
-    releaseDate,
+    releaseDate.dropLast(6),
     runtime,
     voteAverage
 )

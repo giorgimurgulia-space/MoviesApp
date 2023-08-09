@@ -2,6 +2,7 @@ package com.space.moviesapp.presentation.ui.details.fragment
 
 import android.view.LayoutInflater
 import com.space.moviesapp.common.extensions.collectFlow
+import com.space.moviesapp.common.extensions.fromMinutesToHHmm
 import com.space.moviesapp.common.extensions.loadImage
 import com.space.moviesapp.common.utils.MoviesConstants.MOVIE_ID
 import com.space.moviesapp.databinding.ChipFilterItemBinding
@@ -44,8 +45,8 @@ class DetailsFragment :
         if (movieModel.genres.isNotEmpty()) {
             val chips = mutableListOf<String>()
             chips.add(movieModel.voteAverage.toString())
-            chips.addAll(movieModel.genres)
-            chips.add(movieModel.runtime.toString())
+            chips.add(movieModel.genres.first())
+            movieModel.runtime?.fromMinutesToHHmm()?.let { chips.add(it) }
             chips.add(movieModel.releaseDate.toString())
             setChips(chips)
         }

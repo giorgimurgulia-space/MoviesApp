@@ -54,8 +54,6 @@
         android:layout_width="@dimen/dimen_20_dp"
         android:layout_height="@dimen/dimen_20_dp"
         android:button="@drawable/check_box_heart_selector"
-        android:padding="@dimen/dimen_5_dp"
-        android:scaleType="centerInside"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/movie_title_text"
         app:useMaterialThemeColors="false" />
