@@ -137,8 +137,7 @@
             android:layout_width="@dimen/dimen_20_dp"
             android:layout_height="match_parent"
             android:scaleType="centerInside"
-            android:src="@drawable/ic_heart_outlined"
-            app:tint="@color/neutral_08_whisper" />
+            android:src="@drawable/ic_heart_outlined" />
 
         <TextView
             android:layout_width="wrap_content"

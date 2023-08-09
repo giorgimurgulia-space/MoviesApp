@@ -3,8 +3,6 @@ package com.space.moviesapp.presentation.ui.home.fragment
 
 import android.view.LayoutInflater
 import android.view.View
-import androidx.core.widget.doAfterTextChanged
-import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
 import com.space.moviesapp.common.extensions.changeVisibility
@@ -13,13 +11,11 @@ import com.space.moviesapp.common.extensions.observeNonNull
 import com.space.moviesapp.databinding.ChipFilterItemBinding
 import com.space.moviesapp.databinding.FragmentHomeBinding
 import com.space.moviesapp.presentation.base.fragment.BaseFragment
-import com.space.moviesapp.presentation.dialog.ErrorDialogFragment
 import com.space.moviesapp.presentation.model.DialogItem
 import com.space.moviesapp.presentation.model.MovieCategoryUIModel
 import com.space.moviesapp.presentation.ui.home.adapter.GridSpacingItemDecoration
 import com.space.moviesapp.presentation.ui.home.adapter.MovieAdapter
 import com.space.moviesapp.presentation.ui.home.vm.HomeViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlin.reflect.KClass
 
@@ -34,10 +30,7 @@ class HomeFragment :
 
 
     override fun onBind() {
-        viewModel.getMovieCategory()
-
         binding.mainRecycler.adapter = adapter
-
         binding.mainRecycler.addItemDecoration(
             GridSpacingItemDecoration(2, 32, false)
         )
@@ -48,9 +41,12 @@ class HomeFragment :
             adapter.submitData(lifecycle, it)
         }
 
-        collectFlow(viewModel.movieCategory) {
-            setFilter(it)
+        viewModel.movieCategory.observeNonNull(viewLifecycleOwner) {
+            it.getContentIfNotHandled()?.let { it ->
+                setFilter(it)
+            }
         }
+
         lifecycleScope.launch {
             adapter.loadStateFlow.collect { loadStates ->
                 when (loadStates.refresh) {
@@ -58,7 +54,7 @@ class HomeFragment :
                         viewModel.setDialog(DialogItem.LoaderDialog())
                     }
                     is LoadState.Error -> {
-                        viewModel.setDialog(DialogItem.ErrorDialog(onRefreshClick = { viewModel.refresh() }))
+                        viewModel.setDialog(DialogItem.ErrorDialog(onRefreshClick = { adapter.refresh()}))
                     }
                     else -> {
                         viewModel.closeLoaderDialog()
