@@ -10,7 +10,12 @@ import com.space.moviesapp.presentation.model.MovieDetailsUIModel
 import com.space.moviesapp.presentation.model.MovieCategoryUIModel
 import com.space.moviesapp.presentation.model.MovieItemUIModel
 import com.space.moviesapp.presentation.model.MoviePageUIModel
+import java.math.BigDecimal
+import java.math.RoundingMode
+import java.text.DecimalFormat
 import kotlin.collections.HashMap
+import kotlin.math.roundToInt
+import kotlin.math.roundToLong
 
 
 //todo mapper class
@@ -52,5 +57,5 @@ fun MovieDetailsModel.toUIModel() = MovieDetailsUIModel(
     posterPath,
     releaseDate.dropLast(6),
     runtime,
-    voteAverage
+    BigDecimal(voteAverage).setScale(2,RoundingMode.FLOOR).toDouble()
 )
