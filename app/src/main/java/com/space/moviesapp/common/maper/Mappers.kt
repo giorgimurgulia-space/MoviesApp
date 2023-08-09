@@ -15,21 +15,14 @@ import kotlin.collections.HashMap
 fun MovieCategoryDto.toDomainModel(id: Int) = MovieCategoryModel(id, urlId, title)
 fun MovieCategoryModel.toUIModel() = MovieCategoryUIModel(id, urlId, title)
 
-fun MoviesPageDto.toDomainModel(genresMap: Map<Int, String>) = MoviesPageModel(
-    page, results.map { it.toDomainModel(genresMap) }, totalPages
-)
-
-fun MovieItemDto.toDomainModel(genresMap: Map<Int, String>) =
-    MovieItem(
+fun MovieItemDto.toDomainModel(genresMap: Map<Int, String>, isFavourite: Boolean) =
+    MovieItemModel(
         id, genreIds.map { id -> genresMap[id] }, title, voteAverage, releaseDate.dropLast(6),
-        IMAGE_BASE_URL + posterPath
+        IMAGE_BASE_URL + posterPath, isFavourite
     )
 
-fun MoviesPageModel.toUIModel() = MoviePageUIModel(
-    page, results.map { it.toUIModel() }, totalPages
-)
-
-fun MovieItem.toUIModel() = MovieItemUIModel(id, genres, title, rating, releaseDate, poster)
+fun MovieItemModel.toUIModel() =
+    MovieItemUIModel(id, genres, title, rating, releaseDate, poster, isFavourite)
 
 fun GenresDto.toDomainModel(): HashMap<Int, String> {
     val genresMap = HashMap<Int, String>()
@@ -39,7 +32,7 @@ fun GenresDto.toDomainModel(): HashMap<Int, String> {
     return genresMap
 }
 
-fun MovieDetailsDto.toDomainModel() = MovieDetailsModel(
+fun MovieDetailsDto.toDomainModel(isFavourite: Boolean) = MovieDetailsModel(
     id,
     genres.map { it.title },
     originalTitle,
@@ -47,7 +40,8 @@ fun MovieDetailsDto.toDomainModel() = MovieDetailsModel(
     IMAGE_BASE_URL + posterPath,
     releaseDate,
     runtime,
-    voteAverage
+    voteAverage,
+    isFavourite
 )
 
 fun MovieDetailsModel.toUIModel() = MovieDetailsUIModel(
@@ -58,6 +52,12 @@ fun MovieDetailsModel.toUIModel() = MovieDetailsUIModel(
     posterPath,
     releaseDate.dropLast(6),
     runtime,
-    BigDecimal(voteAverage).setScale(2, RoundingMode.FLOOR).toDouble()
+    BigDecimal(voteAverage).setScale(2, RoundingMode.FLOOR).toDouble(),
+    isFavourite
 )
-fun MovieEntity.toDomainModel() = MovieItemModel(id, genres, title, rating, releaseDate, poster)
+
+fun MovieItemModel.toEntity() =
+    MovieEntity(id, genres.firstOrNull() ?: "", title, rating, releaseDate, poster)
+
+fun MovieEntity.toDomainModel() =
+    MovieItemModel(id, listOf(genres), title, rating, releaseDate, poster,true)

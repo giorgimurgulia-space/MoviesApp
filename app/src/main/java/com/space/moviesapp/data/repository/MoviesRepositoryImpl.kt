@@ -5,14 +5,12 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.map
 import com.space.moviesapp.common.maper.toDomainModel
-import com.space.moviesapp.common.resource.ApiError
 import com.space.moviesapp.data.paging.MoviesPagingSource
 import com.space.moviesapp.data.paging.MoviesSearchPagingSource
 import com.space.moviesapp.data.remote.api.ApiService
 import com.space.moviesapp.data.remote.dto.MovieCategoryDto
-import com.space.moviesapp.data.remote.dto.MovieItemDto
 import com.space.moviesapp.domain.model.MovieCategoryModel
-import com.space.moviesapp.domain.model.MovieItem
+import com.space.moviesapp.domain.model.MovieItemModel
 import com.space.moviesapp.domain.repository.MoviesRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -30,7 +28,7 @@ class MoviesRepositoryImpl(
         })
     }
 
-    override suspend fun getMovies(categoryId: String): Flow<PagingData<MovieItem>> {
+    override suspend fun getMovies(categoryId: String): Flow<PagingData<MovieItemModel>> {
         return Pager(
             config = PagingConfig(pageSize = 20, enablePlaceholders = false, initialLoadSize = 20),
             pagingSourceFactory = { MoviesPagingSource(apiService, categoryId) }
@@ -54,7 +52,7 @@ class MoviesRepositoryImpl(
         }
     }
 
-    override suspend fun searchMovies(query: String): Flow<PagingData<MovieItem>> {
+    override suspend fun searchMovies(query: String): Flow<PagingData<MovieItemModel>> {
         return Pager(
             config = PagingConfig(pageSize = 1, enablePlaceholders = false),
             pagingSourceFactory = { MoviesSearchPagingSource(apiService, query) }

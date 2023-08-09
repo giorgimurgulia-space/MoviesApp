@@ -8,5 +8,6 @@ data class MovieDetailsUIModel(
     val posterPath: String? = null,
     val releaseDate: String? = null,
     val runtime: Int? = null,
-    val voteAverage: Double = 0.00
+    val voteAverage: Double = 0.00,
+    val isFavourite: Boolean
 )

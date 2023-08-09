@@ -2,9 +2,7 @@ package com.space.moviesapp.presentation.ui.home.vm
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import androidx.paging.PagingData
-import androidx.paging.cachedIn
-import androidx.paging.map
+import androidx.paging.*
 import com.space.moviesapp.common.extensions.toResult
 import com.space.moviesapp.common.maper.toUIModel
 import com.space.moviesapp.common.resource.onError
