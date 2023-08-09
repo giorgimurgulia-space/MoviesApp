@@ -1,6 +1,5 @@
 package com.space.moviesapp.presentation.ui.home.vm
 
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
@@ -13,17 +12,18 @@ import com.space.moviesapp.common.resource.onLoading
 import com.space.moviesapp.common.resource.onSuccess
 import com.space.moviesapp.domain.usecase.GetMovieCategoryUseCase
 import com.space.moviesapp.domain.usecase.GetMoviesUseCase
+import com.space.moviesapp.domain.usecase.SearchMovieUseCase
 import com.space.moviesapp.presentation.base.vm.BaseViewModel
 import com.space.moviesapp.presentation.model.DialogItem
 import com.space.moviesapp.presentation.model.MovieCategoryUIModel
-import com.space.moviesapp.presentation.model.MovieItemUIModel
-import com.space.moviesapp.presentation.navigation.MovieEvent
+import com.space.moviesapp.presentation.model.MovieUIItem
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 class HomeViewModel(
     private val getMoviesUseCase: GetMoviesUseCase,
     private val getMovieCategoryUseCase: GetMovieCategoryUseCase,
+    private val searchMovieUseCase: SearchMovieUseCase
 ) : BaseViewModel() {
 
     private var selectCategoryIndex = 0
@@ -65,6 +65,15 @@ class HomeViewModel(
             getNewMovie()
         }
     }
+
+    fun movieSearch(query: String) {
+        viewModelScope.launch {
+            searchMovieUseCase.invoke(query).collectLatest { movieItem ->
+                _state.value = movieItem.map { it.toUIModel() }
+            }
+        }
+    }
+
 
     private fun getNewMovie() {
         viewModelScope.launch {
