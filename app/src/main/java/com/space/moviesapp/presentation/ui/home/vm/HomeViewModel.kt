@@ -10,7 +10,7 @@ import com.space.moviesapp.common.resource.onLoading
 import com.space.moviesapp.common.resource.onSuccess
 import com.space.moviesapp.domain.usecase.GetMovieCategoryUseCase
 import com.space.moviesapp.domain.usecase.GetMoviesUseCase
-import com.space.moviesapp.domain.usecase.SearchMovieUseCase
+import com.space.moviesapp.domain.usecase.search.SearchMovieUseCase
 import com.space.moviesapp.presentation.base.vm.BaseViewModel
 import com.space.moviesapp.presentation.model.DialogItem
 import com.space.moviesapp.presentation.model.MovieCategoryUIModel

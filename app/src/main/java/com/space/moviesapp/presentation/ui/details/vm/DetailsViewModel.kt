@@ -6,7 +6,7 @@ import com.space.moviesapp.common.maper.toUIModel
 import com.space.moviesapp.common.resource.onError
 import com.space.moviesapp.common.resource.onLoading
 import com.space.moviesapp.common.resource.onSuccess
-import com.space.moviesapp.domain.usecase.GetMovieDetailsUseCase
+import com.space.moviesapp.domain.usecase.details.GetMovieDetailsUseCase
 import com.space.moviesapp.presentation.base.vm.BaseViewModel
 import com.space.moviesapp.presentation.model.MovieDetailsUIModel
 import com.space.moviesapp.presentation.model.DialogItem
