@@ -2,11 +2,14 @@ package com.space.moviesapp.presentation.ui.details.vm
 
 import androidx.lifecycle.viewModelScope
 import com.space.moviesapp.common.extensions.toResult
+import com.space.moviesapp.common.maper.toEntity
 import com.space.moviesapp.common.maper.toUIModel
 import com.space.moviesapp.common.resource.onError
 import com.space.moviesapp.common.resource.onLoading
 import com.space.moviesapp.common.resource.onSuccess
+import com.space.moviesapp.domain.model.MovieItemModel
 import com.space.moviesapp.domain.usecase.details.GetMovieDetailsUseCase
+import com.space.moviesapp.domain.usecase.favourite.ChangeMovieFavouriteStatusUseCase
 import com.space.moviesapp.presentation.base.vm.BaseViewModel
 import com.space.moviesapp.presentation.model.MovieDetailsUIModel
 import com.space.moviesapp.presentation.model.DialogItem
@@ -17,6 +20,7 @@ import kotlinx.coroutines.launch
 
 class DetailsViewModel(
     private val getMovieDetailsUseCase: GetMovieDetailsUseCase,
+    private val changeMovieFavouriteStatusUseCase: ChangeMovieFavouriteStatusUseCase
 ) : BaseViewModel() {
     private val _movieState = MutableStateFlow(MovieDetailsUIModel())
     val movieState get() = _movieState.asStateFlow()
@@ -40,6 +44,14 @@ class DetailsViewModel(
                     }
                 }
             }
+        }
+    }
+
+    fun onFavouriteClick() {
+        viewModelScope.launch {
+            changeMovieFavouriteStatusUseCase.invoke(
+                _movieState.value.toEntity()
+            )
         }
     }
 }

@@ -11,12 +11,14 @@ val viewModelModule = module {
             getMoviesUseCase = get(),
             getMovieCategoryUseCase = get(),
             searchMovieUseCase = get(),
-            changeMovieFavouriteStatusUseCase = get()
+            changeMovieFavouriteStatusUseCase = get(),
+            getFavouriteMovieUseCase = get()
         )
     }
     viewModel {
         DetailsViewModel(
-            getMovieDetailsUseCase = get()
+            getMovieDetailsUseCase = get(),
+            changeMovieFavouriteStatusUseCase = get()
         )
     }
 }

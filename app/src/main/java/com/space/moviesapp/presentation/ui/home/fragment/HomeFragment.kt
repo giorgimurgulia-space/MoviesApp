@@ -27,7 +27,6 @@ class HomeFragment :
         onItemClicked = { viewModel.navigate(HomeFragmentDirections.actionGlobalDetailsFragment(it)) },
         onFavouriteClick = {
             viewModel.onFavouriteClick(it)
-            g()
         }
     )
 
@@ -86,6 +85,14 @@ class HomeFragment :
 
         chipGroup.setOnCheckedStateChangeListener { group, checkedIds ->
             viewModel.onFilterClick(group.checkedChipId)
+        }
+
+        favoritesNavLinearLayout.setOnClickListener {
+            viewModel.getFavouriteMovie()
+        }
+
+        homeNavLinearLayout.setOnClickListener {
+            chipGroup.check(0)
         }
     }
 

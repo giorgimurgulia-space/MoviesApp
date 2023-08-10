@@ -19,7 +19,6 @@ class MoviesFavoritesPagingSource(
             val response =
                 moviesDao.getFavouriteMovies(params.loadSize, currentPage * params.loadSize)
 
-
             LoadResult.Page(
                 data = response,
                 prevKey = if (currentPage == 0) null else currentPage - 1,

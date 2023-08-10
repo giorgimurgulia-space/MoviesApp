@@ -4,15 +4,18 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import androidx.paging.*
 import com.space.moviesapp.common.extensions.toResult
+import com.space.moviesapp.common.maper.toEntity
 import com.space.moviesapp.common.maper.toUIModel
 import com.space.moviesapp.common.resource.onError
 import com.space.moviesapp.common.resource.onLoading
 import com.space.moviesapp.common.resource.onSuccess
+import com.space.moviesapp.data.local.database.entity.MovieEntity
 import com.space.moviesapp.domain.model.MovieItemModel
 import com.space.moviesapp.domain.usecase.GetMovieCategoryUseCase
 import com.space.moviesapp.domain.usecase.GetMoviesUseCase
 import com.space.moviesapp.domain.usecase.favourite.ChangeMovieFavouriteStatusUseCase
 import com.space.moviesapp.domain.usecase.favourite.CheckFavouriteMovieUseCase
+import com.space.moviesapp.domain.usecase.favourite.GetFavouriteMovieUseCase
 import com.space.moviesapp.domain.usecase.search.SearchMovieUseCase
 import com.space.moviesapp.presentation.base.vm.BaseViewModel
 import com.space.moviesapp.presentation.model.DialogItem
@@ -26,7 +29,8 @@ class HomeViewModel(
     private val getMoviesUseCase: GetMoviesUseCase,
     private val getMovieCategoryUseCase: GetMovieCategoryUseCase,
     private val searchMovieUseCase: SearchMovieUseCase,
-    private val changeMovieFavouriteStatusUseCase: ChangeMovieFavouriteStatusUseCase
+    private val changeMovieFavouriteStatusUseCase: ChangeMovieFavouriteStatusUseCase,
+    private val getFavouriteMovieUseCase: GetFavouriteMovieUseCase
 ) : BaseViewModel() {
 
     private var selectCategoryIndex = 0
@@ -42,13 +46,9 @@ class HomeViewModel(
         getMovieCategory()
     }
 
-    fun onFavouriteClick(movieId: Int) {
+    fun onFavouriteClick(movie: MovieItemUIModel) {
         viewModelScope.launch {
-            changeMovieFavouriteStatusUseCase.invoke(
-                MovieItemModel(
-                    movieId, listOf("tt"), "gio", 1.0, "2034-01-03", "", false
-                )
-            )
+            changeMovieFavouriteStatusUseCase.invoke(movie.toEntity())
         }
     }
 
@@ -69,6 +69,15 @@ class HomeViewModel(
         }
     }
 
+    fun getFavouriteMovie(){
+        viewModelScope.launch{
+            getFavouriteMovieUseCase.invoke().cachedIn(viewModelScope).collectLatest {
+                _state.value = it.map { movieItem ->
+                    movieItem.toUIModel()
+                }
+            }
+        }
+    }
     private fun getMovieCategory() {
         viewModelScope.launch {
             getMovieCategoryUseCase.invoke().toResult().collectLatest { it ->

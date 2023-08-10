@@ -12,7 +12,7 @@ import com.space.moviesapp.presentation.model.MovieItemUIModel
 
 class MovieAdapter(
     private val onItemClicked: ((movieId: Int) -> Unit),
-    private val onFavouriteClick: ((movieId: Int) -> Unit)
+    private val onFavouriteClick: ((movie: MovieItemUIModel) -> Unit)
 ) :
     PagingDataAdapter<MovieItemUIModel, MovieAdapter.MovieViewHolder>(MovieDiffUtil()) {
 
@@ -35,7 +35,7 @@ class MovieAdapter(
     class MovieViewHolder(
         private val binding: LayoutMovieItemBinding,
         private val onItemClicked: ((movieId: Int) -> Unit),
-        private val onFavouriteClick: ((movieId: Int) -> Unit)
+        private val onFavouriteClick: ((movie: MovieItemUIModel) -> Unit)
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(movie: MovieItemUIModel) = with(binding) {
@@ -52,17 +52,8 @@ class MovieAdapter(
             movieYearText.text = movie.releaseDate
 
             favoriteCheckBox.setOnClickListener{
-                onFavouriteClick(movie.id)
+                onFavouriteClick(movie)
             }
-
-//            favoriteCheckBox.setOnCheckedChangeListener { checkbox, isChecked ->
-//                // todo / for test button work
-//                Toast.makeText(
-//                    binding.root.context,
-//                    movie.id.toString() + " " + isChecked,
-//                    Toast.LENGTH_SHORT
-//                ).show()
-//            }
 
             binding.root.setOnClickListener {
                 onItemClicked(movie.id)

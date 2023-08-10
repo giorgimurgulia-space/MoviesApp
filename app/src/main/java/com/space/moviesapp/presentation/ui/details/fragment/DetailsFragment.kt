@@ -35,11 +35,15 @@ class DetailsFragment :
         binding.backImage.setOnClickListener {
             viewModel.navigateBack()
         }
+        binding.favoriteCheckBox.setOnClickListener {
+            viewModel.onFavouriteClick()
+        }
     }
 
     private fun setMovieDetailContent(movieModel: MovieDetailsUIModel) = with(binding) {
         movieModel.posterPath?.let { bannerImage.loadImage(it) }
         movieTitleText.text = movieModel.originalTitle
+        favoriteCheckBox.isChecked = movieModel.isFavourite
         descriptionTextView.text = movieModel.overview
 
         chipGroup.removeAllViews()

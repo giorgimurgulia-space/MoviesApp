@@ -17,12 +17,12 @@ fun MovieCategoryModel.toUIModel() = MovieCategoryUIModel(id, urlId, title)
 
 fun MovieItemDto.toDomainModel(genresMap: Map<Int, String>, isFavourite: Boolean) =
     MovieItemModel(
-        id, genreIds.map { id -> genresMap[id] }, title, voteAverage, releaseDate.dropLast(6),
+        id, genreIds.map { id -> genresMap[id] }, title, releaseDate.dropLast(6),
         IMAGE_BASE_URL + posterPath, isFavourite
     )
 
 fun MovieItemModel.toUIModel() =
-    MovieItemUIModel(id, genres, title, rating, releaseDate, poster, isFavourite)
+    MovieItemUIModel(id, genres, title, releaseDate, poster, isFavourite)
 
 fun GenresDto.toDomainModel(): HashMap<Int, String> {
     val genresMap = HashMap<Int, String>()
@@ -56,8 +56,14 @@ fun MovieDetailsModel.toUIModel() = MovieDetailsUIModel(
     isFavourite
 )
 
+fun MovieItemUIModel.toEntity() =
+    MovieEntity(id, genres.firstOrNull() ?: "", title, releaseDate, poster)
+
 fun MovieItemModel.toEntity() =
-    MovieEntity(id, genres.firstOrNull() ?: "", title, rating, releaseDate, poster)
+    MovieEntity(id, genres.firstOrNull() ?: "", title, releaseDate, poster)
 
 fun MovieEntity.toDomainModel() =
-    MovieItemModel(id, listOf(genres), title, rating, releaseDate, poster,true)
+    MovieItemModel(id, listOf(genres), title, poster, releaseDate, true)
+
+fun MovieDetailsUIModel.toEntity() =
+    MovieEntity(id!!, genres.first(), originalTitle!!, releaseDate!!, posterPath!!)
