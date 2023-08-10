@@ -5,6 +5,7 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.map
 import com.space.moviesapp.common.maper.toDomainModel
+import com.space.moviesapp.data.local.database.dao.MoviesDao
 import com.space.moviesapp.data.paging.MoviesPagingSource
 import com.space.moviesapp.data.paging.MoviesSearchPagingSource
 import com.space.moviesapp.data.remote.api.ApiService
@@ -18,7 +19,8 @@ import kotlinx.coroutines.flow.map
 import java.util.concurrent.CancellationException
 
 class MoviesRepositoryImpl(
-    private val apiService: ApiService
+    private val apiService: ApiService,
+    private val moviesDao: MoviesDao
 ) : MoviesRepository {
 
     override fun getMovieCategory(): Flow<List<MovieCategoryModel>> = flow {
@@ -34,7 +36,7 @@ class MoviesRepositoryImpl(
             pagingSourceFactory = { MoviesPagingSource(apiService, categoryId) }
         ).flow.map {
             it.map { movie ->
-                movie.toDomainModel(getMoviesGenres())
+                movie.toDomainModel(getMoviesGenres(), moviesDao.isFavouriteMovie(movie.id))
             }
         }
     }
@@ -59,7 +61,7 @@ class MoviesRepositoryImpl(
         ).flow
             .map {
                 it.map { movie ->
-                    movie.toDomainModel(getMoviesGenres())
+                    movie.toDomainModel(getMoviesGenres(), moviesDao.isFavouriteMovie(movie.id))
                 }
             }
     }
