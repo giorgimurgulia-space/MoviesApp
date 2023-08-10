@@ -4,16 +4,21 @@ package com.space.moviesapp.presentation.ui.home.fragment
 import android.view.LayoutInflater
 import android.view.View
 import androidx.core.widget.doAfterTextChanged
+import androidx.lifecycle.lifecycleScope
+import androidx.paging.LoadState
 import com.space.moviesapp.common.extensions.changeVisibility
 import com.space.moviesapp.common.extensions.collectFlow
 import com.space.moviesapp.common.extensions.observeNonNull
 import com.space.moviesapp.databinding.ChipFilterItemBinding
 import com.space.moviesapp.databinding.FragmentHomeBinding
 import com.space.moviesapp.presentation.base.fragment.BaseFragment
+import com.space.moviesapp.presentation.model.DialogItem
 import com.space.moviesapp.presentation.model.MovieCategoryUIModel
 import com.space.moviesapp.presentation.ui.home.adapter.GridSpacingItemDecoration
 import com.space.moviesapp.presentation.ui.home.adapter.MovieAdapter
 import com.space.moviesapp.presentation.ui.home.vm.HomeViewModel
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import kotlin.reflect.KClass
 
 
@@ -59,6 +64,21 @@ class HomeFragment :
         viewModel.movieCategory.observeNonNull(viewLifecycleOwner) {
             it.getContentIfNotHandled()?.let { category ->
                 setFilter(category)
+            }
+        }
+        viewLifecycleOwner.lifecycleScope.launch {
+            adapter.loadStateFlow.collectLatest { loadStates ->
+                when (loadStates.refresh) {
+                    is LoadState.Loading -> {
+                        viewModel.setDialog(DialogItem.LoaderDialog())
+                    }
+                    is LoadState.Error -> {
+                        viewModel.setDialog(DialogItem.ErrorDialog(onRefreshClick = { adapter.refresh() }))
+                    }
+                    else -> {
+                        viewModel.closeLoaderDialog()
+                    }
+                }
             }
         }
     }

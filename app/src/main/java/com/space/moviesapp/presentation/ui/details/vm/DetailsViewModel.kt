@@ -38,9 +38,7 @@ class DetailsViewModel(
                         _movieState.tryEmit(it.toUIModel())
                     }
                     it.onError {
-                        setDialog(DialogItem.ErrorDialog(onRefreshClick = {
-                            //todo
-                        }))
+                        setDialog(DialogItem.ErrorDialog(onRefreshClick = { navigateBack() }))
                     }
                 }
             }
