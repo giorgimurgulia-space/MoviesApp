@@ -63,7 +63,7 @@ fun MovieItemModel.toEntity() =
     MovieEntity(id, genres.firstOrNull() ?: "", title, releaseDate, poster)
 
 fun MovieEntity.toDomainModel() =
-    MovieItemModel(id, listOf(genres), title, poster, releaseDate, true)
+    MovieItemModel(id, listOf(genres), title, releaseDate,poster, true)
 
 fun MovieDetailsUIModel.toEntity() =
     MovieEntity(id!!, genres.first(), originalTitle!!, releaseDate!!, posterPath!!)
