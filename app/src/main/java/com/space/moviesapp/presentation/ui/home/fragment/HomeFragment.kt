@@ -88,6 +88,7 @@ class HomeFragment :
         }
 
         favoritesNavLinearLayout.setOnClickListener {
+            chipGroup.clearCheck()
             viewModel.getFavouriteMovie()
         }
 
