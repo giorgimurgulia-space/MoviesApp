@@ -17,7 +17,7 @@ class FavouriteMovieRepositoryImpl(
     private val moviesDao: MoviesDao
 ) : FavouriteMovieRepository {
 
-    override suspend fun getFavoriteMovie(): Flow<PagingData<MovieItemModel>> {
+    override fun getFavoriteMovie(): Flow<PagingData<MovieItemModel>> {
         return Pager(
             config = PagingConfig(pageSize = 20, enablePlaceholders = false),
             pagingSourceFactory = { MoviesFavoritesPagingSource(moviesDao) }

@@ -52,6 +52,7 @@ class HomeFragment :
         searchListener()
     }
 
+    //todo test
     private fun g() {
         adapter.refresh()
     }

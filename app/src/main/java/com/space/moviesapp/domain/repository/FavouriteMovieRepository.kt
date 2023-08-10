@@ -6,7 +6,7 @@ import com.space.moviesapp.domain.model.MovieItemModel
 import kotlinx.coroutines.flow.Flow
 
 interface FavouriteMovieRepository {
-    suspend fun getFavoriteMovie(): Flow<PagingData<MovieItemModel>>
+    fun getFavoriteMovie(): Flow<PagingData<MovieItemModel>>
 
     suspend fun insertFavoriteMovie(movie: MovieEntity)
 

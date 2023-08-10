@@ -47,6 +47,7 @@ class HomeViewModel(
     }
 
     fun onFavouriteClick(movie: MovieItemUIModel) {
+        //todo
         viewModelScope.launch {
             changeMovieFavouriteStatusUseCase.invoke(movie.toEntity())
         }
@@ -80,7 +81,7 @@ class HomeViewModel(
     }
     private fun getMovieCategory() {
         viewModelScope.launch {
-            getMovieCategoryUseCase.invoke().toResult().collectLatest { it ->
+            getMovieCategoryUseCase.invoke().toResult().collectLatest {
                 it.onLoading {
                     setDialog(DialogItem.LoaderDialog())
                 }
