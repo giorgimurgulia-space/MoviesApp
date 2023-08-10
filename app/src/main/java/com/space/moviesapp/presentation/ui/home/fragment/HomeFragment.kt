@@ -23,9 +23,13 @@ class HomeFragment :
     override val viewModelClass: KClass<HomeViewModel>
         get() = HomeViewModel::class
 
-    private val adapter = MovieAdapter(onItemClicked = {
-        viewModel.navigate(HomeFragmentDirections.actionGlobalDetailsFragment(it))
-    })
+    private val adapter = MovieAdapter(
+        onItemClicked = { viewModel.navigate(HomeFragmentDirections.actionGlobalDetailsFragment(it)) },
+        onFavouriteClick = {
+            viewModel.onFavouriteClick(it)
+            g()
+        }
+    )
 
     override fun onBind() {
         binding.mainRecycler.adapter = adapter
@@ -42,6 +46,10 @@ class HomeFragment :
         )
 
         searchListener()
+    }
+
+    private fun g() {
+        adapter.refresh()
     }
 
     override fun setObserves() {
@@ -66,7 +74,6 @@ class HomeFragment :
             searchEditText.text.clear()
             searchEditText.clearFocus()
             closeKeyBoard()
-
             chipGroup.check(0)
         }
 

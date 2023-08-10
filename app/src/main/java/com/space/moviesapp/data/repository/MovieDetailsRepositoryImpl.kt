@@ -13,7 +13,7 @@ class MovieDetailsRepositoryImpl(
     private val apiService: ApiService,
     private val moviesDao: MoviesDao
 ) : MovieDetailsRepository {
-    override suspend fun getMovie(movieId: Int): Flow<MovieDetailsModel> = flow {
+    override suspend fun invoke(movieId: Int): Flow<MovieDetailsModel> = flow {
         val response = apiService.getMovie(movieId)
         if (response.isSuccessful) {
             emit(

@@ -59,6 +59,7 @@
 
     <com.google.android.material.chip.ChipGroup
         android:id="@+id/chip_group"
+        style="@style/CustomFilterStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dimen_8_dp"

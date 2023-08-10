@@ -8,8 +8,11 @@ import com.space.moviesapp.common.maper.toUIModel
 import com.space.moviesapp.common.resource.onError
 import com.space.moviesapp.common.resource.onLoading
 import com.space.moviesapp.common.resource.onSuccess
+import com.space.moviesapp.domain.model.MovieItemModel
 import com.space.moviesapp.domain.usecase.GetMovieCategoryUseCase
 import com.space.moviesapp.domain.usecase.GetMoviesUseCase
+import com.space.moviesapp.domain.usecase.favourite.ChangeMovieFavouriteStatusUseCase
+import com.space.moviesapp.domain.usecase.favourite.CheckFavouriteMovieUseCase
 import com.space.moviesapp.domain.usecase.search.SearchMovieUseCase
 import com.space.moviesapp.presentation.base.vm.BaseViewModel
 import com.space.moviesapp.presentation.model.DialogItem
@@ -22,7 +25,8 @@ import kotlinx.coroutines.launch
 class HomeViewModel(
     private val getMoviesUseCase: GetMoviesUseCase,
     private val getMovieCategoryUseCase: GetMovieCategoryUseCase,
-    private val searchMovieUseCase: SearchMovieUseCase
+    private val searchMovieUseCase: SearchMovieUseCase,
+    private val changeMovieFavouriteStatusUseCase: ChangeMovieFavouriteStatusUseCase
 ) : BaseViewModel() {
 
     private var selectCategoryIndex = 0
@@ -38,21 +42,13 @@ class HomeViewModel(
         getMovieCategory()
     }
 
-    private fun getMovieCategory() {
+    fun onFavouriteClick(movieId: Int) {
         viewModelScope.launch {
-            getMovieCategoryUseCase.invoke().toResult().collectLatest { it ->
-                it.onLoading {
-                    setDialog(DialogItem.LoaderDialog())
-                }
-                it.onSuccess { category ->
-                    closeLoaderDialog()
-                    movieCategoryList = category.map { item -> item.toUIModel() }
-                    _movieCategory.value = MovieEvent(movieCategoryList)
-                }
-                it.onError {
-                    setDialog(DialogItem.ErrorDialog(onRefreshClick = { getMovieCategory() }))
-                }
-            }
+            changeMovieFavouriteStatusUseCase.invoke(
+                MovieItemModel(
+                    movieId, listOf("tt"), "gio", 1.0, "2034-01-03", "", false
+                )
+            )
         }
     }
 
@@ -73,6 +69,23 @@ class HomeViewModel(
         }
     }
 
+    private fun getMovieCategory() {
+        viewModelScope.launch {
+            getMovieCategoryUseCase.invoke().toResult().collectLatest { it ->
+                it.onLoading {
+                    setDialog(DialogItem.LoaderDialog())
+                }
+                it.onSuccess { category ->
+                    closeLoaderDialog()
+                    movieCategoryList = category.map { item -> item.toUIModel() }
+                    _movieCategory.value = MovieEvent(movieCategoryList)
+                }
+                it.onError {
+                    setDialog(DialogItem.ErrorDialog(onRefreshClick = { getMovieCategory() }))
+                }
+            }
+        }
+    }
 
     private fun getNewMovie() {
         viewModelScope.launch {
