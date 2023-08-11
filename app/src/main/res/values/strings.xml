@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">MoviesApp</string>
+    <string name="search_hint">Search</string>
+    <string name="home_nav_text">Home</string>
+    <string name="favorites_nav_text">Favorites</string>
+    <string name="cancel">Cancel</string>
+    <string name="favorite_movies">Favorite movies</string>
+    <string name="data_can_t_be_loaded">Data can’t be loaded</string>
+    <string name="no_internet_connection">internet connection or some other server error</string>
+    <string name="refresh">Refresh</string>
+    <string name="details_title">Details</string>
+    <string name="trailer">Trailer</string>
+    <string name="cancel_text">Cancel</string>
+    <string name="movies_title">Movies</string>
 </resources>
