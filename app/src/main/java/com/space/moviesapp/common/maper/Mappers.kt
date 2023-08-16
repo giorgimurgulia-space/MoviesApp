@@ -7,7 +7,6 @@ import com.space.moviesapp.domain.model.*
 import com.space.moviesapp.presentation.model.MovieCategoryUIModel
 import com.space.moviesapp.presentation.model.MovieDetailsUIModel
 import com.space.moviesapp.presentation.model.MovieItemUIModel
-import com.space.moviesapp.presentation.model.MoviePageUIModel
 import java.math.BigDecimal
 import java.math.RoundingMode
 import kotlin.collections.HashMap
@@ -17,12 +16,12 @@ fun MovieCategoryModel.toUIModel() = MovieCategoryUIModel(id, urlId, title)
 
 fun MovieItemDto.toDomainModel(genresMap: Map<Int, String>, isFavourite: Boolean) =
     MovieItemModel(
-        id, genreIds.map { id -> genresMap[id] }, title, releaseDate.dropLast(6),
+        id, genreIds.map { id -> genresMap[id] }.firstOrNull(), originalTitle, releaseDate.dropLast(6),
         IMAGE_BASE_URL + posterPath, isFavourite
     )
 
 fun MovieItemModel.toUIModel() =
-    MovieItemUIModel(id, genres, title, releaseDate, poster, isFavourite)
+    MovieItemUIModel(id, genres, title, releaseDate, posterPath, isFavourite)
 
 fun GenresDto.toDomainModel(): HashMap<Int, String> {
     val genresMap = HashMap<Int, String>()
@@ -60,7 +59,7 @@ fun MovieItemUIModel.toEntity() =
     MovieEntity(id, genres.firstOrNull() ?: "", title, releaseDate, poster)
 
 fun MovieItemModel.toEntity() =
-    MovieEntity(id, genres.firstOrNull() ?: "", title, releaseDate, poster)
+    MovieEntity(id, genres.firstOrNull() ?: "", title, releaseDate, posterPath)
 
 fun MovieEntity.toDomainModel() =
     MovieItemModel(id, listOf(genres), title, releaseDate,poster, true)

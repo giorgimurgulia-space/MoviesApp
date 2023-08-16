@@ -3,16 +3,16 @@ package com.space.moviesapp.data.remote.dto
 import com.google.gson.annotations.SerializedName
 
 data class MovieDetailsDto(
-    val genres: List<GenreItemDto>,
-    val id: Int,
+    val genres: List<GenreItemDto>?,
+    val id: Int?,
     @SerializedName("original_title")
-    val originalTitle: String,
-    val overview: String,
+    val originalTitle: String?,
+    val overview: String?,
     @SerializedName("backdrop_path")
-    val posterPath: String,
+    val posterPath: String?,
     @SerializedName("release_date")
-    val releaseDate: String,
-    val runtime: Int,
+    val releaseDate: String?,
+    val runtime: Int?,
     @SerializedName("vote_average")
-    val voteAverage: Double
+    val voteAverage: Double?
 )
