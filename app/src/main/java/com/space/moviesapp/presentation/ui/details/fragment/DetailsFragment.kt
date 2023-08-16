@@ -41,7 +41,7 @@ class DetailsFragment :
     }
 
     private fun setMovieDetailContent(movieModel: MovieDetailsUIModel) = with(binding) {
-        bannerImage.loadImage(movieModel.mainPosterPath)
+        bannerImage.loadImage(movieModel.backdropPoster)
         movieTitleText.text = movieModel.title
         favoriteCheckBox.isChecked = movieModel.isFavourite
         descriptionTextView.text = movieModel.overview
