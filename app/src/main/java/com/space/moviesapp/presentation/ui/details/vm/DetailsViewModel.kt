@@ -2,8 +2,6 @@ package com.space.moviesapp.presentation.ui.details.vm
 
 import androidx.lifecycle.viewModelScope
 import com.space.moviesapp.common.extensions.toResult
-import com.space.moviesapp.common.maper.toEntity
-import com.space.moviesapp.common.maper.toUIModel
 import com.space.moviesapp.common.resource.onError
 import com.space.moviesapp.common.resource.onLoading
 import com.space.moviesapp.common.resource.onSuccess
@@ -14,7 +12,6 @@ import com.space.moviesapp.presentation.model.DialogItem
 import com.space.moviesapp.presentation.model.MovieDetailsUIModel
 import com.space.moviesapp.presentation.ui.details.mapper.MovieDetailsModelToUIMapper
 import com.space.moviesapp.presentation.ui.details.mapper.MovieDetailsUIModelToEntity
-import com.space.moviesapp.presentation.ui.home.mapper.MovieItemUIModelToEntity
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
