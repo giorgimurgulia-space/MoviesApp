@@ -11,8 +11,23 @@
         android:id="@+id/main_nav_host_fragment"
         android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         app:defaultNavHost="true"
+        app:layout_constraintBottom_toTopOf="@id/bottomNavigationView"
+        app:layout_constraintTop_toTopOf="parent"
         app:navGraph="@navigation/main_nav_graph" />
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigationView"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_62_dp"
+        android:background="@android:color/transparent"
+        android:paddingHorizontal="@dimen/dimen_16_dp"
+        android:paddingVertical="@dimen/dimen_12_dp"
+        app:itemBackground="@color/bottom_nav_bar_background_selector"
+        app:itemIconTint="@color/bottom_nav_bar_color_selector"
+        app:itemTextColor="@color/bottom_nav_bar_color_selector"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:menu="@menu/main_menu" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

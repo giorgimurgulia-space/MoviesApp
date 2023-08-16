@@ -30,7 +30,4 @@
         android:name="com.space.moviesapp.presentation.ui.favourites.fragment.FavouritesFragment"
         android:label="FavouritesFragment" />
 
-    <action
-        android:id="@+id/action_global_favourites_Fragment"
-        app:destination="@id/favouritesFragment" />
 </navigation>
