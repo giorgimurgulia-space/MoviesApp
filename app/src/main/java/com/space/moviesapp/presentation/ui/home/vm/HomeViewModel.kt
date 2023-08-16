@@ -75,15 +75,6 @@ class HomeViewModel(
         }
     }
 
-    fun getFavouriteMovie() {
-        viewModelScope.launch {
-            getFavouriteMovieUseCase.invoke().cachedIn(viewModelScope).collectLatest {
-                _state.value = it.map { movieItem ->
-                    movieItemModelToUIMapper(movieItem)
-                }
-            }
-        }
-    }
 
     private fun getMovieCategory() {
         viewModelScope.launch {

@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import com.space.moviesapp.common.extensions.changeVisibility
 import com.space.moviesapp.common.extensions.collectFlow
@@ -14,8 +15,8 @@ import com.space.moviesapp.databinding.FragmentHomeBinding
 import com.space.moviesapp.presentation.base.fragment.BaseFragment
 import com.space.moviesapp.presentation.model.DialogItem
 import com.space.moviesapp.presentation.model.MovieCategoryUIModel
-import com.space.moviesapp.presentation.ui.home.adapter.GridSpacingItemDecoration
-import com.space.moviesapp.presentation.ui.home.adapter.MovieAdapter
+import com.space.moviesapp.presentation.common.decorator.GridSpacingItemDecoration
+import com.space.moviesapp.presentation.common.adapter.MoviePagingAdapter
 import com.space.moviesapp.presentation.ui.home.vm.HomeViewModel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -28,7 +29,7 @@ class HomeFragment :
     override val viewModelClass: KClass<HomeViewModel>
         get() = HomeViewModel::class
 
-    private val adapter = MovieAdapter(
+    private val adapter = MoviePagingAdapter(
         onItemClicked = { viewModel.navigate(HomeFragmentDirections.actionGlobalDetailsFragment(it)) },
         onFavouriteClick = {
             viewModel.onFavouriteClick(it)
@@ -104,8 +105,7 @@ class HomeFragment :
         }
 
         favoritesNavLinearLayout.setOnClickListener {
-            chipGroup.clearCheck()
-            viewModel.getFavouriteMovie()
+            viewModel.navigate(HomeFragmentDirections.actionGlobalFavouritesFragment())
         }
 
         homeNavLinearLayout.setOnClickListener {

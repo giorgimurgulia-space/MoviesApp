@@ -13,4 +13,5 @@
     <string name="cancel_text">Cancel</string>
     <string name="movies_title">Movies</string>
     <string name="about_movie_text">About Movie</string>
+    <string name="favorite_title">Favorite movies</string>
 </resources>

@@ -1,4 +1,4 @@
-package com.space.moviesapp.presentation.ui.home.adapter
+package com.space.moviesapp.presentation.common.decorator
 
 import android.graphics.Rect
 import android.view.View

@@ -1,6 +1,7 @@
 package com.space.moviesapp.presentation.di
 
 import com.space.moviesapp.presentation.ui.details.vm.DetailsViewModel
+import com.space.moviesapp.presentation.ui.favourites.vm.FavouritesViewModel
 import com.space.moviesapp.presentation.ui.home.vm.HomeViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -24,6 +25,14 @@ val viewModelModule = module {
             changeMovieFavouriteStatusUseCase = get(),
             movieDetailsModelToUIMapper = get(),
             movieDetailsUIModelToEntity = get()
+        )
+    }
+    viewModel {
+        FavouritesViewModel(
+            getFavouriteMovieUseCase = get(),
+            changeMovieFavouriteStatusUseCase = get(),
+            movieItemModelToUIMapper = get(),
+            movieItemUIModelToEntity = get()
         )
     }
 }

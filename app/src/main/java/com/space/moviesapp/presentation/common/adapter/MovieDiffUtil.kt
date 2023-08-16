@@ -1,4 +1,4 @@
-package com.space.moviesapp.presentation.ui.home.adapter
+package com.space.moviesapp.presentation.common.adapter
 
 import androidx.recyclerview.widget.DiffUtil
 import com.space.moviesapp.presentation.model.MovieItemUIModel

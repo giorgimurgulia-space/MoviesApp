@@ -8,3 +8,11 @@ fun View.changeVisibility() = run {
     else
         View.GONE
 }
+
+fun View.hide() = run {
+    visibility = View.GONE
+}
+
+fun View.show() = run {
+    visibility = View.VISIBLE
+}
