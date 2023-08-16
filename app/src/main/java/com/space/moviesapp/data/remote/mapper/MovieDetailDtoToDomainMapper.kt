@@ -8,7 +8,7 @@ class MovieDetailDtoToDomainMapper {
     fun invoke(model: MovieDetailsDto, isFavourite: Boolean): MovieDetailsModel = with(model) {
         MovieDetailsModel(
             id ?: 0,
-            genres?.get(0)?.title ?: "",
+            genres?.firstOrNull()?.title ?: "",
             originalTitle ?: "",
             overview ?: "",
             if (backdropPosterPath.isNullOrEmpty())
