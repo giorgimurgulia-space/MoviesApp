@@ -7,12 +7,14 @@ import com.space.moviesapp.common.maper.toUIModel
 import com.space.moviesapp.common.resource.onError
 import com.space.moviesapp.common.resource.onLoading
 import com.space.moviesapp.common.resource.onSuccess
-import com.space.moviesapp.domain.model.MovieItemModel
 import com.space.moviesapp.domain.usecase.details.GetMovieDetailsUseCase
 import com.space.moviesapp.domain.usecase.favourite.ChangeMovieFavouriteStatusUseCase
 import com.space.moviesapp.presentation.base.vm.BaseViewModel
-import com.space.moviesapp.presentation.model.MovieDetailsUIModel
 import com.space.moviesapp.presentation.model.DialogItem
+import com.space.moviesapp.presentation.model.MovieDetailsUIModel
+import com.space.moviesapp.presentation.ui.details.mapper.MovieDetailsModelToUIMapper
+import com.space.moviesapp.presentation.ui.details.mapper.MovieDetailsUIModelToEntity
+import com.space.moviesapp.presentation.ui.home.mapper.MovieItemUIModelToEntity
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
@@ -20,7 +22,9 @@ import kotlinx.coroutines.launch
 
 class DetailsViewModel(
     private val getMovieDetailsUseCase: GetMovieDetailsUseCase,
-    private val changeMovieFavouriteStatusUseCase: ChangeMovieFavouriteStatusUseCase
+    private val changeMovieFavouriteStatusUseCase: ChangeMovieFavouriteStatusUseCase,
+    private val movieDetailsModelToUIMapper: MovieDetailsModelToUIMapper,
+    private val movieDetailsUIModelToEntity: MovieDetailsUIModelToEntity
 ) : BaseViewModel() {
     private val _movieState = MutableStateFlow(MovieDetailsUIModel())
     val movieState get() = _movieState.asStateFlow()
@@ -33,9 +37,9 @@ class DetailsViewModel(
             viewModelScope.launch {
                 getMovieDetailsUseCase.invoke(movieId).toResult().collectLatest {
                     it.onLoading { setDialog(DialogItem.LoaderDialog()) }
-                    it.onSuccess {
+                    it.onSuccess { item ->
                         closeLoaderDialog()
-                        _movieState.tryEmit(it.toUIModel())
+                        _movieState.tryEmit(movieDetailsModelToUIMapper(item))
                     }
                     it.onError {
                         setDialog(DialogItem.ErrorDialog(onRefreshClick = { navigateBack() }))
@@ -48,7 +52,7 @@ class DetailsViewModel(
     fun onFavouriteClick() {
         viewModelScope.launch {
             changeMovieFavouriteStatusUseCase.invoke(
-                _movieState.value.toEntity()
+                movieDetailsUIModelToEntity(_movieState.value)
             )
         }
     }

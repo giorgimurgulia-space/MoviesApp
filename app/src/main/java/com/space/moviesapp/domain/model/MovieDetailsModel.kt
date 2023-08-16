@@ -3,7 +3,7 @@ package com.space.moviesapp.domain.model
 data class MovieDetailsModel(
     val id: Int,
     val genre: String,
-    val originalTitle: String,
+    val title: String,
     val overview: String,
     val backdropPoster: String,
     val mainPoster: String,

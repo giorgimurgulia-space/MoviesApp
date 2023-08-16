@@ -2,19 +2,16 @@ package com.space.moviesapp.presentation.ui.home.vm
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import androidx.paging.*
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
+import androidx.paging.map
 import com.space.moviesapp.common.extensions.toResult
-import com.space.moviesapp.common.maper.toEntity
-import com.space.moviesapp.common.maper.toUIModel
 import com.space.moviesapp.common.resource.onError
 import com.space.moviesapp.common.resource.onLoading
 import com.space.moviesapp.common.resource.onSuccess
-import com.space.moviesapp.data.local.database.entity.MovieEntity
-import com.space.moviesapp.domain.model.MovieItemModel
 import com.space.moviesapp.domain.usecase.GetMovieCategoryUseCase
 import com.space.moviesapp.domain.usecase.GetMoviesUseCase
 import com.space.moviesapp.domain.usecase.favourite.ChangeMovieFavouriteStatusUseCase
-import com.space.moviesapp.domain.usecase.favourite.CheckFavouriteMovieUseCase
 import com.space.moviesapp.domain.usecase.favourite.GetFavouriteMovieUseCase
 import com.space.moviesapp.domain.usecase.search.SearchMovieUseCase
 import com.space.moviesapp.presentation.base.vm.BaseViewModel
@@ -23,7 +20,11 @@ import com.space.moviesapp.presentation.model.MovieCategoryUIModel
 import com.space.moviesapp.presentation.model.MovieItemUIModel
 import com.space.moviesapp.presentation.navigation.MovieEvent
 import com.space.moviesapp.presentation.ui.home.mapper.MovieCategoryModelToUIMapper
-import kotlinx.coroutines.flow.*
+import com.space.moviesapp.presentation.ui.home.mapper.MovieItemModelToUIMapper
+import com.space.moviesapp.presentation.ui.home.mapper.MovieItemUIModelToEntity
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 class HomeViewModel(
@@ -32,7 +33,9 @@ class HomeViewModel(
     private val searchMovieUseCase: SearchMovieUseCase,
     private val changeMovieFavouriteStatusUseCase: ChangeMovieFavouriteStatusUseCase,
     private val getFavouriteMovieUseCase: GetFavouriteMovieUseCase,
-    private val movieCategoryModelToUIMapper: MovieCategoryModelToUIMapper
+    private val movieCategoryModelToUIMapper: MovieCategoryModelToUIMapper,
+    private val movieItemModelToUIMapper: MovieItemModelToUIMapper,
+    private val movieItemUIModelToEntity: MovieItemUIModelToEntity
 ) : BaseViewModel() {
 
     private var selectCategoryIndex = 0
@@ -51,7 +54,7 @@ class HomeViewModel(
     fun onFavouriteClick(movie: MovieItemUIModel) {
         //todo
         viewModelScope.launch {
-            changeMovieFavouriteStatusUseCase.invoke(movie.toEntity())
+            changeMovieFavouriteStatusUseCase.invoke(movieItemUIModelToEntity(movie))
         }
     }
 
@@ -67,7 +70,7 @@ class HomeViewModel(
     fun movieSearch(query: String) {
         viewModelScope.launch {
             searchMovieUseCase.invoke(query).collectLatest { movieItem ->
-                _state.value = movieItem.map { it.toUIModel() }
+                _state.value = movieItem.map { movieItemModelToUIMapper(it) }
             }
         }
     }
@@ -76,7 +79,7 @@ class HomeViewModel(
         viewModelScope.launch {
             getFavouriteMovieUseCase.invoke().cachedIn(viewModelScope).collectLatest {
                 _state.value = it.map { movieItem ->
-                    movieItem.toUIModel()
+                    movieItemModelToUIMapper(movieItem)
                 }
             }
         }
@@ -106,7 +109,7 @@ class HomeViewModel(
                 movieCategoryList[selectCategoryIndex].urlId
             ).cachedIn(viewModelScope).collectLatest {
                 _state.value = it.map { movieItem ->
-                    movieItem.toUIModel()
+                    movieItemModelToUIMapper(movieItem)
                 }
             }
         }

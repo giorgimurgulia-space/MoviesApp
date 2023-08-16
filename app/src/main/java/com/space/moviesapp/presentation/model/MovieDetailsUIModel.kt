@@ -3,7 +3,7 @@ package com.space.moviesapp.presentation.model
 data class MovieDetailsUIModel(
     val id: Int = 0,
     val genre: String = "",
-    val originalTitle: String = "",
+    val title: String = "",
     val overview: String = "",
     val backdropPoster: String = "",
     val mainPosterPath: String = "",

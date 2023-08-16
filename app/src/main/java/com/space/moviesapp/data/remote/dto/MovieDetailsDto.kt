@@ -15,7 +15,6 @@ data class MovieDetailsDto(
     @SerializedName("release_date")
     val releaseDate: String?,
     val runtime: Int?,
-
     @SerializedName("vote_average")
     val voteAverage: Double?
 )
