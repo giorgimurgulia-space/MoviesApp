@@ -52,11 +52,6 @@ class HomeFragment :
         searchListener()
     }
 
-    //todo test
-    private fun g() {
-        adapter.refresh()
-    }
-
     override fun setObserves() {
         collectFlow(viewModel.state) {
             adapter.submitData(lifecycle, it)
