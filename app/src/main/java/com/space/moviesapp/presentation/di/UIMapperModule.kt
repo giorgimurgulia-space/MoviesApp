@@ -1,5 +1,7 @@
 package com.space.moviesapp.presentation.di
 
+import com.space.moviesapp.presentation.ui.details.mapper.MovieDetailsModelToUIMapper
+import com.space.moviesapp.presentation.ui.details.mapper.MovieDetailsUIModelToEntity
 import com.space.moviesapp.presentation.ui.home.mapper.MovieCategoryModelToUIMapper
 import com.space.moviesapp.presentation.ui.home.mapper.MovieItemModelToUIMapper
 import com.space.moviesapp.presentation.ui.home.mapper.MovieItemUIModelToEntity
@@ -9,4 +11,6 @@ val uiMapperModule = module {
     single { MovieCategoryModelToUIMapper() }
     single { MovieItemModelToUIMapper() }
     single { MovieItemUIModelToEntity() }
+    single { MovieDetailsModelToUIMapper() }
+    single { MovieDetailsUIModelToEntity() }
 }
