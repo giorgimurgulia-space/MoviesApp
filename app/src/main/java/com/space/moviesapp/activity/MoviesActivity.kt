@@ -18,7 +18,6 @@ class MoviesActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.bottomNavigationView.background = null
-        binding.bottomNavigationView.menu.getItem(0).isEnabled = false
 
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.main_nav_host_fragment) as NavHostFragment
