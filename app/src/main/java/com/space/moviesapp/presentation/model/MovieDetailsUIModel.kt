@@ -1,13 +1,14 @@
 package com.space.moviesapp.presentation.model
 
 data class MovieDetailsUIModel(
-    val id: Int? = null,
-    val genres: List<String> = emptyList(),
-    val originalTitle: String? = null,
-    val overview: String? = null,
-    val posterPath: String? = null,
-    val releaseDate: String? = null,
-    val runtime: Int? = null,
+    val id: Int = 0,
+    val genre: String = "",
+    val originalTitle: String = "",
+    val overview: String = "",
+    val backdropPoster: String = "",
+    val mainPosterPath: String = "",
+    val releaseDate: String = "",
+    val runtime: Int = 0,
     val voteAverage: Double = 0.00,
     val isFavourite: Boolean = false
 )

@@ -22,6 +22,7 @@ import com.space.moviesapp.presentation.model.DialogItem
 import com.space.moviesapp.presentation.model.MovieCategoryUIModel
 import com.space.moviesapp.presentation.model.MovieItemUIModel
 import com.space.moviesapp.presentation.navigation.MovieEvent
+import com.space.moviesapp.presentation.ui.home.mapper.MovieCategoryModelToUIMapper
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
@@ -30,7 +31,8 @@ class HomeViewModel(
     private val getMovieCategoryUseCase: GetMovieCategoryUseCase,
     private val searchMovieUseCase: SearchMovieUseCase,
     private val changeMovieFavouriteStatusUseCase: ChangeMovieFavouriteStatusUseCase,
-    private val getFavouriteMovieUseCase: GetFavouriteMovieUseCase
+    private val getFavouriteMovieUseCase: GetFavouriteMovieUseCase,
+    private val movieCategoryModelToUIMapper: MovieCategoryModelToUIMapper
 ) : BaseViewModel() {
 
     private var selectCategoryIndex = 0
@@ -70,8 +72,8 @@ class HomeViewModel(
         }
     }
 
-    fun getFavouriteMovie(){
-        viewModelScope.launch{
+    fun getFavouriteMovie() {
+        viewModelScope.launch {
             getFavouriteMovieUseCase.invoke().cachedIn(viewModelScope).collectLatest {
                 _state.value = it.map { movieItem ->
                     movieItem.toUIModel()
@@ -79,6 +81,7 @@ class HomeViewModel(
             }
         }
     }
+
     private fun getMovieCategory() {
         viewModelScope.launch {
             getMovieCategoryUseCase.invoke().toResult().collectLatest {
@@ -87,7 +90,7 @@ class HomeViewModel(
                 }
                 it.onSuccess { category ->
                     closeLoaderDialog()
-                    movieCategoryList = category.map { item -> item.toUIModel() }
+                    movieCategoryList = category.map { item -> movieCategoryModelToUIMapper(item) }
                     _movieCategory.value = MovieEvent(movieCategoryList)
                 }
                 it.onError {

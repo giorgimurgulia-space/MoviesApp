@@ -41,16 +41,16 @@ class DetailsFragment :
     }
 
     private fun setMovieDetailContent(movieModel: MovieDetailsUIModel) = with(binding) {
-        movieModel.posterPath?.let { bannerImage.loadImage(it) }
+        movieModel.backdropPoster.let { bannerImage.loadImage(it) }
         movieTitleText.text = movieModel.originalTitle
         favoriteCheckBox.isChecked = movieModel.isFavourite
         descriptionTextView.text = movieModel.overview
 
         chipGroup.removeAllViews()
         setChip(movieModel.voteAverage.toString(), R.drawable.ic_starr)
-        setChip(movieModel.genres.firstOrNull())
+        setChip(movieModel.genre)
         setChip(movieModel.runtime.fromMinutesToHHmm(), R.drawable.ic_clock)
-        setChip(movieModel.releaseDate.toString())
+        setChip(movieModel.releaseDate)
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")

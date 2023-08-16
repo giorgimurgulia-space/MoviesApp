@@ -2,10 +2,11 @@ package com.space.moviesapp.domain.model
 
 data class MovieDetailsModel(
     val id: Int,
-    val genres: String,
+    val genre: String,
     val originalTitle: String,
     val overview: String,
-    val posterPath: String,
+    val backdropPoster: String,
+    val mainPoster: String,
     val releaseDate: String,
     val runtime: Int,
     val voteAverage: Double,

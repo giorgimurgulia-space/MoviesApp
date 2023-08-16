@@ -2,7 +2,6 @@ package com.space.moviesapp.presentation.ui.home.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.space.moviesapp.common.extensions.changeVisibility
@@ -41,13 +40,13 @@ class MovieAdapter(
         fun bind(movie: MovieItemUIModel) = with(binding) {
             favoriteCheckBox.isChecked = movie.isFavourite
 
-            if (movie.genres.isNotEmpty()) {
-                genresText.text = movie.genres.first().toString()
+            if (movie.genre.isNotEmpty()) {
+                genresText.text = movie.genre
             } else {
                 genresText.changeVisibility()
             }
 
-            bannerImage.loadImage(movie.poster)
+            bannerImage.loadImage(movie.mainPosterPath)
             movieTitleText.text = movie.title
             movieYearText.text = movie.releaseDate
 

@@ -11,9 +11,12 @@ class MovieDetailDtoToDomainMapper {
             genres?.get(0)?.title ?: "",
             originalTitle ?: "",
             overview ?: "",
-            if (posterPath.isNullOrEmpty())
+            if (backdropPosterPath.isNullOrEmpty())
                 MoviesConstants.NO_POSTER_IMAGE_URL
-            else MoviesConstants.IMAGE_BASE_URL + posterPath,
+            else MoviesConstants.IMAGE_BASE_URL + backdropPosterPath,
+            if (mainPosterPath.isNullOrEmpty())
+                MoviesConstants.NO_POSTER_IMAGE_URL
+            else MoviesConstants.IMAGE_BASE_URL + mainPosterPath,
             releaseDate ?: "",
             runtime ?: 0,
             voteAverage ?: 0.0,

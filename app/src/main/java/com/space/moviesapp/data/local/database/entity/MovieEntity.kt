@@ -10,5 +10,6 @@ data class MovieEntity(
     val genres: String,
     val title: String,
     val releaseDate: String,
-    val poster: String
+    val backdropPosterPath: String,
+    val mainPosterPath: String
 )

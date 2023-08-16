@@ -1,27 +1,23 @@
 package com.space.moviesapp.common.maper
 
-import com.space.moviesapp.common.utils.MoviesConstants.IMAGE_BASE_URL
 import com.space.moviesapp.data.local.database.entity.MovieEntity
-import com.space.moviesapp.data.remote.dto.*
-import com.space.moviesapp.domain.model.*
-import com.space.moviesapp.presentation.model.MovieCategoryUIModel
+import com.space.moviesapp.domain.model.MovieDetailsModel
+import com.space.moviesapp.domain.model.MovieItemModel
 import com.space.moviesapp.presentation.model.MovieDetailsUIModel
 import com.space.moviesapp.presentation.model.MovieItemUIModel
 import java.math.BigDecimal
 import java.math.RoundingMode
-import kotlin.collections.HashMap
-
-fun MovieCategoryModel.toUIModel() = MovieCategoryUIModel(id, urlId, title)
 
 fun MovieItemModel.toUIModel() =
-    MovieItemUIModel(id, listOf(genre), title, releaseDate, posterPath, isFavourite)
+    MovieItemUIModel(id, genre, title, releaseDate, backdropPosterPath, mainPosterPath, isFavourite)
 
 fun MovieDetailsModel.toUIModel() = MovieDetailsUIModel(
     id,
-    listOf(genres),
+    genre,
     originalTitle,
     overview,
-    posterPath,
+    backdropPoster,
+    mainPoster,
     releaseDate.dropLast(6),
     runtime,
     BigDecimal(voteAverage).setScale(2, RoundingMode.FLOOR).toDouble(),
@@ -29,13 +25,7 @@ fun MovieDetailsModel.toUIModel() = MovieDetailsUIModel(
 )
 
 fun MovieItemUIModel.toEntity() =
-    MovieEntity(id, genres.firstOrNull() ?: "", title, releaseDate, poster)
-
-fun MovieItemModel.toEntity() =
-    MovieEntity(id, listOf(genre).firstOrNull() ?: "", title, releaseDate, posterPath)
-
-fun MovieEntity.toDomainModel() =
-    MovieItemModel(id, genres, title, releaseDate,poster, true)
+    MovieEntity(id, genre, title, releaseDate, backdropPoster, mainPosterPath)
 
 fun MovieDetailsUIModel.toEntity() =
-    MovieEntity(id!!, genres.first(), originalTitle!!, releaseDate!!, posterPath!!)
+    MovieEntity(id, genre, originalTitle, releaseDate, backdropPoster, mainPosterPath)

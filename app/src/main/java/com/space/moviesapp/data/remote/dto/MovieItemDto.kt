@@ -8,8 +8,10 @@ data class MovieItemDto(
     val genreIds: List<Int>?,
     @SerializedName("original_title")
     val originalTitle: String?,
+    @SerializedName("backdrop_path")
+    val backdropPosterPath: String?,
     @SerializedName("poster_path")
-    val posterPath: String?,
+    val mainPosterPath: String?,
     @SerializedName("release_date")
     val releaseDate: String?,
     @SerializedName("vote_average")

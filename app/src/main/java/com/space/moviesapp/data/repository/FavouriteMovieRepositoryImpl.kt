@@ -4,7 +4,6 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.map
-import com.space.moviesapp.common.maper.toDomainModel
 import com.space.moviesapp.data.local.database.dao.MoviesDao
 import com.space.moviesapp.data.local.database.entity.MovieEntity
 import com.space.moviesapp.data.local.mapper.MovieEntityToDomainModelMapper

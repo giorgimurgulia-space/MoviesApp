@@ -6,6 +6,12 @@ import com.space.moviesapp.domain.model.MovieItemModel
 
 class MovieEntityToDomainModelMapper : Mapper<MovieEntity, MovieItemModel> {
     override fun invoke(model: MovieEntity): MovieItemModel = MovieItemModel(
-        model.id, model.genres, model.title, model.releaseDate, model.poster, true
+        model.id,
+        model.genres,
+        model.title,
+        model.releaseDate,
+        model.backdropPosterPath,
+        model.mainPosterPath,
+        true
     )
 }
