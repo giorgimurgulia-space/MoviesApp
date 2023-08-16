@@ -52,7 +52,6 @@ class HomeViewModel(
     }
 
     fun onFavouriteClick(movie: MovieItemUIModel) {
-        //todo
         viewModelScope.launch {
             changeMovieFavouriteStatusUseCase.invoke(movieItemUIModelToEntity(movie))
         }

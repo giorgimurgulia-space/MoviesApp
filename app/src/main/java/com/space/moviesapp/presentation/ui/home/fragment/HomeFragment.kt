@@ -103,14 +103,6 @@ class HomeFragment :
         chipGroup.setOnCheckedStateChangeListener { group, checkedIds ->
             viewModel.onFilterClick(group.checkedChipId)
         }
-
-        favoritesNavLinearLayout.setOnClickListener {
-            viewModel.navigate(HomeFragmentDirections.actionGlobalFavouritesFragment())
-        }
-
-        homeNavLinearLayout.setOnClickListener {
-            chipGroup.check(0)
-        }
     }
 
     private fun searchListener() {
