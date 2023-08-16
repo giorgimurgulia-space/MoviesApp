@@ -11,41 +11,14 @@ import java.math.BigDecimal
 import java.math.RoundingMode
 import kotlin.collections.HashMap
 
-fun MovieCategoryDto.toDomainModel(id: Int) = MovieCategoryModel(id, urlId, title)
 fun MovieCategoryModel.toUIModel() = MovieCategoryUIModel(id, urlId, title)
 
-fun MovieItemDto.toDomainModel(genresMap: Map<Int, String>, isFavourite: Boolean) =
-    MovieItemModel(
-        id, genreIds.map { id -> genresMap[id] }.firstOrNull(), originalTitle, releaseDate.dropLast(6),
-        IMAGE_BASE_URL + posterPath, isFavourite
-    )
-
 fun MovieItemModel.toUIModel() =
-    MovieItemUIModel(id, genres, title, releaseDate, posterPath, isFavourite)
-
-fun GenresDto.toDomainModel(): HashMap<Int, String> {
-    val genresMap = HashMap<Int, String>()
-    this.genres.forEach {
-        genresMap[it.id] = it.title
-    }
-    return genresMap
-}
-
-fun MovieDetailsDto.toDomainModel(isFavourite: Boolean) = MovieDetailsModel(
-    id,
-    genres.map { it.title },
-    originalTitle,
-    overview,
-    IMAGE_BASE_URL + posterPath,
-    releaseDate,
-    runtime,
-    voteAverage,
-    isFavourite
-)
+    MovieItemUIModel(id, listOf(genre), title, releaseDate, posterPath, isFavourite)
 
 fun MovieDetailsModel.toUIModel() = MovieDetailsUIModel(
     id,
-    genres,
+    listOf(genres),
     originalTitle,
     overview,
     posterPath,
@@ -59,10 +32,10 @@ fun MovieItemUIModel.toEntity() =
     MovieEntity(id, genres.firstOrNull() ?: "", title, releaseDate, poster)
 
 fun MovieItemModel.toEntity() =
-    MovieEntity(id, genres.firstOrNull() ?: "", title, releaseDate, posterPath)
+    MovieEntity(id, listOf(genre).firstOrNull() ?: "", title, releaseDate, posterPath)
 
 fun MovieEntity.toDomainModel() =
-    MovieItemModel(id, listOf(genres), title, releaseDate,poster, true)
+    MovieItemModel(id, genres, title, releaseDate,poster, true)
 
 fun MovieDetailsUIModel.toEntity() =
     MovieEntity(id!!, genres.first(), originalTitle!!, releaseDate!!, posterPath!!)

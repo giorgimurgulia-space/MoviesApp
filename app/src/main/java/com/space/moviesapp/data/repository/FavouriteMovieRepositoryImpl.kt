@@ -7,6 +7,7 @@ import androidx.paging.map
 import com.space.moviesapp.common.maper.toDomainModel
 import com.space.moviesapp.data.local.database.dao.MoviesDao
 import com.space.moviesapp.data.local.database.entity.MovieEntity
+import com.space.moviesapp.data.local.mapper.MovieEntityToDomainModelMapper
 import com.space.moviesapp.data.paging.MoviesFavoritesPagingSource
 import com.space.moviesapp.domain.model.MovieItemModel
 import com.space.moviesapp.domain.repository.FavouriteMovieRepository
@@ -14,7 +15,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
 class FavouriteMovieRepositoryImpl(
-    private val moviesDao: MoviesDao
+    private val moviesDao: MoviesDao,
+    private val movieEntityToDomainModelMapper: MovieEntityToDomainModelMapper
 ) : FavouriteMovieRepository {
 
     override fun getFavoriteMovie(): Flow<PagingData<MovieItemModel>> {
@@ -23,7 +25,7 @@ class FavouriteMovieRepositoryImpl(
             pagingSourceFactory = { MoviesFavoritesPagingSource(moviesDao) }
         ).flow.map {
             it.map { movie ->
-                movie.toDomainModel()
+                movieEntityToDomainModelMapper(movie)
             }
         }
     }

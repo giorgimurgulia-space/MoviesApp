@@ -1,5 +1,6 @@
 package com.space.moviesapp.data.remote.mapper
 
+import com.space.moviesapp.common.utils.MoviesConstants
 import com.space.moviesapp.data.remote.dto.MovieDetailsDto
 import com.space.moviesapp.domain.model.MovieDetailsModel
 
@@ -10,7 +11,9 @@ class MovieDetailDtoToDomainMapper {
             genres?.get(0)?.title ?: "",
             originalTitle ?: "",
             overview ?: "",
-            posterPath ?: "",
+            if (posterPath.isNullOrEmpty())
+                MoviesConstants.NO_POSTER_IMAGE_URL
+            else MoviesConstants.IMAGE_BASE_URL + posterPath,
             releaseDate ?: "",
             runtime ?: 0,
             voteAverage ?: 0.0,

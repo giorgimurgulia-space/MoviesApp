@@ -10,6 +10,9 @@ import com.space.moviesapp.data.paging.MoviesPagingSource
 import com.space.moviesapp.data.paging.MoviesSearchPagingSource
 import com.space.moviesapp.data.remote.api.ApiService
 import com.space.moviesapp.data.remote.dto.MovieCategoryDto
+import com.space.moviesapp.data.remote.mapper.GenresDtoToDomainMapper
+import com.space.moviesapp.data.remote.mapper.MovieCategoryDtoToDomainMapper
+import com.space.moviesapp.data.remote.mapper.MovieItemDtoToDomainMapper
 import com.space.moviesapp.domain.model.MovieCategoryModel
 import com.space.moviesapp.domain.model.MovieItemModel
 import com.space.moviesapp.domain.repository.MoviesRepository
@@ -20,13 +23,16 @@ import java.util.concurrent.CancellationException
 
 class MoviesRepositoryImpl(
     private val apiService: ApiService,
-    private val moviesDao: MoviesDao
+    private val moviesDao: MoviesDao,
+    private val movieCategoryDtoToDomainMapper: MovieCategoryDtoToDomainMapper,
+    private val movieItemDtoToDomainMapper: MovieItemDtoToDomainMapper,
+    private val movieGenresDtoToDomainMapper: GenresDtoToDomainMapper
 ) : MoviesRepository {
 
     override fun getMovieCategory(): Flow<List<MovieCategoryModel>> = flow {
         //todo list from Api
         emit(categoryList.mapIndexed { index, category ->
-            category.toDomainModel(index)
+            movieCategoryDtoToDomainMapper.invoke(category, index)
         })
     }
 
@@ -36,7 +42,11 @@ class MoviesRepositoryImpl(
             pagingSourceFactory = { MoviesPagingSource(apiService, categoryId) }
         ).flow.map {
             it.map { movie ->
-                movie.toDomainModel(getMoviesGenres(), moviesDao.isFavouriteMovie(movie.id))
+                movieItemDtoToDomainMapper.invoke(
+                    movie,
+                    getMoviesGenres(),
+                    moviesDao.isFavouriteMovie(movie.id ?: 0)
+                )
             }
         }
     }
@@ -45,7 +55,7 @@ class MoviesRepositoryImpl(
         val response = apiService.getMovieGenres()
         return if (response.isSuccessful) {
             try {
-                response.body()!!.toDomainModel()
+                movieGenresDtoToDomainMapper(response.body()!!)
             } catch (e: CancellationException) {
                 throw e
             }
@@ -61,7 +71,11 @@ class MoviesRepositoryImpl(
         ).flow
             .map {
                 it.map { movie ->
-                    movie.toDomainModel(getMoviesGenres(), moviesDao.isFavouriteMovie(movie.id))
+                    movieItemDtoToDomainMapper.invoke(
+                        movie,
+                        getMoviesGenres(),
+                        moviesDao.isFavouriteMovie(movie.id ?: 0)
+                    )
                 }
             }
     }

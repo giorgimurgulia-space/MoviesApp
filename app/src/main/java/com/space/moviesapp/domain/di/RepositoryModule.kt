@@ -9,12 +9,26 @@ import com.space.moviesapp.domain.repository.MoviesRepository
 import org.koin.dsl.module
 
 val repositoryModule = module {
-    single<MoviesRepository> { MoviesRepositoryImpl(apiService = get(), moviesDao = get()) }
+    single<MoviesRepository> {
+        MoviesRepositoryImpl(
+            apiService = get(),
+            moviesDao = get(),
+            movieCategoryDtoToDomainMapper = get(),
+            movieItemDtoToDomainMapper = get(),
+            movieGenresDtoToDomainMapper = get()
+        )
+    }
     single<MovieDetailsRepository> {
         MovieDetailsRepositoryImpl(
             apiService = get(),
-            moviesDao = get()
+            moviesDao = get(),
+            movieDetailDtoToDomainMapper = get(),
         )
     }
-    single<FavouriteMovieRepository> { FavouriteMovieRepositoryImpl(moviesDao = get()) }
+    single<FavouriteMovieRepository> {
+        FavouriteMovieRepositoryImpl(
+            moviesDao = get(),
+            movieEntityToDomainModelMapper = get()
+        )
+    }
 }
