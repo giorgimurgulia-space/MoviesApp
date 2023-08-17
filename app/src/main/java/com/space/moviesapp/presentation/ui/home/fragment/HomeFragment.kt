@@ -49,8 +49,6 @@ class HomeFragment :
                 includeEdge
             )
         )
-
-        searchListener()
     }
 
     override fun setObserves() {
@@ -86,30 +84,12 @@ class HomeFragment :
                 chipGroup.changeVisibility()
         }
 
-        cancelSearchText.setOnClickListener {
-            searchEditText.text.clear()
-            searchEditText.clearFocus()
-            closeKeyBoard()
-            chipGroup.check(0)
-        }
-
-        searchEditText.setOnFocusChangeListener { view, b ->
-            cancelSearchText.changeVisibility()
-            filterCheckBox.isChecked = false
-            filterCheckBox.changeVisibility()
-            chipGroup.clearCheck()
+        searchEditText.setOnClickListener {
+            viewModel.navigate(HomeFragmentDirections.actionGlobalSearchFragment())
         }
 
         chipGroup.setOnCheckedStateChangeListener { group, checkedIds ->
             viewModel.onFilterClick(group.checkedChipId)
-        }
-    }
-
-    private fun searchListener() {
-        binding.searchEditText.doAfterTextChanged {
-            if (!it.isNullOrEmpty() && it.isNotBlank()) {
-                viewModel.movieSearch(it.toString())
-            }
         }
     }
 

@@ -30,4 +30,13 @@
         android:name="com.space.moviesapp.presentation.ui.favourites.fragment.FavouritesFragment"
         android:label="FavouritesFragment" />
 
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.space.moviesapp.presentation.ui.search.fragment.SearchFragment"
+        android:label="SearchFragment" />
+
+    <action
+        android:id="@+id/action_global_search_Fragment"
+        app:destination="@id/searchFragment" />
+
 </navigation>

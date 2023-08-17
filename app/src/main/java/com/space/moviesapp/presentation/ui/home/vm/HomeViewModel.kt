@@ -32,7 +32,6 @@ class HomeViewModel(
     private val getMovieCategoryUseCase: GetMovieCategoryUseCase,
     private val searchMovieUseCase: SearchMovieUseCase,
     private val changeMovieFavouriteStatusUseCase: ChangeMovieFavouriteStatusUseCase,
-    private val getFavouriteMovieUseCase: GetFavouriteMovieUseCase,
     private val movieCategoryModelToUIMapper: MovieCategoryModelToUIMapper,
     private val movieItemModelToUIMapper: MovieItemModelToUIMapper,
     private val movieItemUIModelToEntity: MovieItemUIModelToEntity
@@ -65,15 +64,6 @@ class HomeViewModel(
             getNewMovie()
         }
     }
-
-    fun movieSearch(query: String) {
-        viewModelScope.launch {
-            searchMovieUseCase.invoke(query).cachedIn(viewModelScope).collectLatest { movieItem ->
-                _state.value = movieItem.map { movieItemModelToUIMapper(it) }
-            }
-        }
-    }
-
 
     private fun getMovieCategory() {
         viewModelScope.launch {
