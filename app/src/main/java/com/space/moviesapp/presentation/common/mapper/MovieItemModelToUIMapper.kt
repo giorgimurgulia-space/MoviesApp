@@ -1,4 +1,4 @@
-package com.space.moviesapp.presentation.ui.home.mapper
+package com.space.moviesapp.presentation.common.mapper
 
 import com.space.moviesapp.common.maper.Mapper
 import com.space.moviesapp.domain.model.MovieItemModel

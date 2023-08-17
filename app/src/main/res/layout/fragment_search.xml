@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <EditText
+        android:id="@+id/search_edit_text"
+        android:layout_width="@dimen/dimen_0_dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/dimen_8_dp"
+        android:background="@drawable/shape_input_background"
+        android:backgroundTint="@color/neutral_02_darkest_grey"
+        android:drawableStart="@drawable/ic_search"
+        android:drawablePadding="@dimen/dimen_6_dp"
+        android:hint="@string/search_hint"
+        android:paddingVertical="11dp"
+        android:paddingStart="@dimen/dimen_20_dp"
+        android:textColor="@color/neutral_05_light_grey"
+        android:textColorHint="@color/neutral_05_light_grey"
+        app:layout_constraintEnd_toStartOf="@id/search_barrier"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

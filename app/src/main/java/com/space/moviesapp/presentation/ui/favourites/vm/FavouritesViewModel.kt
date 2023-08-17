@@ -10,8 +10,8 @@ import com.space.moviesapp.domain.usecase.favourite.GetFavouriteMovieUseCase
 import com.space.moviesapp.presentation.base.vm.BaseViewModel
 import com.space.moviesapp.presentation.model.DialogItem
 import com.space.moviesapp.presentation.model.MovieItemUIModel
-import com.space.moviesapp.presentation.ui.home.mapper.MovieItemModelToUIMapper
-import com.space.moviesapp.presentation.ui.home.mapper.MovieItemUIModelToEntity
+import com.space.moviesapp.presentation.common.mapper.MovieItemModelToUIMapper
+import com.space.moviesapp.presentation.common.mapper.MovieItemUIModelToEntity
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
