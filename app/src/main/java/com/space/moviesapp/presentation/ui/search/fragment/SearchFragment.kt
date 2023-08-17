@@ -41,9 +41,7 @@ class SearchFragment :
 
     private fun searchListener() {
         binding.searchEditText.doAfterTextChanged {
-            if (!it.isNullOrEmpty() && it.isNotBlank()) {
-                viewModel.movieSearch(it.toString())
-            }
+            viewModel.movieSearch(it.toString())
         }
     }
 

@@ -30,7 +30,6 @@ import kotlinx.coroutines.launch
 class HomeViewModel(
     private val getMoviesUseCase: GetMoviesUseCase,
     private val getMovieCategoryUseCase: GetMovieCategoryUseCase,
-    private val searchMovieUseCase: SearchMovieUseCase,
     private val changeMovieFavouriteStatusUseCase: ChangeMovieFavouriteStatusUseCase,
     private val movieCategoryModelToUIMapper: MovieCategoryModelToUIMapper,
     private val movieItemModelToUIMapper: MovieItemModelToUIMapper,

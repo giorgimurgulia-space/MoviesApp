@@ -10,20 +10,44 @@ import com.space.moviesapp.presentation.base.vm.BaseViewModel
 import com.space.moviesapp.presentation.common.mapper.MovieItemModelToUIMapper
 import com.space.moviesapp.presentation.common.mapper.MovieItemUIModelToEntity
 import com.space.moviesapp.presentation.model.MovieItemUIModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.channels.BufferOverflow
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 class SearchViewModel(
     private val changeMovieFavouriteStatusUseCase: ChangeMovieFavouriteStatusUseCase,
     private val searchMovieUseCase: SearchMovieUseCase,
     private val movieItemUIModelToEntity: MovieItemUIModelToEntity,
-    private val movieItemModelToUIMapper: MovieItemModelToUIMapper,
+    private val movieItemModelToUIMapper: MovieItemModelToUIMapper
+) : BaseViewModel() {
+    private val searchFlow =
+        MutableSharedFlow<String?>(
+            extraBufferCapacity = 1,
+            onBufferOverflow = BufferOverflow.DROP_OLDEST
+        )
 
-    ) : BaseViewModel() {
     private val _state = MutableStateFlow<PagingData<MovieItemUIModel>>(PagingData.empty())
     val state get() = _state.asStateFlow()
+
+    init {
+        viewModelScope.launch {
+            searchFlow
+                .filterNotNull()
+                .debounce(300)
+                .distinctUntilChanged()
+                .collectLatest { query ->
+                    searchMovieUseCase
+                        .invoke(query)
+                        .cachedIn(viewModelScope)
+                        .collectLatest {
+                            _state.value = it.map { movieItem ->
+                                movieItemModelToUIMapper(movieItem)
+                            }
+                        }
+                }
+
+        }
+    }
 
     fun onFavouriteClick(movie: MovieItemUIModel) {
         viewModelScope.launch {
@@ -31,12 +55,7 @@ class SearchViewModel(
         }
     }
 
-
     fun movieSearch(query: String) {
-        viewModelScope.launch {
-            searchMovieUseCase.invoke(query).cachedIn(viewModelScope).collectLatest { movieItem ->
-                _state.value = movieItem.map { movieItemModelToUIMapper(it) }
-            }
-        }
+        searchFlow.tryEmit(query)
     }
 }
