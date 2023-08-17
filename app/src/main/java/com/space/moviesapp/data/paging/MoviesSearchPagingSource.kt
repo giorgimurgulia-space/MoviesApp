@@ -28,7 +28,7 @@ class MoviesSearchPagingSource(
         } catch (e: CancellationException) {
             throw e
         } catch (e: Exception) {
-            throw ApiError(Throwable())
+            LoadResult.Error(e)
         }
     }
 
