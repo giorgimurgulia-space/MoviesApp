@@ -6,7 +6,7 @@ import com.space.moviesapp.domain.repository.MoviesRepository
 import kotlinx.coroutines.flow.Flow
 
 class GetMoviesUseCase(private val moviesRepository: MoviesRepository) {
-    suspend fun invoke(categoryId: String): Flow<PagingData<MovieItemModel>> {
+    fun invoke(categoryId: String): Flow<PagingData<MovieItemModel>> {
         return moviesRepository.getMovies(categoryId)
     }
 }

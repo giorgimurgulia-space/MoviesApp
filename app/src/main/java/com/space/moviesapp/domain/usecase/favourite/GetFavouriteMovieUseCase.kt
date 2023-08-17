@@ -5,5 +5,5 @@ import com.space.moviesapp.domain.repository.FavouriteMovieRepository
 import kotlinx.coroutines.flow.Flow
 
 class GetFavouriteMovieUseCase(private val favouriteMovieRepository: FavouriteMovieRepository) {
-    suspend fun invoke(): Flow<List<MovieItemModel>> = favouriteMovieRepository.getFavoriteMovie()
+    fun invoke(): Flow<List<MovieItemModel>> = favouriteMovieRepository.getFavoriteMovie()
 }

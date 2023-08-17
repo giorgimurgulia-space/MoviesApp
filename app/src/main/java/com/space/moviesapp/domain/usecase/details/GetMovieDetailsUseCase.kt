@@ -5,7 +5,7 @@ import com.space.moviesapp.domain.repository.MovieDetailsRepository
 import kotlinx.coroutines.flow.Flow
 
 class GetMovieDetailsUseCase(private val movieDetailsRepository: MovieDetailsRepository) {
-    suspend fun invoke(movieId: Int): Flow<MovieDetailsModel> {
+    fun invoke(movieId: Int): Flow<MovieDetailsModel> {
         return movieDetailsRepository.invoke(movieId)
     }
 }

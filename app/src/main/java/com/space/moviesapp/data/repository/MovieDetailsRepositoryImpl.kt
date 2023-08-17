@@ -14,7 +14,7 @@ class MovieDetailsRepositoryImpl(
     private val moviesDao: MoviesDao,
     private val movieDetailDtoToDomainMapper: MovieDetailDtoToDomainMapper
 ) : MovieDetailsRepository {
-    override suspend fun invoke(movieId: Int): Flow<MovieDetailsModel> = flow {
+    override fun invoke(movieId: Int): Flow<MovieDetailsModel> = flow {
         val response = apiService.getMovie(movieId)
         if (response.isSuccessful) {
             emit(

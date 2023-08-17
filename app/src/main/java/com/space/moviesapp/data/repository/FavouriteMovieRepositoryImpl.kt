@@ -13,7 +13,7 @@ class FavouriteMovieRepositoryImpl(
     private val movieEntityToDomainModelMapper: MovieEntityToDomainModelMapper
 ) : FavouriteMovieRepository {
 
-    override suspend fun getFavoriteMovie(): Flow<List<MovieItemModel>> {
+    override fun getFavoriteMovie(): Flow<List<MovieItemModel>> {
         return moviesDao.getFavouriteMovies().map {
             it.map { item ->
                 movieEntityToDomainModelMapper(item)

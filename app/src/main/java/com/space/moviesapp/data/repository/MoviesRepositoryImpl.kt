@@ -35,7 +35,7 @@ class MoviesRepositoryImpl(
         })
     }
 
-    override suspend fun getMovies(categoryId: String): Flow<PagingData<MovieItemModel>> {
+    override fun getMovies(categoryId: String): Flow<PagingData<MovieItemModel>> {
         return Pager(
             config = PagingConfig(pageSize = 20, enablePlaceholders = false, initialLoadSize = 20),
             pagingSourceFactory = { MoviesPagingSource(apiService, categoryId) }
@@ -63,7 +63,7 @@ class MoviesRepositoryImpl(
         }
     }
 
-    override suspend fun searchMovies(query: String): Flow<PagingData<MovieItemModel>> {
+    override fun searchMovies(query: String): Flow<PagingData<MovieItemModel>> {
         return Pager(
             config = PagingConfig(pageSize = 1, enablePlaceholders = false),
             pagingSourceFactory = { MoviesSearchPagingSource(apiService, query) }
