@@ -61,6 +61,10 @@ class SearchFragment :
             adapter.submitData(lifecycle, it)
         }
 
+        collectFlow(viewModel.favouriteMovies) { favouritesMovies ->
+            adapter.onItemFavouriteChange(favouritesMovies)
+        }
+
         viewLifecycleOwner.lifecycleScope.launch {
             adapter.loadStateFlow.collectLatest { loadStates ->
                 when (loadStates.refresh) {

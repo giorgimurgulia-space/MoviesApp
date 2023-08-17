@@ -31,9 +31,10 @@ class HomeViewModel(
     private val getMoviesUseCase: GetMoviesUseCase,
     private val getMovieCategoryUseCase: GetMovieCategoryUseCase,
     private val changeMovieFavouriteStatusUseCase: ChangeMovieFavouriteStatusUseCase,
+    private val getFavouriteMovieUseCase: GetFavouriteMovieUseCase,
     private val movieCategoryModelToUIMapper: MovieCategoryModelToUIMapper,
     private val movieItemModelToUIMapper: MovieItemModelToUIMapper,
-    private val movieItemUIModelToEntity: MovieItemUIModelToEntity
+    private val movieItemUIModelToEntity: MovieItemUIModelToEntity,
 ) : BaseViewModel() {
 
     private var selectCategoryIndex = 0
@@ -45,8 +46,12 @@ class HomeViewModel(
     private val _state = MutableStateFlow<PagingData<MovieItemUIModel>>(PagingData.empty())
     val state get() = _state.asStateFlow()
 
+    private val _favouriteMovies = MutableStateFlow<List<Int>>(emptyList())
+    val favouriteMovies get() = _favouriteMovies.asStateFlow()
+
     init {
         getMovieCategory()
+        getFavouriteMovie()
     }
 
     fun onFavouriteClick(movie: MovieItemUIModel) {
@@ -89,6 +94,27 @@ class HomeViewModel(
             ).cachedIn(viewModelScope).collectLatest {
                 _state.value = it.map { movieItem ->
                     movieItemModelToUIMapper(movieItem)
+                }
+            }
+        }
+    }
+
+    private fun getFavouriteMovie() {
+        viewModelScope.launch {
+            getFavouriteMovieUseCase.invoke().toResult().collectLatest {
+                it.onLoading {
+                    setDialog(DialogItem.LoaderDialog())
+                }
+                it.onSuccess { movies ->
+                    closeLoaderDialog()
+                    _favouriteMovies.value = movies.map { item ->
+                        item.id
+                    }
+                }
+                it.onError {
+                    setDialog(DialogItem.ErrorDialog(onRefreshClick = {
+                        getFavouriteMovie()
+                    }))
                 }
             }
         }

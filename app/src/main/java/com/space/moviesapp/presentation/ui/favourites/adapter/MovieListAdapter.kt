@@ -1,9 +1,10 @@
-package com.space.moviesapp.presentation.common.adapter
+package com.space.moviesapp.presentation.ui.favourites.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import com.space.moviesapp.databinding.LayoutMovieItemBinding
+import com.space.moviesapp.presentation.common.adapter.MovieDiffUtil
 import com.space.moviesapp.presentation.common.view_holder.MovieViewHolder
 import com.space.moviesapp.presentation.model.MovieItemUIModel
 

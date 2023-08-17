@@ -8,21 +8,32 @@ import com.space.moviesapp.databinding.LayoutMovieItemBinding
 import com.space.moviesapp.presentation.model.MovieItemUIModel
 
 class MovieViewHolder(
-        private val binding: LayoutMovieItemBinding
-    ) : RecyclerView.ViewHolder(binding.root) {
+    private val binding: LayoutMovieItemBinding,
+) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(movie: MovieItemUIModel) = with(binding) {
-            favoriteCheckBox.isChecked = movie.isFavourite
-
-            if (movie.genre.isNotEmpty()) {
-                genresText.show()
-                genresText.text = movie.genre
+    fun bind(
+        movie: MovieItemUIModel,
+        favouriteMoviesIds: MutableMap<Int, Boolean> = mutableMapOf()
+    ) = with(binding) {
+        if (favouriteMoviesIds[movie.id] != null) {
+            if (favouriteMoviesIds[movie.id] != movie.isFavourite) {
+                favoriteCheckBox.isChecked = !movie.isFavourite
             } else {
-                genresText.hide()
+                favoriteCheckBox.isChecked = movie.isFavourite
             }
-
-            bannerImage.loadImage(movie.mainPosterPath)
-            movieTitleText.text = movie.title
-            movieYearText.text = movie.releaseDate
+        } else {
+            favoriteCheckBox.isChecked = movie.isFavourite
         }
+
+        if (movie.genre.isNotEmpty()) {
+            genresText.show()
+            genresText.text = movie.genre
+        } else {
+            genresText.hide()
+        }
+
+        bannerImage.loadImage(movie.mainPosterPath)
+        movieTitleText.text = movie.title
+        movieYearText.text = movie.releaseDate
     }
+}

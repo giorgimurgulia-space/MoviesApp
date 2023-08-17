@@ -56,6 +56,10 @@ class HomeFragment :
             adapter.submitData(lifecycle, it)
         }
 
+        collectFlow(viewModel.favouriteMovies) { favouritesMovies ->
+            adapter.onItemFavouriteChange(favouritesMovies)
+        }
+
         viewModel.movieCategory.observeNonNull(viewLifecycleOwner) {
             it.getContentIfNotHandled()?.let { category ->
                 setFilter(category)
