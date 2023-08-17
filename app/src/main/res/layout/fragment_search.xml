@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:paddingHorizontal="@dimen/dimen_16_dp">
+
+
     <EditText
         android:id="@+id/search_edit_text"
         android:layout_width="@dimen/dimen_0_dp"
@@ -16,9 +21,45 @@
         android:paddingStart="@dimen/dimen_20_dp"
         android:textColor="@color/neutral_05_light_grey"
         android:textColorHint="@color/neutral_05_light_grey"
-        app:layout_constraintEnd_toStartOf="@id/search_barrier"
+        app:layout_constraintEnd_toStartOf="@id/cancel_search_text"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/cancel_search_text"
+        style="@style/smallMontserratMedium"
+        android:layout_width="44dp"
+        android:layout_height="wrap_content"
+        android:text="@string/cancel_text"
+        android:textColor="@color/neutral_08_whisper"
+        app:layout_constraintBottom_toBottomOf="@id/search_edit_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/search_edit_text" />
+
+    <TextView
+        android:id="@+id/movie_title"
+        style="@style/mediumMontserratMedium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_16_dp"
+        android:text="@string/movies_title"
+        android:textColor="@color/yellow_primary"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/search_edit_text" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/main_recycler"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/dimen_16_dp"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/movie_title"
+        app:spanCount="2"
+        tools:listitem="@layout/layout_movie_item" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
