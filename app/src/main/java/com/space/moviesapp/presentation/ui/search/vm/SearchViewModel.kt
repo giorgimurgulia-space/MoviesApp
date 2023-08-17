@@ -33,7 +33,7 @@ class SearchViewModel(
         viewModelScope.launch {
             searchFlow
                 .filterNotNull()
-                .debounce(300)
+                .debounce(500)
                 .distinctUntilChanged()
                 .collectLatest { query ->
                     searchMovieUseCase
