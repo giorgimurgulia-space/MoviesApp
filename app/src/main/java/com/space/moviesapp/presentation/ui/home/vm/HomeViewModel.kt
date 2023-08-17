@@ -68,7 +68,7 @@ class HomeViewModel(
 
     fun movieSearch(query: String) {
         viewModelScope.launch {
-            searchMovieUseCase.invoke(query).collectLatest { movieItem ->
+            searchMovieUseCase.invoke(query).cachedIn(viewModelScope).collectLatest { movieItem ->
                 _state.value = movieItem.map { movieItemModelToUIMapper(it) }
             }
         }
