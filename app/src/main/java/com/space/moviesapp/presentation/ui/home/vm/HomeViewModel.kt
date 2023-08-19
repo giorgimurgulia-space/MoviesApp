@@ -13,18 +13,15 @@ import com.space.moviesapp.domain.usecase.GetMovieCategoryUseCase
 import com.space.moviesapp.domain.usecase.GetMoviesUseCase
 import com.space.moviesapp.domain.usecase.favourite.ChangeMovieFavouriteStatusUseCase
 import com.space.moviesapp.domain.usecase.favourite.GetFavouriteMovieUseCase
-import com.space.moviesapp.domain.usecase.search.SearchMovieUseCase
 import com.space.moviesapp.presentation.base.vm.BaseViewModel
+import com.space.moviesapp.presentation.common.mapper.MovieItemModelToUIMapper
+import com.space.moviesapp.presentation.common.mapper.MovieItemUIModelToEntity
 import com.space.moviesapp.presentation.model.DialogItem
 import com.space.moviesapp.presentation.model.MovieCategoryUIModel
 import com.space.moviesapp.presentation.model.MovieItemUIModel
 import com.space.moviesapp.presentation.navigation.MovieEvent
 import com.space.moviesapp.presentation.ui.home.mapper.MovieCategoryModelToUIMapper
-import com.space.moviesapp.presentation.common.mapper.MovieItemModelToUIMapper
-import com.space.moviesapp.presentation.common.mapper.MovieItemUIModelToEntity
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 class HomeViewModel(
@@ -61,10 +58,9 @@ class HomeViewModel(
     }
 
     fun onFilterClick(index: Int) {
-        selectCategoryIndex = index
-        _state.tryEmit(PagingData.empty())
-
         if (index >= 0) {
+            selectCategoryIndex = index
+            _state.tryEmit(PagingData.empty())
             getNewMovie()
         }
     }
@@ -90,7 +86,7 @@ class HomeViewModel(
     private fun getNewMovie() {
         viewModelScope.launch {
             getMoviesUseCase.invoke(
-                movieCategoryList[selectCategoryIndex].urlId
+                movieCategoryList[selectCategoryIndex!!].urlId
             ).cachedIn(viewModelScope).collectLatest {
                 _state.value = it.map { movieItem ->
                     movieItemModelToUIMapper(movieItem)
@@ -102,11 +98,7 @@ class HomeViewModel(
     private fun getFavouriteMovie() {
         viewModelScope.launch {
             getFavouriteMovieUseCase.invoke().toResult().collectLatest {
-                it.onLoading {
-                    setDialog(DialogItem.LoaderDialog())
-                }
                 it.onSuccess { movies ->
-                    closeLoaderDialog()
                     _favouriteMovies.value = movies.map { item ->
                         item.id
                     }

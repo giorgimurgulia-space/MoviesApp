@@ -8,12 +8,12 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.space.moviesapp.presentation.ui.home.fragment.HomeFragment"
+        android:name="com.space.moviesapp.presentation.ui.home.HomeFragment"
         android:label="HomeFragment" />
 
     <fragment
         android:id="@+id/detailsFragment"
-        android:name="com.space.moviesapp.presentation.ui.details.fragment.DetailsFragment"
+        android:name="com.space.moviesapp.presentation.ui.details.DetailsFragment"
         android:label="DetailsFragment">
 
         <argument
@@ -27,12 +27,12 @@
 
     <fragment
         android:id="@+id/favouritesFragment"
-        android:name="com.space.moviesapp.presentation.ui.favourites.fragment.FavouritesFragment"
+        android:name="com.space.moviesapp.presentation.ui.favourites.FavouritesFragment"
         android:label="FavouritesFragment" />
 
     <fragment
         android:id="@+id/searchFragment"
-        android:name="com.space.moviesapp.presentation.ui.search.fragment.SearchFragment"
+        android:name="com.space.moviesapp.presentation.ui.search.SearchFragment"
         android:label="SearchFragment" />
 
     <action

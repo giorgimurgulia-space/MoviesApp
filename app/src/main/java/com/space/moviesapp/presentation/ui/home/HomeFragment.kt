@@ -1,11 +1,9 @@
-package com.space.moviesapp.presentation.ui.home.fragment
+package com.space.moviesapp.presentation.ui.home
 
 
 import android.view.LayoutInflater
 import android.view.View
-import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import com.space.moviesapp.common.extensions.changeVisibility
 import com.space.moviesapp.common.extensions.collectFlow
@@ -65,6 +63,7 @@ class HomeFragment :
                 setFilter(category)
             }
         }
+
         viewLifecycleOwner.lifecycleScope.launch {
             adapter.loadStateFlow.collectLatest { loadStates ->
                 when (loadStates.refresh) {

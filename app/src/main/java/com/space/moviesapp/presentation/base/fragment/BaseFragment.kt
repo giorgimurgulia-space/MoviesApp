@@ -18,8 +18,8 @@ import com.space.moviesapp.common.types.Inflater
 import com.space.moviesapp.common.utils.MoviesConstants.ERROR_FRAGMENT_TAG
 import com.space.moviesapp.common.utils.MoviesConstants.LOADER_FRAGMENT_TAG
 import com.space.moviesapp.presentation.base.vm.BaseViewModel
-import com.space.moviesapp.presentation.dialog.ErrorDialogFragment
-import com.space.moviesapp.presentation.dialog.LoaderDialogFragment
+import com.space.moviesapp.presentation.view.dialog.ErrorDialogFragment
+import com.space.moviesapp.presentation.view.dialog.LoaderDialogFragment
 import com.space.moviesapp.presentation.model.DialogItem
 import com.space.moviesapp.presentation.navigation.NavigationCommand
 import kotlinx.coroutines.delay
@@ -86,10 +86,6 @@ abstract class BaseFragment<VB : ViewBinding, VM : BaseViewModel>(private val in
                 }
             }
         }
-    }
-
-    protected fun toast(message: String) {
-        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
     }
 
     protected fun closeKeyBoard() {

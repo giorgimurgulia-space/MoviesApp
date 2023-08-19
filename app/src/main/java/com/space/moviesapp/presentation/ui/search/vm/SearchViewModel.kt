@@ -16,10 +16,12 @@ import com.space.moviesapp.presentation.common.mapper.MovieItemModelToUIMapper
 import com.space.moviesapp.presentation.common.mapper.MovieItemUIModelToEntity
 import com.space.moviesapp.presentation.model.DialogItem
 import com.space.moviesapp.presentation.model.MovieItemUIModel
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
+@OptIn(FlowPreview::class)
 class SearchViewModel(
     private val changeMovieFavouriteStatusUseCase: ChangeMovieFavouriteStatusUseCase,
     private val searchMovieUseCase: SearchMovieUseCase,
@@ -33,6 +35,7 @@ class SearchViewModel(
             onBufferOverflow = BufferOverflow.DROP_OLDEST
         )
 
+    // todo name
     private val _state = MutableStateFlow<PagingData<MovieItemUIModel>>(PagingData.empty())
     val state get() = _state.asStateFlow()
 
@@ -55,7 +58,6 @@ class SearchViewModel(
                             }
                         }
                 }
-
         }
 
         getFavouriteMovie()

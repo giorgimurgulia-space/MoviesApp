@@ -50,7 +50,7 @@ class MoviesRepositoryImpl(
         }
     }
 
-    override suspend fun getMoviesGenres(): Map<Int, String> {
+    override suspend fun getMoviesGenres(): Map<Int, String>? {
         val response = apiService.getMovieGenres()
         return if (response.isSuccessful) {
             try {
@@ -59,7 +59,7 @@ class MoviesRepositoryImpl(
                 throw e
             }
         } else {
-            emptyMap()
+            null
         }
     }
 

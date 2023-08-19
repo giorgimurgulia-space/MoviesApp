@@ -1,4 +1,4 @@
-package com.space.moviesapp.presentation.ui.search.fragment
+package com.space.moviesapp.presentation.ui.search
 
 import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.lifecycleScope
@@ -9,7 +9,6 @@ import com.space.moviesapp.presentation.base.fragment.BaseFragment
 import com.space.moviesapp.presentation.common.adapter.MoviePagingAdapter
 import com.space.moviesapp.presentation.common.decorator.GridSpacingItemDecoration
 import com.space.moviesapp.presentation.model.DialogItem
-import com.space.moviesapp.presentation.ui.home.fragment.HomeFragmentDirections
 import com.space.moviesapp.presentation.ui.search.vm.SearchViewModel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -21,7 +20,7 @@ class SearchFragment :
         get() = SearchViewModel::class
 
     private val adapter = MoviePagingAdapter(
-        onItemClicked = { viewModel.navigate(HomeFragmentDirections.actionGlobalDetailsFragment(it)) },
+        onItemClicked = { viewModel.navigate(SearchFragmentDirections.actionGlobalDetailsFragment(it)) },
         onFavouriteClick = {
             viewModel.onFavouriteClick(it)
         }

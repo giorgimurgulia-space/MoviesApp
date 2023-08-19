@@ -37,4 +37,26 @@
         <item name="android:textColor">@color/neutral_06_light_grey</item>
         <item name="chipIconSize">@dimen/dimen_16_dp</item>
     </style>
+
+    <style name="tab_text" parent="TextAppearance.Design.Tab">
+        <item name="android:textSize">@dimen/dimen_14_sp</item>
+        <item name="fontFamily">@font/montserrat_medium</item>
+        <item name="lineHeight">@dimen/dimen_14_sp</item>
+        <item name="textAllCaps">false</item>
+    </style>
+
+    <style name="NavigationTab" parent="Widget.Design.TabLayout">
+        <item name="tabTextAppearance">@style/NavigationTabTextAppearance</item>
+        <item name="tabBackground">@drawable/tab_layout_item_background_selector</item>
+        <item name="tabIconTint">@color/bottom_nav_bar_color_selector</item>
+        <item name="tabSelectedTextColor">@color/neutral_01_black</item>
+        <item name="tabTextColor">@color/neutral_08_whisper</item>
+    </style>
+
+    <style name="NavigationTabTextAppearance" parent="TextAppearance.Design.Tab">
+        <item name="android:textSize">@dimen/dimen_14_sp</item>
+        <item name="fontFamily">@font/montserrat_medium</item>
+        <item name="lineHeight">@dimen/dimen_14_sp</item>
+        <item name="textAllCaps">false</item>
+    </style>
 </resources>

@@ -1,4 +1,4 @@
-package com.space.moviesapp.presentation.ui.favourites.fragment
+package com.space.moviesapp.presentation.ui.favourites
 
 import android.view.View
 import com.space.moviesapp.common.extensions.collectFlow
@@ -7,7 +7,6 @@ import com.space.moviesapp.presentation.base.fragment.BaseFragment
 import com.space.moviesapp.presentation.ui.favourites.adapter.MovieListAdapter
 import com.space.moviesapp.presentation.common.decorator.GridSpacingItemDecoration
 import com.space.moviesapp.presentation.ui.favourites.vm.FavouritesViewModel
-import com.space.moviesapp.presentation.ui.home.fragment.HomeFragmentDirections
 import kotlin.reflect.KClass
 
 class FavouritesFragment :
@@ -16,7 +15,7 @@ class FavouritesFragment :
         get() = FavouritesViewModel::class
 
     private val adapter = MovieListAdapter(
-        onItemClicked = { viewModel.navigate(HomeFragmentDirections.actionGlobalDetailsFragment(it)) },
+        onItemClicked = { viewModel.navigate(FavouritesFragmentDirections.actionGlobalDetailsFragment(it)) },
         onFavouriteClick = {
             viewModel.onFavouriteClick(it)
         }

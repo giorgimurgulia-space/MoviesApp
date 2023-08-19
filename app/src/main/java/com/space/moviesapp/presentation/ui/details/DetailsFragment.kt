@@ -1,4 +1,4 @@
-package com.space.moviesapp.presentation.ui.details.fragment
+package com.space.moviesapp.presentation.ui.details
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater

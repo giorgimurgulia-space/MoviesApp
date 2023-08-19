@@ -1,4 +1,4 @@
-package com.space.moviesapp.presentation.dialog
+package com.space.moviesapp.presentation.view.dialog
 
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable

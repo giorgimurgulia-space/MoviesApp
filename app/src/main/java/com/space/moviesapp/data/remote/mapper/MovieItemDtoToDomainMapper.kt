@@ -7,12 +7,12 @@ import com.space.moviesapp.domain.model.MovieItemModel
 class MovieItemDtoToDomainMapper {
     fun invoke(
         model: MovieItemDto,
-        genresMap: Map<Int, String>,
+        genresMap: Map<Int, String>?,
         isFavourite: Boolean
     ): MovieItemModel = with(model) {
         MovieItemModel(
             id ?: 0,
-            genresMap[genreIds?.firstOrNull()] ?: "",
+            genresMap?.get(genreIds?.firstOrNull()) ?: "",
             originalTitle ?: "",
             releaseDate?.dropLast(6) ?: "",
             IMAGE_BASE_URL + mainPosterPath,
