@@ -7,7 +7,7 @@ import com.space.moviesapp.common.extensions.toResult
 import com.space.moviesapp.common.resource.onError
 import com.space.moviesapp.common.resource.onLoading
 import com.space.moviesapp.common.resource.onSuccess
-import com.space.moviesapp.data.paging.MoviesPagingSource
+import com.space.moviesapp.presentation.ui.home.paging.MoviesPagingSource
 import com.space.moviesapp.domain.usecase.GetMovieCategoryUseCase
 import com.space.moviesapp.domain.usecase.GetMoviesUseCase
 import com.space.moviesapp.domain.usecase.favourite.ChangeMovieFavouriteStatusUseCase
@@ -41,9 +41,6 @@ class HomeViewModel(
 
     private var _state = MutableStateFlow<PagingData<MovieItemUIModel>>(PagingData.empty())
     val state get() = _state.asStateFlow()
-
-    private val _favouriteMovies = MutableStateFlow<List<Int>>(emptyList())
-    val favouriteMovies get() = _favouriteMovies.asStateFlow()
 
     init {
         getMovieCategory()
@@ -99,23 +96,6 @@ class HomeViewModel(
             }.collectLatest { (movies, favourites) ->
                 _state.value = movies.map { movie ->
                     movieItemModelToUIMapper.invoke(movie, favourites.any { it.id == movie.id })
-                }
-            }
-        }
-    }
-
-    private fun getFavouriteMovie() {
-        viewModelScope.launch {
-            getFavouriteMovieUseCase.invoke().toResult().collectLatest {
-                it.onSuccess { movies ->
-                    _favouriteMovies.value = movies.map { item ->
-                        item.id
-                    }
-                }
-                it.onError {
-                    setDialog(DialogItem.ErrorDialog(onRefreshClick = {
-                        getFavouriteMovie()
-                    }))
                 }
             }
         }

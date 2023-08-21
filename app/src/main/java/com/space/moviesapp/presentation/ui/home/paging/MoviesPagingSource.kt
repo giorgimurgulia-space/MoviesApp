@@ -1,4 +1,4 @@
-package com.space.moviesapp.data.paging
+package com.space.moviesapp.presentation.ui.home.paging
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
@@ -14,8 +14,6 @@ class MoviesPagingSource(
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, MovieItemModel> {
         return try {
             val currentPage = params.key ?: 1
-//            val response = apiService.getMoviesPage(categoryId, currentPage)
-//            val responseBody = response.body()!!
 
             val response = getMoviesUseCase.invoke(categoryId, currentPage)
             val totalPages = response.totalPages
