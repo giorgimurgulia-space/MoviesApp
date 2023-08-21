@@ -14,7 +14,7 @@ class FavouriteMovieRepositoryImpl(
 ) : FavouriteMovieRepository {
 
     override fun getFavoriteMovie(): Flow<List<MovieItemModel>> {
-        return moviesDao.getFavouriteMovies().map {
+        return moviesDao.getFavouriteMoviesFlow().map {
             it.map { item ->
                 movieEntityToDomainModelMapper(item)
             }

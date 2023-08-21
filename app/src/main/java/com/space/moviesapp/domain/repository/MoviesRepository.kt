@@ -3,13 +3,14 @@ package com.space.moviesapp.domain.repository
 import androidx.paging.PagingData
 import com.space.moviesapp.domain.model.MovieCategoryModel
 import com.space.moviesapp.domain.model.MovieItemModel
+import com.space.moviesapp.domain.model.MoviesPageModel
 import kotlinx.coroutines.flow.Flow
 
 
 interface MoviesRepository {
     fun getMovieCategory(): Flow<List<MovieCategoryModel>>
 
-    fun getMovies(categoryId: String): Flow<PagingData<MovieItemModel>>
+    suspend fun getMovies(categoryId: String, page: Int): MoviesPageModel
 
     suspend fun getMoviesGenres(): Map<Int, String>?
 

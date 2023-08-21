@@ -1,9 +1,6 @@
 package com.space.moviesapp.data.remote.di
 
-import com.space.moviesapp.data.remote.mapper.GenresDtoToDomainMapper
-import com.space.moviesapp.data.remote.mapper.MovieCategoryDtoToDomainMapper
-import com.space.moviesapp.data.remote.mapper.MovieDetailDtoToDomainMapper
-import com.space.moviesapp.data.remote.mapper.MovieItemDtoToDomainMapper
+import com.space.moviesapp.data.remote.mapper.*
 import org.koin.dsl.module
 
 val remoteMapperModule = module {
@@ -11,4 +8,5 @@ val remoteMapperModule = module {
     single { MovieCategoryDtoToDomainMapper() }
     single { MovieDetailDtoToDomainMapper() }
     single { MovieItemDtoToDomainMapper() }
+    single { MoviePageDtoToDomainMapper() }
 }

@@ -2,13 +2,12 @@ package com.space.moviesapp.presentation.ui.home.vm
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import androidx.paging.PagingData
-import androidx.paging.cachedIn
-import androidx.paging.map
+import androidx.paging.*
 import com.space.moviesapp.common.extensions.toResult
 import com.space.moviesapp.common.resource.onError
 import com.space.moviesapp.common.resource.onLoading
 import com.space.moviesapp.common.resource.onSuccess
+import com.space.moviesapp.data.paging.MoviesPagingSource
 import com.space.moviesapp.domain.usecase.GetMovieCategoryUseCase
 import com.space.moviesapp.domain.usecase.GetMoviesUseCase
 import com.space.moviesapp.domain.usecase.favourite.ChangeMovieFavouriteStatusUseCase
@@ -40,7 +39,7 @@ class HomeViewModel(
     private val _movieCategory = MutableLiveData<MovieEvent<List<MovieCategoryUIModel>>>()
     val movieCategory get() = _movieCategory
 
-    private val _state = MutableStateFlow<PagingData<MovieItemUIModel>>(PagingData.empty())
+    private var _state = MutableStateFlow<PagingData<MovieItemUIModel>>(PagingData.empty())
     val state get() = _state.asStateFlow()
 
     private val _favouriteMovies = MutableStateFlow<List<Int>>(emptyList())
@@ -85,14 +84,25 @@ class HomeViewModel(
 
     private fun getNewMovie() {
         viewModelScope.launch {
-            getMoviesUseCase.invoke(
-                movieCategoryList[selectCategoryIndex!!].urlId
-            ).cachedIn(viewModelScope).collectLatest {
-                _state.value = it.map { movieItem ->
-                    movieItemModelToUIMapper(movieItem)
+            Pager(
+                config = PagingConfig(pageSize = 20, enablePlaceholders = false, initialLoadSize = 20),
+                pagingSourceFactory = { MoviesPagingSource(getMoviesUseCase(),selectCategoryIndex) }
+            ).flow.map {
+                it.map { movie ->
+                    MovieItemModelToUIMapper(movie)
                 }
             }
         }
+
+//        viewModelScope.launch {
+//            getMoviesUseCase.invoke(
+//                movieCategoryList[selectCategoryIndex!!].urlId
+//            ).cachedIn(viewModelScope).collectLatest {
+//                _state.value = it.map { movieItem ->
+//                    movieItemModelToUIMapper(movieItem)
+//                }
+//            }
+//        }
     }
 
     private fun getFavouriteMovie() {
