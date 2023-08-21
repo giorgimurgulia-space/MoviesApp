@@ -45,7 +45,7 @@ class FavouritesViewModel(
                 it.onSuccess { movies ->
                     closeLoaderDialog()
                     _state.value = movies.map { item ->
-                        movieItemModelToUIMapper(item)
+                        movieItemModelToUIMapper.invoke(item, false)
                     }
                 }
                 it.onError {

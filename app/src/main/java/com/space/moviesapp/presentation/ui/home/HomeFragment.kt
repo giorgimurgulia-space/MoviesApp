@@ -55,7 +55,7 @@ class HomeFragment :
         }
 
         collectFlow(viewModel.favouriteMovies) { favouritesMovies ->
-            adapter.onItemFavouriteChange(favouritesMovies)
+//            adapter.onItemFavouriteChange(favouritesMovies)
         }
 
         viewModel.movieCategory.observeNonNull(viewLifecycleOwner) {

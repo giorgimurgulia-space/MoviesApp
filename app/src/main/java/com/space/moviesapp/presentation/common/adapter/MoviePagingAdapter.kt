@@ -35,7 +35,6 @@ class MoviePagingAdapter(
         getItem(position)?.let { holder.bind(it, favouriteMoviesIds) }
     }
 
-    @SuppressLint("NotifyDataSetChanged")
     fun onItemFavouriteChange(moviesId: List<Int>) {
         moviesId.forEach {
             favouriteMoviesIds[it] = true

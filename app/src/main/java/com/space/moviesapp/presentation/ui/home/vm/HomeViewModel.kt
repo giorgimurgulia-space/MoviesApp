@@ -8,7 +8,6 @@ import com.space.moviesapp.common.resource.onError
 import com.space.moviesapp.common.resource.onLoading
 import com.space.moviesapp.common.resource.onSuccess
 import com.space.moviesapp.data.paging.MoviesPagingSource
-import com.space.moviesapp.domain.model.MovieItemModel
 import com.space.moviesapp.domain.usecase.GetMovieCategoryUseCase
 import com.space.moviesapp.domain.usecase.GetMoviesUseCase
 import com.space.moviesapp.domain.usecase.favourite.ChangeMovieFavouriteStatusUseCase
@@ -48,7 +47,6 @@ class HomeViewModel(
 
     init {
         getMovieCategory()
-        getFavouriteMovie()
     }
 
     fun onFavouriteClick(movie: MovieItemUIModel) {
@@ -85,17 +83,22 @@ class HomeViewModel(
 
     private fun getNewMovie() {
         viewModelScope.launch {
-            Pager(
-                config = PagingConfig(pageSize = 20, enablePlaceholders = false),
-                pagingSourceFactory = {
-                    MoviesPagingSource(
-                        movieCategoryList[selectCategoryIndex].urlId,
-                        getMoviesUseCase
-                    )
-                }
-            ).flow.cachedIn(viewModelScope).collectLatest {
-                _state.value = it.map { movie ->
-                    MovieItemModelToUIMapper().invoke(movie)
+            combine(
+                Pager(
+                    config = PagingConfig(pageSize = 20, enablePlaceholders = false),
+                    pagingSourceFactory = {
+                        MoviesPagingSource(
+                            movieCategoryList[selectCategoryIndex].urlId,
+                            getMoviesUseCase
+                        )
+                    }
+                ).flow.cachedIn(viewModelScope),
+                getFavouriteMovieUseCase.invoke(),
+            ) { movies, favourites ->
+                movies to favourites
+            }.collectLatest { (movies, favourites) ->
+                _state.value = movies.map { movie ->
+                    movieItemModelToUIMapper.invoke(movie, favourites.any { it.id == movie.id })
                 }
             }
         }

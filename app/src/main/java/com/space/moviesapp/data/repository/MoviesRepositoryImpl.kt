@@ -18,9 +18,7 @@ import com.space.moviesapp.domain.model.MovieItemModel
 import com.space.moviesapp.domain.model.MoviesPageModel
 import com.space.moviesapp.domain.repository.MoviesRepository
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.withContext
 import java.util.concurrent.CancellationException
 

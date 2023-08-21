@@ -54,7 +54,7 @@ class SearchViewModel(
                         .cachedIn(viewModelScope)
                         .collectLatest {
                             _state.value = it.map { movieItem ->
-                                movieItemModelToUIMapper(movieItem)
+                                movieItemModelToUIMapper.invoke(movieItem,false)
                             }
                         }
                 }
