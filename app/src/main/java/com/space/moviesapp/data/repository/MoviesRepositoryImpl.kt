@@ -17,9 +17,11 @@ import com.space.moviesapp.domain.model.MovieCategoryModel
 import com.space.moviesapp.domain.model.MovieItemModel
 import com.space.moviesapp.domain.model.MoviesPageModel
 import com.space.moviesapp.domain.repository.MoviesRepository
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.withContext
 import java.util.concurrent.CancellationException
 
 class MoviesRepositoryImpl(
@@ -39,18 +41,20 @@ class MoviesRepositoryImpl(
     }
 
     override suspend fun getMovies(categoryId: String, page: Int): MoviesPageModel {
-        try {
-            val response = apiService.getMoviesPage(categoryId, page)
-            if (response.isSuccessful) {
-                return moviesPageDtoToDomainMapper.invoke(
-                    response.body()!!,
-                    getMoviesGenres(),
-                    moviesDao.getFavouriteMovies().map { it.id })
-            } else {
-                throw ApiError(Throwable())
+        return withContext(Dispatchers.IO) {
+            try {
+                val response = apiService.getMoviesPage(categoryId, page)
+                if (response.isSuccessful) {
+                    moviesPageDtoToDomainMapper.invoke(
+                        response.body()!!,
+                        getMoviesGenres(),
+                        moviesDao.getFavouriteMovies().map { it.id })
+                } else {
+                    throw ApiError(Throwable())
+                }
+            } catch (e: CancellationException) {
+                throw e
             }
-        } catch (e: CancellationException) {
-            throw e
         }
 //        return Pager(
 //            config = PagingConfig(pageSize = 20, enablePlaceholders = false, initialLoadSize = 20),
@@ -81,7 +85,7 @@ class MoviesRepositoryImpl(
 
     override fun searchMovies(query: String): Flow<PagingData<MovieItemModel>> {
         return Pager(
-            config = PagingConfig(pageSize = 1, enablePlaceholders = false),
+            config = PagingConfig(pageSize = 20, enablePlaceholders = false),
             pagingSourceFactory = { MoviesSearchPagingSource(apiService, query) }
         ).flow
             .map {

@@ -8,6 +8,7 @@ import com.space.moviesapp.common.resource.onError
 import com.space.moviesapp.common.resource.onLoading
 import com.space.moviesapp.common.resource.onSuccess
 import com.space.moviesapp.data.paging.MoviesPagingSource
+import com.space.moviesapp.domain.model.MovieItemModel
 import com.space.moviesapp.domain.usecase.GetMovieCategoryUseCase
 import com.space.moviesapp.domain.usecase.GetMoviesUseCase
 import com.space.moviesapp.domain.usecase.favourite.ChangeMovieFavouriteStatusUseCase
@@ -85,24 +86,19 @@ class HomeViewModel(
     private fun getNewMovie() {
         viewModelScope.launch {
             Pager(
-                config = PagingConfig(pageSize = 20, enablePlaceholders = false, initialLoadSize = 20),
-                pagingSourceFactory = { MoviesPagingSource(getMoviesUseCase(),selectCategoryIndex) }
-            ).flow.map {
-                it.map { movie ->
-                    MovieItemModelToUIMapper(movie)
+                config = PagingConfig(pageSize = 20, enablePlaceholders = false),
+                pagingSourceFactory = {
+                    MoviesPagingSource(
+                        movieCategoryList[selectCategoryIndex].urlId,
+                        getMoviesUseCase
+                    )
+                }
+            ).flow.cachedIn(viewModelScope).collectLatest {
+                _state.value = it.map { movie ->
+                    MovieItemModelToUIMapper().invoke(movie)
                 }
             }
         }
-
-//        viewModelScope.launch {
-//            getMoviesUseCase.invoke(
-//                movieCategoryList[selectCategoryIndex!!].urlId
-//            ).cachedIn(viewModelScope).collectLatest {
-//                _state.value = it.map { movieItem ->
-//                    movieItemModelToUIMapper(movieItem)
-//                }
-//            }
-//        }
     }
 
     private fun getFavouriteMovie() {

@@ -9,7 +9,7 @@ import java.util.concurrent.CancellationException
 
 class MoviesSearchPagingSource(
     private val apiService: ApiService,
-    private val query: String,
+    private val query: String
 ) : PagingSource<Int, MovieItemDto>() {
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, MovieItemDto> {

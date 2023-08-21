@@ -15,7 +15,8 @@ val repositoryModule = module {
             moviesDao = get(),
             movieCategoryDtoToDomainMapper = get(),
             movieItemDtoToDomainMapper = get(),
-            movieGenresDtoToDomainMapper = get()
+            movieGenresDtoToDomainMapper = get(),
+            moviesPageDtoToDomainMapper = get()
         )
     }
     single<MovieDetailsRepository> {
