@@ -1,32 +1,23 @@
 package com.space.moviesapp.data.repository
 
-import androidx.paging.Pager
-import androidx.paging.PagingConfig
-import androidx.paging.PagingData
-import androidx.paging.map
 import com.space.moviesapp.common.resource.ApiError
-import com.space.moviesapp.data.local.database.dao.MoviesDao
-import com.space.moviesapp.presentation.ui.search.paging.MoviesSearchPagingSource
 import com.space.moviesapp.data.remote.api.ApiService
 import com.space.moviesapp.data.remote.dto.MovieCategoryDto
 import com.space.moviesapp.data.remote.mapper.GenresDtoToDomainMapper
 import com.space.moviesapp.data.remote.mapper.MovieCategoryDtoToDomainMapper
-import com.space.moviesapp.data.remote.mapper.MovieItemDtoToDomainMapper
 import com.space.moviesapp.data.remote.mapper.MoviePageDtoToDomainMapper
 import com.space.moviesapp.domain.model.MovieCategoryModel
-import com.space.moviesapp.domain.model.MovieItemModel
 import com.space.moviesapp.domain.model.MoviesPageModel
 import com.space.moviesapp.domain.repository.MoviesRepository
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.withContext
 import java.util.concurrent.CancellationException
 
 class MoviesRepositoryImpl(
     private val apiService: ApiService,
-    private val moviesDao: MoviesDao,
     private val movieCategoryDtoToDomainMapper: MovieCategoryDtoToDomainMapper,
-    private val movieItemDtoToDomainMapper: MovieItemDtoToDomainMapper,
     private val movieGenresDtoToDomainMapper: GenresDtoToDomainMapper,
     private val moviesPageDtoToDomainMapper: MoviePageDtoToDomainMapper
 ) : MoviesRepository {
@@ -45,8 +36,8 @@ class MoviesRepositoryImpl(
                 if (response.isSuccessful) {
                     moviesPageDtoToDomainMapper.invoke(
                         response.body()!!,
-                        getMoviesGenres(),
-                        moviesDao.getFavouriteMovies().map { it.id })
+                        getMoviesGenres()
+                    )
                 } else {
                     throw ApiError(Throwable())
                 }
@@ -63,8 +54,8 @@ class MoviesRepositoryImpl(
                 if (response.isSuccessful) {
                     moviesPageDtoToDomainMapper.invoke(
                         response.body()!!,
-                        getMoviesGenres(),
-                        moviesDao.getFavouriteMovies().map { it.id })
+                        getMoviesGenres()
+                    )
                 } else {
                     throw ApiError(Throwable())
                 }

@@ -12,9 +12,7 @@ val repositoryModule = module {
     single<MoviesRepository> {
         MoviesRepositoryImpl(
             apiService = get(),
-            moviesDao = get(),
             movieCategoryDtoToDomainMapper = get(),
-            movieItemDtoToDomainMapper = get(),
             movieGenresDtoToDomainMapper = get(),
             moviesPageDtoToDomainMapper = get()
         )

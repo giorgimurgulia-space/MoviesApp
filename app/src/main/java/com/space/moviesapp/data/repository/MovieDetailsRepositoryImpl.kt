@@ -20,7 +20,7 @@ class MovieDetailsRepositoryImpl(
             emit(
                 movieDetailDtoToDomainMapper.invoke(
                     response.body()!!,
-                    moviesDao.isFavouriteMovie(response.body()!!.id ?: 0)
+                    moviesDao.isFavouriteMovie(movieId)
                 )
             )
         } else

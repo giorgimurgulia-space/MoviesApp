@@ -11,7 +11,6 @@ class MovieEntityToDomainModelMapper : Mapper<MovieEntity, MovieItemModel> {
         model.title,
         model.releaseDate,
         model.backdropPosterPath,
-        model.mainPosterPath,
-        true
+        model.mainPosterPath
     )
 }

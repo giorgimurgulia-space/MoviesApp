@@ -9,7 +9,6 @@ class MoviePageDtoToDomainMapper {
     fun invoke(
         model: MoviesPageDto,
         genresMap: Map<Int, String>?,
-        favouritesItemIds: List<Int>
     ): MoviesPageModel = with(model) {
         MoviesPageModel(page, results.map {
             MovieItemModel(
@@ -18,8 +17,7 @@ class MoviePageDtoToDomainMapper {
                 it.originalTitle ?: "",
                 it.releaseDate?.dropLast(6) ?: "",
                 MoviesConstants.IMAGE_BASE_URL + it.mainPosterPath,
-                MoviesConstants.IMAGE_BASE_URL + it.mainPosterPath,
-                favouritesItemIds.contains(it.id)
+                MoviesConstants.IMAGE_BASE_URL + it.mainPosterPath
             )
         }, totalPages)
     }

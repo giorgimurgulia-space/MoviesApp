@@ -6,6 +6,5 @@ data class MovieItemModel(
     val title: String,
     val releaseDate: String,
     val backdropPosterPath: String,
-    val mainPosterPath: String,
-    val isFavourite: Boolean
+    val mainPosterPath: String
 )

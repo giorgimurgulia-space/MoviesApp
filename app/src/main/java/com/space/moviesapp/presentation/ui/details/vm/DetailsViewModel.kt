@@ -7,6 +7,7 @@ import com.space.moviesapp.common.resource.onLoading
 import com.space.moviesapp.common.resource.onSuccess
 import com.space.moviesapp.domain.usecase.details.GetMovieDetailsUseCase
 import com.space.moviesapp.domain.usecase.favourite.ChangeMovieFavouriteStatusUseCase
+import com.space.moviesapp.domain.usecase.favourite.CheckFavouriteMovieUseCase
 import com.space.moviesapp.presentation.base.vm.BaseViewModel
 import com.space.moviesapp.presentation.model.DialogItem
 import com.space.moviesapp.presentation.model.MovieDetailsUIModel
@@ -20,12 +21,12 @@ import kotlinx.coroutines.launch
 class DetailsViewModel(
     private val getMovieDetailsUseCase: GetMovieDetailsUseCase,
     private val changeMovieFavouriteStatusUseCase: ChangeMovieFavouriteStatusUseCase,
+    private val checkFavouriteMovieUseCase: CheckFavouriteMovieUseCase,
     private val movieDetailsModelToUIMapper: MovieDetailsModelToUIMapper,
     private val movieDetailsUIModelToEntity: MovieDetailsUIModelToEntity
 ) : BaseViewModel() {
     private val _movieState = MutableStateFlow(MovieDetailsUIModel())
     val movieState get() = _movieState.asStateFlow()
-
 
     fun getMovie(movieId: Int?) {
         if (movieId == null) {
@@ -36,7 +37,11 @@ class DetailsViewModel(
                     it.onLoading { setDialog(DialogItem.LoaderDialog()) }
                     it.onSuccess { item ->
                         closeLoaderDialog()
-                        _movieState.tryEmit(movieDetailsModelToUIMapper(item))
+                        _movieState.tryEmit(
+                            movieDetailsModelToUIMapper.invoke(
+                                item,
+                            )
+                        )
                     }
                     it.onError {
                         setDialog(DialogItem.ErrorDialog(onRefreshClick = { navigateBack() }))

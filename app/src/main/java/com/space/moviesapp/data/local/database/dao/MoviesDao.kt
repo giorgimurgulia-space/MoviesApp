@@ -21,7 +21,4 @@ interface MoviesDao {
 
     @Query("select exists(select * from favourite_movie where id=:id)")
     suspend fun isFavouriteMovie(id: Int): Boolean
-
-    @Query("select * from favourite_movie")
-    fun getFavouriteMovies(): List<MovieEntity>
 }

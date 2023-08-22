@@ -14,8 +14,6 @@ val useCaseModule = module {
     single { GetMovieDetailsUseCase(movieDetailsRepository = get()) }
     single { GetMoviesUseCase(moviesRepository = get()) }
     single { GetFavouriteMovieUseCase(favouriteMovieRepository = get()) }
-    single { InsertFavouriteMovieUseCase(favouriteMovieRepository = get()) }
-    single { DeleteFavouriteMovieUseCase(favouriteMovieRepository = get()) }
     single { CheckFavouriteMovieUseCase(favouriteMovieRepository = get()) }
     single { ChangeMovieFavouriteStatusUseCase(favouriteMovieRepository = get()) }
 }

@@ -7,7 +7,5 @@ import com.space.moviesapp.domain.repository.MoviesRepository
 import kotlinx.coroutines.flow.Flow
 
 class SearchMovieUseCase(private val moviesRepository: MoviesRepository) {
-    suspend fun invoke(query: String, page: Int): MoviesPageModel {
-        return moviesRepository.searchMovies(query, page)
-    }
+    suspend fun invoke(query: String, page: Int) = moviesRepository.searchMovies(query, page)
 }
