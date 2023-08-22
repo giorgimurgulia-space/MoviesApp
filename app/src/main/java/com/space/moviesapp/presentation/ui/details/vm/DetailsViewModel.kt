@@ -7,7 +7,6 @@ import com.space.moviesapp.common.resource.onLoading
 import com.space.moviesapp.common.resource.onSuccess
 import com.space.moviesapp.domain.usecase.details.GetMovieDetailsUseCase
 import com.space.moviesapp.domain.usecase.favourite.ChangeMovieFavouriteStatusUseCase
-import com.space.moviesapp.domain.usecase.favourite.CheckFavouriteMovieUseCase
 import com.space.moviesapp.presentation.base.vm.BaseViewModel
 import com.space.moviesapp.presentation.model.DialogItem
 import com.space.moviesapp.presentation.model.MovieDetailsUIModel
@@ -24,6 +23,7 @@ class DetailsViewModel(
     private val movieDetailsModelToUIMapper: MovieDetailsModelToUIMapper,
     private val movieDetailsUIModelToEntity: MovieDetailsUIModelToEntity
 ) : BaseViewModel() {
+    private var detailMovieId: Int? = null
     private val _movieState = MutableStateFlow(MovieDetailsUIModel())
     val movieState get() = _movieState.asStateFlow()
 
@@ -31,8 +31,10 @@ class DetailsViewModel(
         if (movieId == null) {
             setDialog(DialogItem.ErrorDialog(onRefreshClick = { }))
         } else {
+            detailMovieId = movieId
+
             viewModelScope.launch {
-                getMovieDetailsUseCase.invoke(movieId).toResult().collectLatest {
+                getMovieDetailsUseCase.invoke(detailMovieId!!).toResult().collectLatest {
                     it.onLoading { setDialog(DialogItem.LoaderDialog()) }
                     it.onSuccess { item ->
                         closeLoaderDialog()
@@ -43,7 +45,7 @@ class DetailsViewModel(
                         )
                     }
                     it.onError {
-                        setDialog(DialogItem.ErrorDialog(onRefreshClick = { navigateBack() }))
+                        setDialog(DialogItem.ErrorDialog(onRefreshClick = { getMovie(detailMovieId) }))
                     }
                 }
             }
