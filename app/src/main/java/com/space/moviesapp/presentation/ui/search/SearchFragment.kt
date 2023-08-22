@@ -27,11 +27,11 @@ class SearchFragment :
     )
 
     override fun onBind() {
-        binding.mainRecycler.adapter = adapter
-
         val spanCount = 2
         val spacing = 32
         val includeEdge = false
+
+        binding.mainRecycler.adapter = adapter
         binding.mainRecycler.addItemDecoration(
             GridSpacingItemDecoration(
                 spanCount,

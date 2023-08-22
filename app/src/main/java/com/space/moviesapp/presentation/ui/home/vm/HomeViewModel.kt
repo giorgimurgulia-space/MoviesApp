@@ -85,8 +85,8 @@ class HomeViewModel(
                     config = PagingConfig(pageSize = 20, enablePlaceholders = false),
                     pagingSourceFactory = {
                         MoviesPagingSource(
-                            movieCategoryList[selectCategoryIndex].urlId,
-                            getMoviesUseCase
+                            getMoviesUseCase,
+                            movieCategoryList[selectCategoryIndex].urlId
                         )
                     }
                 ).flow.cachedIn(viewModelScope),

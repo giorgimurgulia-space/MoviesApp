@@ -7,9 +7,9 @@ import com.space.moviesapp.domain.usecase.GetMoviesUseCase
 import java.util.concurrent.CancellationException
 
 class MoviesPagingSource(
-    private val categoryId: String,
-    private val getMoviesUseCase: GetMoviesUseCase
-) : PagingSource<Int, MovieItemModel>() {
+    private val getMoviesUseCase: GetMoviesUseCase,
+    private val categoryId: String
+    ) : PagingSource<Int, MovieItemModel>() {
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, MovieItemModel> {
         return try {

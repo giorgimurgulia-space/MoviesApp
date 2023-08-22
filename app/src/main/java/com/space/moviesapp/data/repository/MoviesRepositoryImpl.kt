@@ -6,7 +6,7 @@ import androidx.paging.PagingData
 import androidx.paging.map
 import com.space.moviesapp.common.resource.ApiError
 import com.space.moviesapp.data.local.database.dao.MoviesDao
-import com.space.moviesapp.data.paging.MoviesSearchPagingSource
+import com.space.moviesapp.presentation.ui.search.paging.MoviesSearchPagingSource
 import com.space.moviesapp.data.remote.api.ApiService
 import com.space.moviesapp.data.remote.dto.MovieCategoryDto
 import com.space.moviesapp.data.remote.mapper.GenresDtoToDomainMapper
@@ -54,18 +54,24 @@ class MoviesRepositoryImpl(
                 throw e
             }
         }
-//        return Pager(
-//            config = PagingConfig(pageSize = 20, enablePlaceholders = false, initialLoadSize = 20),
-//            pagingSourceFactory = { MoviesPagingSource(apiService, categoryId) }
-//        ).flow.map {
-//            it.map { movie ->
-//                movieItemDtoToDomainMapper.invoke(
-//                    movie,
-//                    getMoviesGenres(),
-//                    moviesDao.isFavouriteMovie(movie.id ?: 0)
-//                )
-//            }
-//        }
+    }
+
+    override suspend fun searchMovies(query: String, page: Int): MoviesPageModel {
+        return withContext(Dispatchers.IO) {
+            try {
+                val response = apiService.searchMovies(query, page)
+                if (response.isSuccessful) {
+                    moviesPageDtoToDomainMapper.invoke(
+                        response.body()!!,
+                        getMoviesGenres(),
+                        moviesDao.getFavouriteMovies().map { it.id })
+                } else {
+                    throw ApiError(Throwable())
+                }
+            } catch (e: CancellationException) {
+                throw e
+            }
+        }
     }
 
     override suspend fun getMoviesGenres(): Map<Int, String>? {
@@ -79,22 +85,6 @@ class MoviesRepositoryImpl(
         } catch (e: CancellationException) {
             throw e
         }
-    }
-
-    override fun searchMovies(query: String): Flow<PagingData<MovieItemModel>> {
-        return Pager(
-            config = PagingConfig(pageSize = 20, enablePlaceholders = false),
-            pagingSourceFactory = { MoviesSearchPagingSource(apiService, query) }
-        ).flow
-            .map {
-                it.map { movie ->
-                    movieItemDtoToDomainMapper.invoke(
-                        movie,
-                        getMoviesGenres(),
-                        moviesDao.isFavouriteMovie(movie.id ?: 0)
-                    )
-                }
-            }
     }
 
     private val categoryList = listOf(

@@ -12,18 +12,10 @@ class MovieViewHolder(
 ) : RecyclerView.ViewHolder(binding.root) {
 
     fun bind(
-        movie: MovieItemUIModel,
-        favouriteMoviesIds: MutableMap<Int, Boolean> = mutableMapOf()
+        movie: MovieItemUIModel
     ) = with(binding) {
-        if (favouriteMoviesIds[movie.id] != null) {
-            if (favouriteMoviesIds[movie.id] != movie.isFavourite) {
-                favoriteCheckBox.isChecked = !movie.isFavourite
-            } else {
-                favoriteCheckBox.isChecked = movie.isFavourite
-            }
-        } else {
-            favoriteCheckBox.isChecked = movie.isFavourite
-        }
+
+        favoriteCheckBox.isChecked = movie.isFavourite
 
         if (movie.genre.isNotEmpty()) {
             genresText.show()
