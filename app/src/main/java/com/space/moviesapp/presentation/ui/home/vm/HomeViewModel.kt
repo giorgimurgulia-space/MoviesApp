@@ -20,6 +20,7 @@ import com.space.moviesapp.presentation.model.MovieCategoryUIModel
 import com.space.moviesapp.presentation.model.MovieItemUIModel
 import com.space.moviesapp.presentation.navigation.MovieEvent
 import com.space.moviesapp.presentation.ui.home.mapper.MovieCategoryModelToUIMapper
+import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
@@ -33,17 +34,26 @@ class HomeViewModel(
     private val movieItemUIModelToEntity: MovieItemUIModelToEntity,
 ) : BaseViewModel() {
 
-    private var selectCategoryIndex = 0
-    private var movieCategoryList = emptyList<MovieCategoryUIModel>()
-
-    private val _movieCategory = MutableLiveData<MovieEvent<List<MovieCategoryUIModel>>>()
-    val movieCategory get() = _movieCategory
+    private val categoryFlow = MutableSharedFlow<Int>(
+        extraBufferCapacity = 1, onBufferOverflow = BufferOverflow.DROP_OLDEST
+    )
+    private val _movieCategory = MutableStateFlow<List<MovieCategoryUIModel>>(emptyList())
+    val movieCategory get() = _movieCategory.asStateFlow()
 
     private var _state = MutableStateFlow<PagingData<MovieItemUIModel>>(PagingData.empty())
     val state get() = _state.asStateFlow()
 
     init {
         getMovieCategory()
+
+        viewModelScope.launch {
+            categoryFlow
+                .filterNotNull()
+                .distinctUntilChanged()
+                .collectLatest {
+                    getNewMovie(it)
+                }
+        }
     }
 
     fun onFavouriteClick(movie: MovieItemUIModel) {
@@ -52,12 +62,8 @@ class HomeViewModel(
         }
     }
 
-    fun onFilterClick(index: Int) {
-        if (index >= 0) {
-            selectCategoryIndex = index
-            _state.tryEmit(PagingData.empty())
-            getNewMovie()
-        }
+    fun onFilterClick(id: Int) {
+        categoryFlow.tryEmit(id)
     }
 
     private fun getMovieCategory() {
@@ -68,8 +74,8 @@ class HomeViewModel(
                 }
                 it.onSuccess { category ->
                     closeLoaderDialog()
-                    movieCategoryList = category.map { item -> movieCategoryModelToUIMapper(item) }
-                    _movieCategory.value = MovieEvent(movieCategoryList)
+                    _movieCategory.value =
+                        category.map { item -> movieCategoryModelToUIMapper(item) }
                 }
                 it.onError {
                     setDialog(DialogItem.ErrorDialog(onRefreshClick = { getMovieCategory() }))
@@ -78,7 +84,7 @@ class HomeViewModel(
         }
     }
 
-    private fun getNewMovie() {
+    private fun getNewMovie(categoryId: Int) {
         viewModelScope.launch {
             combine(
                 Pager(
@@ -86,7 +92,7 @@ class HomeViewModel(
                     pagingSourceFactory = {
                         MoviesPagingSource(
                             getMoviesUseCase,
-                            movieCategoryList[selectCategoryIndex].urlId
+                            _movieCategory.value[categoryId].urlId
                         )
                     }
                 ).flow.cachedIn(viewModelScope),

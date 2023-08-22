@@ -53,11 +53,8 @@ class HomeFragment :
         collectFlow(viewModel.state) {
             adapter.submitData(lifecycle, it)
         }
-
-        viewModel.movieCategory.observeNonNull(viewLifecycleOwner) {
-            it.getContentIfNotHandled()?.let { category ->
-                setFilter(category)
-            }
+        collectFlow(viewModel.movieCategory){
+            setFilter(it)
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
@@ -95,12 +92,13 @@ class HomeFragment :
     private fun setFilter(chips: List<MovieCategoryUIModel>) = with(binding) {
         chips.forEachIndexed { index, it ->
             val chip = ChipFilterItemBinding.inflate(LayoutInflater.from(requireContext())).chipItem
-            chip.text = it.title
-            chip.id = index
 
+            chip.id = index
+            chip.text = it.title
             chipGroup.addView(chip)
         }
-        chipGroup.check(0)
+
+//        chipGroup.check(0)
     }
 }
 
