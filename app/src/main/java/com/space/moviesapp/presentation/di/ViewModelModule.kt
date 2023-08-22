@@ -24,8 +24,7 @@ val viewModelModule = module {
             getMovieDetailsUseCase = get(),
             changeMovieFavouriteStatusUseCase = get(),
             movieDetailsModelToUIMapper = get(),
-            movieDetailsUIModelToEntity = get(),
-            checkFavouriteMovieUseCase = get()
+            movieDetailsUIModelToEntity = get()
         )
     }
     viewModel {

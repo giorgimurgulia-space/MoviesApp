@@ -21,7 +21,6 @@ import kotlinx.coroutines.launch
 class DetailsViewModel(
     private val getMovieDetailsUseCase: GetMovieDetailsUseCase,
     private val changeMovieFavouriteStatusUseCase: ChangeMovieFavouriteStatusUseCase,
-    private val checkFavouriteMovieUseCase: CheckFavouriteMovieUseCase,
     private val movieDetailsModelToUIMapper: MovieDetailsModelToUIMapper,
     private val movieDetailsUIModelToEntity: MovieDetailsUIModelToEntity
 ) : BaseViewModel() {

@@ -12,10 +12,9 @@ import androidx.fragment.app.setFragmentResult
 import com.space.moviesapp.R
 import com.space.moviesapp.databinding.LayoutErrorBinding
 
-class ErrorDialogFragment : DialogFragment() {
+class ErrorDialogFragment(private val onRefreshClick: () -> Unit) : DialogFragment() {
 
     private var binding: LayoutErrorBinding? = null
-    private var onRefreshClickListener: (() -> Unit)? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,11 +33,8 @@ class ErrorDialogFragment : DialogFragment() {
 
 
         binding?.refreshLinearLayout?.setOnClickListener {
-            onRefreshClickListener?.invoke()
+            onRefreshClick()
+            this.dismiss()
         }
-    }
-
-    fun setOnRefreshClickListener(onRefreshClick: (() -> Unit)) {
-        this.onRefreshClickListener = onRefreshClick
     }
 }
