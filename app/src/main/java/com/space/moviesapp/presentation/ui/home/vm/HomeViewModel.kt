@@ -34,9 +34,8 @@ class HomeViewModel(
     private val movieItemUIModelToEntity: MovieItemUIModelToEntity,
 ) : BaseViewModel() {
 
-    private val categoryFlow = MutableSharedFlow<Int>(
-        extraBufferCapacity = 1, onBufferOverflow = BufferOverflow.DROP_OLDEST
-    )
+    private val categoryFlow = MutableStateFlow(0)
+
     private val _movieCategory = MutableStateFlow<List<MovieCategoryUIModel>>(emptyList())
     val movieCategory get() = _movieCategory.asStateFlow()
 
@@ -51,6 +50,7 @@ class HomeViewModel(
                 .filterNotNull()
                 .distinctUntilChanged()
                 .collectLatest {
+                    changeCheckedCategory(it)
                     getNewMovie(it)
                 }
         }
@@ -75,7 +75,12 @@ class HomeViewModel(
                 it.onSuccess { category ->
                     closeLoaderDialog()
                     _movieCategory.value =
-                        category.map { item -> movieCategoryModelToUIMapper(item) }
+                        category.map { item ->
+                            movieCategoryModelToUIMapper.invoke(
+                                item,
+                                item.id == categoryFlow.value
+                            )
+                        }
                 }
                 it.onError {
                     setDialog(DialogItem.ErrorDialog(onRefreshClick = { getMovieCategory() }))
@@ -104,6 +109,12 @@ class HomeViewModel(
                     movieItemModelToUIMapper.invoke(movie, favourites.any { it.id == movie.id })
                 }
             }
+        }
+    }
+
+    private fun changeCheckedCategory(categoryId: Int) {
+        _movieCategory.value = _movieCategory.value.map {
+            it.copy(isChecked = it.id == categoryId)
         }
     }
 }

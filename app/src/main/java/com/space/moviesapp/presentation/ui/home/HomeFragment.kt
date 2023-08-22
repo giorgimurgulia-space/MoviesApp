@@ -53,7 +53,7 @@ class HomeFragment :
         collectFlow(viewModel.state) {
             adapter.submitData(lifecycle, it)
         }
-        collectFlow(viewModel.movieCategory){
+        collectFlow(viewModel.movieCategory) {
             setFilter(it)
         }
 
@@ -90,15 +90,15 @@ class HomeFragment :
     }
 
     private fun setFilter(chips: List<MovieCategoryUIModel>) = with(binding) {
+        chipGroup.removeAllViews()
         chips.forEachIndexed { index, it ->
             val chip = ChipFilterItemBinding.inflate(LayoutInflater.from(requireContext())).chipItem
 
             chip.id = index
             chip.text = it.title
+            chip.isChecked = it.isChecked
             chipGroup.addView(chip)
         }
-
-//        chipGroup.check(0)
     }
 }
 
