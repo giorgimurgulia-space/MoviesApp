@@ -36,14 +36,9 @@ class FavouritesFragment :
         )
     }
 
-    override fun setListeners() {
-        super.setListeners()
-    }
-
     override fun setObserves() {
         collectFlow(viewModel.state) {
             binding.noMoviesImage.visibility = if (it.isEmpty()) View.VISIBLE else View.GONE
-
             adapter.submitList(it)
         }
     }
