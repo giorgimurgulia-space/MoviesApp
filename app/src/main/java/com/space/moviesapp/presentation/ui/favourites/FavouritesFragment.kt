@@ -1,11 +1,11 @@
 package com.space.moviesapp.presentation.ui.favourites
 
 import android.view.View
-import com.space.moviesapp.common.extensions.collectFlow
+import com.space.core.extensions.collectFlow
 import com.space.moviesapp.databinding.FragmentFavouritesBinding
-import com.space.moviesapp.presentation.base.fragment.BaseFragment
+import com.space.core.base.fragment.BaseFragment
 import com.space.moviesapp.presentation.ui.favourites.adapter.MovieListAdapter
-import com.space.moviesapp.presentation.common.decorator.GridSpacingItemDecoration
+import com.space.core.decorator.GridSpacingItemDecoration
 import com.space.moviesapp.presentation.ui.favourites.vm.FavouritesViewModel
 import kotlin.reflect.KClass
 

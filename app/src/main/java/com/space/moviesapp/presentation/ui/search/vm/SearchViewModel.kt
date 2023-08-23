@@ -5,7 +5,7 @@ import androidx.paging.*
 import com.space.moviesapp.domain.usecase.favourite.ChangeMovieFavouriteStatusUseCase
 import com.space.moviesapp.domain.usecase.favourite.GetFavouriteMovieUseCase
 import com.space.moviesapp.domain.usecase.search.SearchMovieUseCase
-import com.space.moviesapp.presentation.base.vm.BaseViewModel
+import com.space.core.base.vm.BaseViewModel
 import com.space.moviesapp.presentation.common.mapper.MovieItemModelToUIMapper
 import com.space.moviesapp.presentation.common.mapper.MovieItemUIModelToEntity
 import com.space.moviesapp.presentation.model.MovieItemUIModel

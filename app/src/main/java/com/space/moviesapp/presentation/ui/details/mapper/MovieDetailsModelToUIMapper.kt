@@ -1,12 +1,13 @@
 package com.space.moviesapp.presentation.ui.details.mapper
 
-import com.space.moviesapp.common.maper.Mapper
+import com.space.core.maper.Mapper
 import com.space.moviesapp.domain.model.MovieDetailsModel
 import com.space.moviesapp.presentation.model.MovieDetailsUIModel
 import java.math.BigDecimal
 import java.math.RoundingMode
 
-class MovieDetailsModelToUIMapper : Mapper<MovieDetailsModel, MovieDetailsUIModel> {
+class MovieDetailsModelToUIMapper :
+    com.space.core.maper.Mapper<MovieDetailsModel, MovieDetailsUIModel> {
     override fun invoke(model: MovieDetailsModel): MovieDetailsUIModel = with(model) {
         MovieDetailsUIModel(
             id,

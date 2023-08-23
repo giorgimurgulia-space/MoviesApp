@@ -1,14 +1,14 @@
 package com.space.moviesapp.presentation.ui.details.vm
 
 import androidx.lifecycle.viewModelScope
-import com.space.moviesapp.common.extensions.toResult
-import com.space.moviesapp.common.resource.onError
-import com.space.moviesapp.common.resource.onLoading
-import com.space.moviesapp.common.resource.onSuccess
+import com.space.core.extensions.toResult
+import com.space.core.resource.onError
+import com.space.core.resource.onLoading
+import com.space.core.resource.onSuccess
 import com.space.moviesapp.domain.usecase.details.GetMovieDetailsUseCase
 import com.space.moviesapp.domain.usecase.favourite.ChangeMovieFavouriteStatusUseCase
-import com.space.moviesapp.presentation.base.vm.BaseViewModel
-import com.space.moviesapp.presentation.model.DialogItem
+import com.space.core.base.vm.BaseViewModel
+import com.space.core.view.dialog.DialogItem
 import com.space.moviesapp.presentation.model.MovieDetailsUIModel
 import com.space.moviesapp.presentation.ui.details.mapper.MovieDetailsModelToUIMapper
 import com.space.moviesapp.presentation.ui.details.mapper.MovieDetailsUIModelToEntity

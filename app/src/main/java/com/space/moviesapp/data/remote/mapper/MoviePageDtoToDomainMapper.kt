@@ -1,6 +1,6 @@
 package com.space.moviesapp.data.remote.mapper
 
-import com.space.moviesapp.common.utils.MoviesConstants
+import com.space.core.utils.MoviesConstants
 import com.space.moviesapp.data.remote.dto.MoviesPageDto
 import com.space.moviesapp.domain.model.MovieItemModel
 import com.space.moviesapp.domain.model.MoviesPageModel
@@ -16,8 +16,8 @@ class MoviePageDtoToDomainMapper {
                 genresMap?.get(it.genreIds?.firstOrNull()) ?: "",
                 it.originalTitle ?: "",
                 it.releaseDate?.dropLast(6) ?: "",
-                MoviesConstants.IMAGE_BASE_URL + it.mainPosterPath,
-                MoviesConstants.IMAGE_BASE_URL + it.mainPosterPath
+                com.space.core.utils.MoviesConstants.IMAGE_BASE_URL + it.mainPosterPath,
+                com.space.core.utils.MoviesConstants.IMAGE_BASE_URL + it.mainPosterPath
             )
         }, totalPages)
     }

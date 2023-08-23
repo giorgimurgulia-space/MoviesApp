@@ -1,6 +1,6 @@
 package com.space.moviesapp.data.remote.mapper
 
-import com.space.moviesapp.common.utils.MoviesConstants.IMAGE_BASE_URL
+import com.space.core.utils.MoviesConstants.IMAGE_BASE_URL
 import com.space.moviesapp.data.remote.dto.MovieDetailsDto
 import com.space.moviesapp.domain.model.MovieDetailsModel
 

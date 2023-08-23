@@ -1,9 +1,9 @@
 package com.space.moviesapp.presentation.common.view_holder
 
 import androidx.recyclerview.widget.RecyclerView
-import com.space.moviesapp.common.extensions.hide
-import com.space.moviesapp.common.extensions.loadImage
-import com.space.moviesapp.common.extensions.show
+import com.space.core.extensions.hide
+import com.space.core.extensions.loadImage
+import com.space.core.extensions.show
 import com.space.moviesapp.databinding.LayoutMovieItemBinding
 import com.space.moviesapp.presentation.model.MovieItemUIModel
 

@@ -1,6 +1,6 @@
 package com.space.moviesapp.data.repository
 
-import com.space.moviesapp.common.resource.ApiError
+import com.space.core.resource.ApiError
 import com.space.moviesapp.data.local.database.dao.MoviesDao
 import com.space.moviesapp.data.remote.api.ApiService
 import com.space.moviesapp.data.remote.mapper.MovieDetailDtoToDomainMapper
@@ -24,6 +24,6 @@ class MovieDetailsRepositoryImpl(
                 )
             )
         } else
-            throw ApiError(Throwable())
+            throw com.space.core.resource.ApiError(Throwable())
     }
 }

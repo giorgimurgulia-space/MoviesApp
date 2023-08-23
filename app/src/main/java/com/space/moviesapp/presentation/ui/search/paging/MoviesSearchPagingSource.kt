@@ -2,7 +2,7 @@ package com.space.moviesapp.presentation.ui.search.paging
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.space.moviesapp.common.resource.ApiError
+import com.space.core.resource.ApiError
 import com.space.moviesapp.data.remote.api.ApiService
 import com.space.moviesapp.data.remote.dto.MovieItemDto
 import com.space.moviesapp.domain.model.MovieItemModel

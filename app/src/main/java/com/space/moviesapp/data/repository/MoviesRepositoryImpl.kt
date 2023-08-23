@@ -1,6 +1,6 @@
 package com.space.moviesapp.data.repository
 
-import com.space.moviesapp.common.resource.ApiError
+import com.space.core.resource.ApiError
 import com.space.moviesapp.data.remote.api.ApiService
 import com.space.moviesapp.data.remote.dto.MovieCategoryDto
 import com.space.moviesapp.data.remote.mapper.GenresDtoToDomainMapper
@@ -39,7 +39,7 @@ class MoviesRepositoryImpl(
                         getMoviesGenres()
                     )
                 } else {
-                    throw ApiError(Throwable())
+                    throw com.space.core.resource.ApiError(Throwable())
                 }
             } catch (e: CancellationException) {
                 throw e
@@ -57,7 +57,7 @@ class MoviesRepositoryImpl(
                         getMoviesGenres()
                     )
                 } else {
-                    throw ApiError(Throwable())
+                    throw com.space.core.resource.ApiError(Throwable())
                 }
             } catch (e: CancellationException) {
                 throw e

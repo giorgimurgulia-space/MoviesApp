@@ -1,6 +1,6 @@
 package com.space.moviesapp.presentation.common.mapper
 
-import com.space.moviesapp.common.maper.Mapper
+import com.space.core.maper.Mapper
 import com.space.moviesapp.domain.model.MovieItemModel
 import com.space.moviesapp.presentation.model.MovieItemUIModel
 
