@@ -1,6 +1,5 @@
 package com.space.moviesapp.presentation.ui.home.vm
 
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import androidx.paging.*
 import com.space.moviesapp.common.extensions.toResult
@@ -18,9 +17,7 @@ import com.space.moviesapp.presentation.common.mapper.MovieItemUIModelToEntity
 import com.space.moviesapp.presentation.model.DialogItem
 import com.space.moviesapp.presentation.model.MovieCategoryUIModel
 import com.space.moviesapp.presentation.model.MovieItemUIModel
-import com.space.moviesapp.presentation.navigation.MovieEvent
 import com.space.moviesapp.presentation.ui.home.mapper.MovieCategoryModelToUIMapper
-import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
@@ -39,8 +36,8 @@ class HomeViewModel(
     private val _movieCategory = MutableStateFlow<List<MovieCategoryUIModel>>(emptyList())
     val movieCategory get() = _movieCategory.asStateFlow()
 
-    private var _state = MutableStateFlow<PagingData<MovieItemUIModel>>(PagingData.empty())
-    val state get() = _state.asStateFlow()
+    private var _homeUIState = MutableStateFlow<PagingData<MovieItemUIModel>>(PagingData.empty())
+    val homeUIState get() = _homeUIState.asStateFlow()
 
     init {
         getMovieCategory()
@@ -105,7 +102,7 @@ class HomeViewModel(
             ) { movies, favourites ->
                 movies to favourites
             }.collectLatest { (movies, favourites) ->
-                _state.value = movies.map { movie ->
+                _homeUIState.value = movies.map { movie ->
                     movieItemModelToUIMapper.invoke(movie, favourites.any { it.id == movie.id })
                 }
             }

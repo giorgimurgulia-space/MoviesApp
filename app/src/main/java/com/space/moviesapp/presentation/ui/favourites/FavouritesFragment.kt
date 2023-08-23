@@ -37,7 +37,7 @@ class FavouritesFragment :
     }
 
     override fun setObserves() {
-        collectFlow(viewModel.state) {
+        collectFlow(viewModel.favouriteUIState) {
             binding.noMoviesImage.visibility = if (it.isEmpty()) View.VISIBLE else View.GONE
             adapter.submitList(it)
         }

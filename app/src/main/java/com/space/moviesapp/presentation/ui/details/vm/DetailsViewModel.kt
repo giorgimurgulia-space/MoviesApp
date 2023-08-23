@@ -24,8 +24,9 @@ class DetailsViewModel(
     private val movieDetailsUIModelToEntity: MovieDetailsUIModelToEntity
 ) : BaseViewModel() {
     private var detailMovieId: Int? = null
-    private val _movieState = MutableStateFlow(MovieDetailsUIModel())
-    val movieState get() = _movieState.asStateFlow()
+
+    private val _detailUIState = MutableStateFlow(MovieDetailsUIModel())
+    val detailUIState get() = _detailUIState.asStateFlow()
 
     fun getMovie(movieId: Int?) {
         if (movieId == null) {
@@ -38,7 +39,7 @@ class DetailsViewModel(
                     it.onLoading { setDialog(DialogItem.LoaderDialog()) }
                     it.onSuccess { item ->
                         closeLoaderDialog()
-                        _movieState.tryEmit(
+                        _detailUIState.tryEmit(
                             movieDetailsModelToUIMapper.invoke(
                                 item,
                             )
@@ -55,7 +56,7 @@ class DetailsViewModel(
     fun onFavouriteClick() {
         viewModelScope.launch {
             changeMovieFavouriteStatusUseCase.invoke(
-                movieDetailsUIModelToEntity(_movieState.value)
+                movieDetailsUIModelToEntity(_detailUIState.value)
             )
         }
     }

@@ -23,8 +23,9 @@ class FavouritesViewModel(
     private val movieItemModelToUIMapper: MovieItemModelToUIMapper,
     private val movieItemUIModelToEntity: MovieItemUIModelToEntity
 ) : BaseViewModel() {
-    private val _state = MutableStateFlow<List<MovieItemUIModel>>(emptyList())
-    val state get() = _state.asStateFlow()
+
+    private val _favouriteUIState = MutableStateFlow<List<MovieItemUIModel>>(emptyList())
+    val favouriteUIState get() = _favouriteUIState.asStateFlow()
 
     init {
         getFavouriteMovie()
@@ -44,7 +45,7 @@ class FavouritesViewModel(
                 }
                 it.onSuccess { movies ->
                     closeLoaderDialog()
-                    _state.value = movies.map { item ->
+                    _favouriteUIState.value = movies.map { item ->
                         movieItemModelToUIMapper.invoke(item, true)
                     }
                 }

@@ -7,7 +7,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
 import com.space.moviesapp.common.extensions.changeVisibility
 import com.space.moviesapp.common.extensions.collectFlow
-import com.space.moviesapp.common.extensions.observeNonNull
 import com.space.moviesapp.databinding.ChipFilterItemBinding
 import com.space.moviesapp.databinding.FragmentHomeBinding
 import com.space.moviesapp.presentation.base.fragment.BaseFragment
@@ -50,7 +49,7 @@ class HomeFragment :
     }
 
     override fun setObserves() {
-        collectFlow(viewModel.state) {
+        collectFlow(viewModel.homeUIState) {
             adapter.submitData(lifecycle, it)
         }
         collectFlow(viewModel.movieCategory) {

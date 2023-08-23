@@ -26,7 +26,7 @@ class DetailsFragment :
     }
 
     override fun setObserves() {
-        collectFlow(viewModel.movieState) {
+        collectFlow(viewModel.detailUIState) {
             setMovieDetailContent(it)
         }
     }

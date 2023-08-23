@@ -56,7 +56,7 @@ class SearchFragment :
     }
 
     override fun setObserves() {
-        collectFlow(viewModel.state) {
+        collectFlow(viewModel.searchUIState) {
             adapter.submitData(lifecycle, it)
         }
 

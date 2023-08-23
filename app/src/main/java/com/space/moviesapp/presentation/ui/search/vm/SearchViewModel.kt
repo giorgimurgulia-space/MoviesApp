@@ -28,9 +28,8 @@ class SearchViewModel(
         extraBufferCapacity = 1, onBufferOverflow = BufferOverflow.DROP_OLDEST
     )
 
-    // todo name
-    private val _state = MutableStateFlow<PagingData<MovieItemUIModel>>(PagingData.empty())
-    val state get() = _state.asStateFlow()
+    private val _searchUIState = MutableStateFlow<PagingData<MovieItemUIModel>>(PagingData.empty())
+    val searchUIState get() = _searchUIState.asStateFlow()
 
     init {
         viewModelScope.launch {
@@ -50,7 +49,7 @@ class SearchViewModel(
                     ) { movies, favourites ->
                         movies to favourites
                     }.collectLatest { (movies, favourites) ->
-                        _state.value = movies.map { movie ->
+                        _searchUIState.value = movies.map { movie ->
                             movieItemModelToUIMapper.invoke(movie,
                                 favourites.any { it.id == movie.id })
                         }
