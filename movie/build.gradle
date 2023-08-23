@@ -9,25 +9,11 @@ plugins {
 apply from: '../common.gradle'
 
 android {
-    namespace 'com.space.moviesapp'
-
-    defaultConfig {
-        applicationId "com.space.moviesapp"
-        versionCode 1
-        versionName "1.0"
-    }
-
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
-    }
+    namespace 'com.space.movie'
 }
 
 dependencies {
     implementation project(':core')
-    implementation project(':movie')
 
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.6.1'

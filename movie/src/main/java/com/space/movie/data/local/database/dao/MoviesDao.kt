@@ -1,0 +1,24 @@
+package com.space.movie.data.local.database.dao
+
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
+import com.space.movie.data.local.database.entity.MovieEntity
+import kotlinx.coroutines.flow.Flow
+
+
+@Dao
+interface MoviesDao {
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertFavouriteMovie(movieEntity: MovieEntity)
+
+    @Query("delete from favourite_movie where id = :id")
+    suspend fun deleteFavouriteMovie(id: Int)
+
+    @Query("select * from favourite_movie")
+    fun getFavouriteMoviesFlow(): Flow<List<MovieEntity>>
+
+    @Query("select exists(select * from favourite_movie where id=:id)")
+    suspend fun isFavouriteMovie(id: Int): Boolean
+}
