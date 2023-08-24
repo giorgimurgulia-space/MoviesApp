@@ -1,0 +1,5 @@
+<resources>
+    <string name="data_can_t_be_loaded">Data can’t be loaded</string>
+    <string name="no_internet_connection">internet connection or some other server error</string>
+    <string name="refresh">Refresh</string>
+</resources>
