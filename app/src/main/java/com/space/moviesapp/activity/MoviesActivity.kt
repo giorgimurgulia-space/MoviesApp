@@ -36,6 +36,7 @@ class MoviesActivity : AppCompatActivity() {
                     navController
                 )
             }
+
             override fun onTabUnselected(tab: TabLayout.Tab?) {}
 
             override fun onTabReselected(tab: TabLayout.Tab?) {}
@@ -45,7 +46,7 @@ class MoviesActivity : AppCompatActivity() {
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
-                R.id.detailsFragment -> {
+                com.space.movie.R.id.detailsFragment -> {
                     binding.tabLayout.visibility = View.GONE
                 }
                 else -> {
@@ -55,7 +56,7 @@ class MoviesActivity : AppCompatActivity() {
         }
     }
 
-    fun onNavDestinationSelected(navItem: Navigation, navController: NavController): Boolean {
+    private fun onNavDestinationSelected(navItem: Navigation, navController: NavController): Boolean {
         val builder = NavOptions.Builder().setLaunchSingleTop(true).setRestoreState(true)
         val order = navItem.ordinal
         if (
@@ -93,7 +94,7 @@ class MoviesActivity : AppCompatActivity() {
         }
     }
 
-    fun setDestinationChangeListener() {
+    private fun setDestinationChangeListener() {
         navController.addOnDestinationChangedListener(
             object : NavController.OnDestinationChangedListener {
                 override fun onDestinationChanged(
@@ -113,7 +114,7 @@ class MoviesActivity : AppCompatActivity() {
     }
 
     enum class Navigation(val linkedFragmentId: Int) {
-        HOME(R.id.homeFragment), FAVOURITES(R.id.favouritesFragment);
+        HOME(com.space.movie.R.id.homeFragment), FAVOURITES(com.space.movie.R.id.favouritesFragment);
 
         companion object {
             fun getByOrdinal(ordinal: Int): Navigation {
