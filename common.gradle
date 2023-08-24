@@ -1,6 +1,6 @@
 
 android {
-    compileSdk rootProject.compileSdk
+    compileSdkVersion minSdk
 
     defaultConfig {
         minSdk rootProject.minSdk
